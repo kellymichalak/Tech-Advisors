@@ -1,0 +1,509 @@
+/* ==========================================================================
+   BIBLIOTECA DE ÁUDIOS (PROFS REAIS) — MODO CLARO & DARK MODE + TELA INTEIRA
+   ========================================================================== */
+
+:root,
+body[data-theme="light"] {
+  --bg-color: #f4f6fa;
+  --header-bg: #3533a3;
+  --card-bg: #ffffff;
+  --text-purple: #3f3da3;
+  --text-main: #1e293b;
+  --text-sub: #64748b;
+  --badge-green: #00d26a;
+  --icon-bg: #eef0ff;
+  --button-bg: #3f3da3;
+  --button-hover: #312f8a;
+  --border-color: #e2e8f0;
+  --pill-bg: #ffffff;
+  --shadow: 0 6px 24px rgba(53, 51, 163, 0.06);
+}
+
+body[data-theme="dark"] {
+  --bg-color: #0b1120;
+  --header-bg: #1e1b4b;
+  --card-bg: #1e293b;
+  --text-purple: #a5b4fc;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --badge-green: #34d399;
+  --icon-bg: #312e81;
+  --button-bg: #4f46e5;
+  --button-hover: #4338ca;
+  --border-color: #334155;
+  --pill-bg: #1e293b;
+  --shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* TOP BAR */
+.top-bar {
+  background-color: var(--header-bg);
+  color: #ffffff;
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.brand-book-icon {
+  width: 20px;
+  height: 25px;
+  background-color: #3b82f6;
+  border-radius: 2px 4px 4px 2px;
+  border-left: 3px solid #60a5fa;
+  display: inline-block;
+}
+
+.badge-aluno {
+  background-color: var(--badge-green);
+  color: #000000;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 0.94rem;
+}
+
+.nav-item {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.user-menu {
+  color: #ffcc00 !important;
+  font-weight: 700;
+}
+
+/* MAIN */
+.main-content {
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 24px 80px 24px;
+  flex: 1;
+}
+
+.top-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-purple);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.theme-switcher {
+  display: inline-flex;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.theme-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-sub);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theme-btn.active {
+  background-color: var(--button-bg);
+  color: #ffffff;
+}
+
+/* PAGE HEADER */
+.page-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.header-badge {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px auto;
+  border-radius: 16px;
+  background: var(--icon-bg);
+  color: var(--text-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-header h1 {
+  color: var(--text-purple);
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.page-header p {
+  color: var(--text-sub);
+  font-size: 0.95rem;
+}
+
+/* FILTROS */
+.filters-section {
+  margin-bottom: 26px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 14px;
+  padding: 12px 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  width: 100%;
+  font-size: 0.94rem;
+  outline: none;
+}
+
+.filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  background: var(--pill-bg);
+  color: var(--text-sub);
+  border: 1px solid var(--border-color);
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: none;
+}
+
+@media (hover: hover) {
+  .pill:hover {
+    background: var(--button-bg);
+    color: #ffffff;
+    border-color: var(--button-bg);
+  }
+}
+
+.pill.active {
+  background: var(--button-bg);
+  color: #ffffff;
+  border-color: var(--button-bg);
+}
+
+/* LISTA DE CARDS */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.list-header h3 {
+  font-size: 1.15rem;
+  color: var(--text-purple);
+}
+
+.count-badge {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  background: var(--card-bg);
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+}
+
+.audio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.audio-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.audio-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--button-bg);
+}
+
+.audio-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.subject-chip {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-purple);
+  background: var(--icon-bg);
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.ep-badge {
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: #059669;
+  background: #d1fae5;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+body[data-theme="dark"] .ep-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+}
+
+.fav-btn {
+  background: none;
+  border: none;
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+
+.audio-card h4 {
+  font-size: 1.02rem;
+  color: var(--text-main);
+  margin: 8px 0 4px 0;
+}
+
+.audio-card p {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  line-height: 1.45;
+}
+
+.audio-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.meta-info {
+  font-size: 0.8rem;
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+.btn-listen {
+  background: var(--button-bg);
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-listen:hover {
+  background: var(--button-hover);
+}
+
+/* ==========================================================================
+   MODO PÁGINA INTEIRA DO PLAYER + ADAPTAÇÃO AO MODO CLARO E DARK MODE
+   ========================================================================== */
+
+.full-player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.btn-voltar-lista {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card-bg);
+  color: var(--text-purple);
+  border: 1.5px solid var(--border-color);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.btn-voltar-lista:hover {
+  border-color: var(--button-bg);
+}
+
+.full-subject-badge {
+  background: var(--icon-bg);
+  color: var(--text-purple);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* Override limpo do .audio-player-box para ficar CLARO no Modo Claro e ESCURO no Dark Mode */
+body[data-theme="light"] .full-player-container .audio-player-box {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 12px 36px rgba(53, 51, 163, 0.1) !important;
+  padding: 28px !important;
+  border-radius: 22px !important;
+}
+
+body[data-theme="light"] .full-player-container .audio-player-box > div:nth-child(3) {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+body[data-theme="light"] .full-player-container .pod-titulo-ativo {
+  color: #0f172a !important;
+}
+
+body[data-theme="light"] .full-player-container .pod-status-texto,
+body[data-theme="light"] .full-player-container .audio-player-box span,
+body[data-theme="light"] .full-player-container .audio-player-box p {
+  color: #475569 !important;
+}
+
+body[data-theme="light"] .full-player-container .btn-play-pod {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+body[data-theme="light"] .full-player-container .btn-ep-pod {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  border-color: #cbd5e1 !important;
+}
+
+body[data-theme="light"] .full-player-container .btn-ep-pod.ativo-ep,
+body[data-theme="light"] .full-player-container .btn-ep-pod[style*="10b981"] {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+  border-color: #4f46e5 !important;
+}
+
+/* Caixa de transcrição sincronizada bem legível e ampla */
+.full-player-container .legenda-sincronizada-box,
+.full-player-container [id*="transcricao"],
+.full-player-container [class*="legenda"] {
+  margin-top: 20px !important;
+  padding: 22px !important;
+  border-radius: 16px !important;
+  font-size: 1.05rem !important;
+  line-height: 1.8 !important;
+}
+
+body[data-theme="light"] .full-player-container .legenda-sincronizada-box,
+body[data-theme="light"] .full-player-container [id*="transcricao"],
+body[data-theme="light"] .full-player-container [class*="legenda"] {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.footer-bar {
+  background-color: var(--header-bg);
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.88rem;
+  margin-top: auto;
+}
+
+@media (max-width: 850px) {
+  .audio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .top-bar {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.audio-card { content-visibility: auto; contain-intrinsic-size: 220px; }

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techadvisors - Relatórios & Indicadores (Admin)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css?v=13">
+  <link rel="stylesheet" href="../css/config.css">
+</head>
+<body>
+      <header class="home-header">
+    <div class="logo" onclick="window.location.href='admin.html'">
+      TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-950 px-2 py-1 rounded ml-2 font-bold">ADMINISTRADOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li  onclick="window.location.href='admin.html'">🏠 Portal Gestão</li>
+        <li  onclick="window.location.href='cadastro-turmas.html'">🏫 Cadastro de Turmas</li>
+        <li  onclick="window.location.href='cadastro-alunos.html'">👥 Alunos</li>
+        <li  onclick="window.location.href='cadastro-professores.html'">👨‍🏫 Professores</li>
+        <li class="text-yellow-300 font-bold border-b-2 border-yellow-300 pb-0.5" onclick="window.location.href='relatorios-admin.html'">📊 Relatórios & Indicadores</li>
+        <li class="user-menu-container">
+          <div id="admin-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>👨‍💼</span>
+            <span id="admin-name-text">Olá, Administrador</span>
+            <span class="text-xs">▼</span>
+          </div>
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">👤 Minha Conta</li>
+              <li onclick="configuracoes()">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="banner flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <h2>Relatórios & Indicadores da Plataforma</h2>
+        <p>Visão geral do engajamento dos alunos, entrega de atividades, médias nos simulados e desempenho consolidado por turma.</p>
+      </div>
+      <div class="flex flex-wrap gap-3 shrink-0">
+        <button onclick="exportarRelatorioCSV()" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 font-semibold px-4 py-2.5 rounded-xl text-sm transition-all cursor-pointer">
+          Exportar Planilha
+        </button>
+        <button onclick="window.print()" class="bg-yellow-400 hover:bg-yellow-300 text-blue-950 font-bold px-4 py-2.5 rounded-xl text-sm shadow-md transition-all cursor-pointer">
+          Imprimir Relatório
+        </button>
+      </div>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="panel-box p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <span class="text-sm font-bold text-blue-700">Filtrar Visão Geral:</span>
+      <div class="flex flex-wrap gap-3 w-full md:w-auto">
+        <select id="filtroPeriodo" onchange="atualizarDashboardRelatorios()" class="custom-input px-3 py-2 rounded-lg text-xs font-semibold">
+          <option value="2026">Consolidado Anual - 2026</option>
+          <option value="1sem">1º Semestre - 2026</option>
+          <option value="2sem">2º Semestre - 2026</option>
+        </select>
+        <select id="filtroSerie" onchange="atualizarDashboardRelatorios()" class="custom-input px-3 py-2 rounded-lg text-xs font-semibold">
+          <option value="todas">Todas as Séries</option>
+          <option value="1">1º Ano EM</option>
+          <option value="2">2º Ano EM</option>
+          <option value="3">3º Ano EM</option>
+        </select>
+        <select id="filtroTurma" onchange="atualizarDashboardRelatorios()" class="custom-input px-3 py-2 rounded-lg text-xs font-semibold">
+          <option value="todas">Todas as Turmas</option>
+          <option value="1° Ano A">1º Ano A</option>
+          <option value="2° Ano B">2º Ano B</option>
+          <option value="3° Ano A">3º Ano A</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 4 CARDS KPI -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="panel-box p-5 flex items-center justify-between border-l-4 border-l-blue-600">
+        <div>
+          <span class="text-xs font-semibold text-purple-300/80 uppercase tracking-wider">Estudantes Ativos</span>
+          <div id="kpi-alunos" class="text-2xl font-extrabold text-white mt-1">186</div>
+          <span class="text-[11px] font-semibold text-emerald-700 mt-1 block">Distribuídos em 6 turmas</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-600 flex items-center justify-center font-extrabold text-lg">AL</div>
+      </div>
+
+      <div class="panel-box p-5 flex items-center justify-between border-l-4 border-l-emerald-500">
+        <div>
+          <span class="text-xs font-semibold text-purple-300/80 uppercase tracking-wider">Frequência nos Estudos</span>
+          <div id="kpi-frequencia" class="text-2xl font-extrabold text-white mt-1">91,2%</div>
+          <span class="text-[11px] font-semibold text-purple-300/70 mt-1 block">Acessos e aulas assistidas</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center font-extrabold text-lg">FQ</div>
+      </div>
+
+      <div class="panel-box p-5 flex items-center justify-between border-l-4 border-l-sky-500">
+        <div>
+          <span class="text-xs font-semibold text-purple-300/80 uppercase tracking-wider">Média Geral Simulados</span>
+          <div id="kpi-nota" class="text-2xl font-extrabold text-white mt-1">7,8</div>
+          <span class="text-[11px] font-semibold text-emerald-700 mt-1 block">Acima da meta (7,0)</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-sky-500/15 text-sky-600 flex items-center justify-center font-extrabold text-lg">MD</div>
+      </div>
+
+      <div class="panel-box p-5 flex items-center justify-between border-l-4 border-l-amber-500">
+        <div>
+          <span class="text-xs font-semibold text-purple-300/80 uppercase tracking-wider">Alunos em Reforço</span>
+          <div id="kpi-alertas" class="text-2xl font-extrabold text-amber-500 mt-1">14</div>
+          <span class="text-[11px] font-semibold text-purple-300/70 mt-1 block">Média &lt; 6,0 ou baixo acesso</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-500/15 text-amber-600 flex items-center justify-center font-extrabold text-lg">RF</div>
+      </div>
+    </div>
+
+    <!-- GRÁFICOS VISUAIS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+      <div class="panel-box p-6 lg:col-span-2 flex flex-col justify-between">
+        <div class="flex items-center justify-between border-b border-purple-900/60 pb-3 mb-5">
+          <div>
+            <h3 class="text-base font-bold text-purple-300 m-0">Frequência & Engajamento Mensal (%)</h3>
+            <p class="text-xs text-purple-300/70 m-0">Taxa média de participação dos alunos nos conteúdos e atividades</p>
+          </div>
+          <span class="text-xs font-semibold bg-purple-950 text-purple-300 px-2.5 py-1 rounded-md border border-purple-700/50">Meta: 85%</span>
+        </div>
+        <div id="grafico-frequencia" class="grid grid-cols-6 gap-3 items-end h-52 pt-6 px-2 border-b border-purple-900/60"></div>
+        <div class="flex flex-wrap justify-between text-[11px] text-purple-300/80 mt-3 px-1 gap-2">
+          <span>Alto Engajamento (&ge; 90%)</span>
+          <span>Bom Ritmo (80% - 89%)</span>
+          <span>Baixa Participação (&lt; 80%)</span>
+        </div>
+      </div>
+
+      <div class="panel-box p-6 lg:col-span-1 flex flex-col justify-between">
+        <div class="border-b border-purple-900/60 pb-3 mb-4">
+          <h3 class="text-base font-bold text-purple-300 m-0">Conclusão por Área</h3>
+          <p class="text-xs text-purple-300/70 m-0">Percentual de listas e simulados entregues</p>
+        </div>
+        <div id="lista-disciplinas-indicadores" class="flex flex-col gap-4 my-auto"></div>
+        <div class="mt-5 pt-3 border-t border-purple-900/60 text-xs text-purple-300/70 flex justify-between">
+          <span>Atualizado hoje às 09:00</span>
+          <span class="font-semibold text-purple-300">Techadvisors Analytics</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELA CONSOLIDADA -->
+    <div class="panel-box p-6 mt-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 border-b border-purple-900/60 pb-3">
+        <div>
+          <h3 class="text-lg font-bold text-purple-300 m-0">Visão Consolidada por Turma</h3>
+          <p class="text-xs text-purple-300/70 m-0">Cada turma reúne os indicadores gerais de todas as suas disciplinas. Clique em "Matérias & Detalhes" para ver por disciplina.</p>
+        </div>
+        <input type="text" id="buscaTabelaRelatorio" onkeyup="filtrarTabelaRelatorio()" placeholder="Buscar turma, série ou disciplina..." class="custom-input p-2 px-3 rounded-lg text-xs w-full sm:w-72">
+      </div>
+      <div class="overflow-x-auto">
+        <table class="custom-table" id="tabelaRelatorios">
+          <thead>
+            <tr>
+              <th>Turma / Identificação</th>
+              <th>Turno</th>
+              <th>Alunos</th>
+              <th>Matérias Ativas</th>
+              <th>Frequência</th>
+              <th>Atividades</th>
+              <th>Média Geral</th>
+              <th>Situação</th>
+              <th class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaRelatoriosBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DETALHES DA TURMA -->
+  <div id="modalDetalhesRelatorioOverlay" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="panel-box w-full max-w-2xl p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-purple-900/60 pb-3 mb-4">
+        <div>
+          <h3 id="detalheTituloTurma" class="text-lg font-bold text-purple-300 m-0">1° Ano A • Ensino Médio Regular</h3>
+          <span id="detalheSubtituloTurma" class="text-xs text-purple-300/70">Turno: Matutino • 32 alunos matriculados</span>
+        </div>
+        <button onclick="fecharModalDetalhes()" class="text-lg font-bold px-2 cursor-pointer">✕</button>
+      </div>
+      <div id="detalheResumoTopo" class="grid grid-cols-3 gap-3 mb-5"></div>
+      <div class="mb-4">
+        <h4 class="text-xs font-bold uppercase tracking-wider mb-2">Desempenho por Disciplina</h4>
+        <div class="overflow-x-auto">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Disciplina</th>
+                <th>Docente</th>
+                <th>Frequência</th>
+                <th>Média</th>
+              </tr>
+            </thead>
+            <tbody id="detalheMateriasBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="home-footer">© 2026 • Techadvisors — Painel do Administrador</footer>
+  <script src="../js/config.js"></script>
+  <script src="../js/admin.js?v=10"></script>
+  <script>
+    const dadosMensais = [
+      { mes: 'Jan', valor: 84 },
+      { mes: 'Fev', valor: 88 },
+      { mes: 'Mar', valor: 91 },
+      { mes: 'Abr', valor: 89 },
+      { mes: 'Mai', valor: 93 },
+      { mes: 'Jun', valor: 92 }
+    ];
+
+    const dadosAreas = [
+      { area: 'Matemática e Tecnologias', pct: 89, cor: 'bg-blue-600' },
+      { area: 'Linguagens e Códigos', pct: 94, cor: 'bg-emerald-600' },
+      { area: 'Ciências da Natureza', pct: 82, cor: 'bg-sky-600' },
+      { area: 'Ciências Humanas', pct: 91, cor: 'bg-indigo-600' }
+    ];
+
+    const dadosTurmas = [
+      { id: 1, turma: '1° Ano A • Ensino Médio', turno: 'Matutino', alunos: 34, materias: 8, freq: '93%', ativ: '91%', media: '8,1', status: 'Excelente',
+        detalhes: [
+          { disc: 'Matemática', prof: 'Prof. Carlos Eduardo', freq: '94%', media: '8,0' },
+          { disc: 'Português', prof: 'Profa. Mariana Silva', freq: '95%', media: '8,4' },
+          { disc: 'Física', prof: 'Prof. Roberto Alves', freq: '90%', media: '7,9' }
+        ]
+      },
+      { id: 2, turma: '2° Ano B • Ensino Médio', turno: 'Matutino', alunos: 31, materias: 9, freq: '89%', ativ: '86%', media: '7,6', status: 'Regular',
+        detalhes: [
+          { disc: 'Matemática', prof: 'Prof. Carlos Eduardo', freq: '88%', media: '7,4' },
+          { disc: 'História', prof: 'Profa. Fernanda Costa', freq: '91%', media: '7,9' },
+          { disc: 'Química', prof: 'Prof. André Lima', freq: '87%', media: '7,5' }
+        ]
+      },
+      { id: 3, turma: '3° Ano A • Ensino Médio', turno: 'Vespertino', alunos: 29, materias: 10, freq: '92%', ativ: '90%', media: '7,9', status: 'Excelente',
+        detalhes: [
+          { disc: 'Redação', prof: 'Profa. Mariana Silva', freq: '94%', media: '8,3' },
+          { disc: 'Biologia', prof: 'Profa. Helena Souza', freq: '91%', media: '7,7' },
+          { disc: 'Matemática', prof: 'Prof. Carlos Eduardo', freq: '90%', media: '7,8' }
+        ]
+      }
+    ];
+
+    function renderizarGraficos() {
+      const gFreq = document.getElementById('grafico-frequencia');
+      if (gFreq) {
+        gFreq.innerHTML = dadosMensais.map(d => {
+          const corBarra = d.valor >= 90 ? 'bg-emerald-600' : (d.valor >= 80 ? 'bg-blue-600' : 'bg-rose-600');
+          return `
+            <div class="flex flex-col items-center justify-end h-full gap-2">
+              <span class="text-xs font-bold">${d.valor}%</span>
+              <div class="w-full max-w-[44px] ${corBarra} rounded-t-lg transition-all" style="height: ${d.valor}%"></div>
+              <span class="text-xs font-semibold opacity-75">${d.mes}</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const lAreas = document.getElementById('lista-disciplinas-indicadores');
+      if (lAreas) {
+        lAreas.innerHTML = dadosAreas.map(a => `
+          <div>
+            <div class="flex justify-between text-xs font-bold mb-1">
+              <span>${a.area}</span>
+              <span>${a.pct}%</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div class="${a.cor} h-full rounded-full" style="width: ${a.pct}%"></div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function renderizarTabela(filtro = '') {
+      const tbody = document.getElementById('tabelaRelatoriosBody');
+      if (!tbody) return;
+      const filtrados = dadosTurmas.filter(t => t.turma.toLowerCase().includes(filtro.toLowerCase()));
+      tbody.innerHTML = filtrados.map(t => `
+        <tr>
+          <td class="font-bold">${t.turma}</td>
+          <td>${t.turno}</td>
+          <td>${t.alunos}</td>
+          <td>${t.materias}</td>
+          <td>${t.freq}</td>
+          <td>${t.ativ}</td>
+          <td class="font-bold text-blue-700">${t.media}</td>
+          <td><span class="px-2.5 py-1 rounded-full text-xs font-bold ${t.status === 'Excelente' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${t.status}</span></td>
+          <td class="text-center">
+            <button onclick="abrirModalDetalhes(${t.id})" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer">
+              Matérias & Detalhes
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filtrarTabelaRelatorio() {
+      const val = document.getElementById('buscaTabelaRelatorio')?.value || '';
+      renderizarTabela(val);
+    }
+
+    function atualizarDashboardRelatorios() {
+      renderizarGraficos();
+      renderizarTabela(document.getElementById('buscaTabelaRelatorio')?.value || '');
+    }
+
+    function abrirModalDetalhes(id) {
+      const t = dadosTurmas.find(x => x.id === id);
+      if (!t) return;
+      document.getElementById('detalheTituloTurma').textContent = t.turma;
+      document.getElementById('detalheSubtituloTurma').textContent = `Turno: ${t.turno} • ${t.alunos} alunos matriculados`;
+      document.getElementById('detalheResumoTopo').innerHTML = `
+        <div class="p-3 rounded-xl bg-blue-500/10 text-center"><div class="text-xs font-bold opacity-75">Frequência</div><div class="text-lg font-extrabold">${t.freq}</div></div>
+        <div class="p-3 rounded-xl bg-emerald-500/10 text-center"><div class="text-xs font-bold opacity-75">Entregas</div><div class="text-lg font-extrabold">${t.ativ}</div></div>
+        <div class="p-3 rounded-xl bg-sky-500/10 text-center"><div class="text-xs font-bold opacity-75">Média Geral</div><div class="text-lg font-extrabold">${t.media}</div></div>
+      `;
+      document.getElementById('detalheMateriasBody').innerHTML = t.detalhes.map(d => `
+        <tr>
+          <td class="font-semibold">${d.disc}</td>
+          <td>${d.prof}</td>
+          <td>${d.freq}</td>
+          <td class="font-bold">${d.media}</td>
+        </tr>
+      `).join('');
+      document.getElementById('modalDetalhesRelatorioOverlay').classList.remove('hidden');
+    }
+
+    function fecharModalDetalhes() {
+      document.getElementById('modalDetalhesRelatorioOverlay').classList.add('hidden');
+    }
+
+    function exportarRelatorioCSV() {
+      const linhas = ['Turma,Turno,Alunos,Frequencia,Atividades,Media'];
+      dadosTurmas.forEach(t => linhas.push(`"${t.turma}",${t.turno},${t.alunos},${t.freq},${t.ativ},"${t.media}"`));
+      const blob = new Blob([linhas.join('
+')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'relatorio-admin-2026.csv';
+      a.click();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderizarGraficos();
+      renderizarTabela();
+    });
+  </script>
+</body>
+</html>

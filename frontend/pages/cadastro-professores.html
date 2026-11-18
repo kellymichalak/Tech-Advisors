@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techadvisors - Corpo Docente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css?v=13">
+  <link rel="stylesheet" href="../css/config.css">
+</head>
+<body>
+      <header class="home-header">
+    <div class="logo" onclick="window.location.href='admin.html'">
+      TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-950 px-2 py-1 rounded ml-2 font-bold">ADMINISTRADOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li  onclick="window.location.href='admin.html'">🏠 Portal Gestão</li>
+        <li  onclick="window.location.href='cadastro-turmas.html'">🏫 Cadastro de Turmas</li>
+        <li  onclick="window.location.href='cadastro-alunos.html'">👥 Alunos</li>
+        <li class="text-yellow-300 font-bold border-b-2 border-yellow-300 pb-0.5" onclick="window.location.href='cadastro-professores.html'">👨‍🏫 Professores</li>
+        <li  onclick="window.location.href='relatorios-admin.html'">📊 Relatórios & Indicadores</li>
+        <li class="user-menu-container">
+          <div id="admin-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>👨‍💼</span>
+            <span id="admin-name-text">Olá, Administrador</span>
+            <span class="text-xs">▼</span>
+          </div>
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">👤 Minha Conta</li>
+              <li onclick="configuracoes()">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="banner">
+      <h2>Corpo Docente</h2>
+      <p>Cadastre professores, vincule disciplinas acadêmicas e gerencie a equipe docente.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-5 panel-box p-6">
+        <h3 class="text-xl font-bold mb-4 text-blue-700">Cadastrar Professor</h3>
+        <form id="form-cadastro-prof" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase mb-1">Nome Completo do Docente</label>
+            <input type="text" id="prof-nome" required placeholder="Ex: Prof. Carlos Eduardo" class="custom-input w-full p-3 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-1">E-mail Institucional</label>
+            <input type="email" id="prof-email" required placeholder="professor@escola.com" class="custom-input w-full p-3 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-1">Senha de Acesso</label>
+            <input type="password" id="prof-senha" required placeholder="Mínimo 6 caracteres" class="custom-input w-full p-3 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-1">Disciplinas Ministradas</label>
+            <input type="text" id="prof-disciplina" required placeholder="Ex: Matemática, Física" class="custom-input w-full p-3 rounded-xl text-sm">
+          </div>
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md transition-all cursor-pointer">
+            Salvar Professor
+          </button>
+        </form>
+      </div>
+
+      <div class="lg:col-span-7 panel-box p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-blue-700">Professores Ativos</h3>
+          <button type="button" onclick="carregarProfessores()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white cursor-pointer">Atualizar Lista</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Docente</th>
+                <th>E-mail</th>
+                <th>Disciplinas</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-profs-body">
+              <tr><td colspan="4" class="p-6 text-center text-slate-400">Carregando professores...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="home-footer">© 2026 • Techadvisors — Painel do Administrador</footer>
+  <script src="../js/config.js"></script>
+  <script src="../js/admin.js?v=10"></script>
+  <script>
+    const API_URL = 'http://127.0.0.1:8000';
+    async function carregarProfessores() {
+      const tbody = document.getElementById('tabela-profs-body');
+      try {
+        const res = await fetch(`${API_URL}/professores`);
+        const lista = res.ok ? await res.json() : [];
+        if (!lista.length) {
+          tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-slate-400">Nenhum professor cadastrado no momento.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = lista.map(p => `
+          <tr>
+            <td class="font-mono text-xs">#${p.id_professor || p.id || '-'}</td>
+            <td class="font-semibold">${p.nome || '-'}</td>
+            <td>${p.email || '-'}</td>
+            <td>${p.disciplinas || p.disciplina || '-'}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-red-500">Erro de conexão com o servidor.</td></tr>';
+      }
+    }
+
+    document.getElementById('form-cadastro-prof').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        nome: document.getElementById('prof-nome').value.trim(),
+        email: document.getElementById('prof-email').value.trim(),
+        senha: document.getElementById('prof-senha').value,
+        role: 'professor',
+        disciplinas: document.getElementById('prof-disciplina').value.trim()
+      };
+      try {
+        const res = await fetch(`${API_URL}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok) {
+          alert('Professor cadastrado com sucesso!');
+          e.target.reset();
+          carregarProfessores();
+        } else {
+          alert('Erro: ' + (data.detail || 'Não foi possível concluir o cadastro.'));
+        }
+      } catch (err) {
+        alert('Servidor FastAPI indisponível.');
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', carregarProfessores);
+  </script>
+</body>
+</html>

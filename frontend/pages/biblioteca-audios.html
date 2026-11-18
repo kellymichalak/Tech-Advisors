@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Áudios e Narrações — Techadvisors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/biblioteca-audios.css">
+</head>
+<body>
+  <header class="top-bar">
+    <div class="brand" onclick="window.location.href='alunos.html'">
+      <span class="brand-book-icon"></span>
+      <span>TECHADVISORS</span>
+      <span class="badge-aluno">ALUNO</span>
+    </div>
+    <nav class="nav-links">
+      <a href="alunos.html" class="nav-item">🏠 Portal do Estudante</a>
+      <a href="materias.html" class="nav-item">📖 Minhas Matérias</a>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <!-- BARRA SUPERIOR DE CONTROLES -->
+    <div class="top-controls-row">
+      <a href="acessibilidade.html" class="back-btn" id="btn-back-library">
+        <i data-lucide="arrow-left" size="18"></i>
+        <span id="txt-back-library">Voltar para Recursos Inclusivos</span>
+      </a>
+
+      <div class="theme-switcher" role="group" aria-label="Alternar tema">
+        <button type="button" class="theme-btn active" id="btn-audio-light">
+          <i data-lucide="sun" size="16"></i>
+          <span>Modo Claro</span>
+        </button>
+        <button type="button" class="theme-btn" id="btn-audio-dark">
+          <i data-lucide="moon" size="16"></i>
+          <span>Dark Mode</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- VISÃO 1: CATÁLOGO DE ÁUDIOS POR CONTEÚDO (5 ÁUDIOS POR TEMA) -->
+    <div id="view-catalogo">
+      <div class="page-header">
+        <div class="header-badge">
+          <i data-lucide="headphones" size="28"></i>
+        </div>
+        <h1>Biblioteca de Áudios e Narrações</h1>
+        <p>Escolha uma aula gravada por professores reais para ouvir em tela cheia com transcrição sincronizada.</p>
+      </div>
+
+      <section class="filters-section">
+        <div class="search-box">
+          <i data-lucide="search" size="18"></i>
+          <input type="text" id="audio-search" placeholder="Buscar áudio por tema, professor ou matéria...">
+        </div>
+
+        <div class="filter-pills" id="serie-filters" style="margin-bottom: 10px;">
+          <button type="button" class="pill active" data-serie="all">Todas as Séries</button>
+          <button type="button" class="pill" data-serie="1º Ano">1º Ano E.M.</button>
+          <button type="button" class="pill" data-serie="2º Ano">2º Ano E.M.</button>
+          <button type="button" class="pill" data-serie="3º Ano">3º Ano E.M.</button>
+          <button type="button" class="pill" data-serie="favorites">⭐ Favoritos</button>
+        </div>
+
+        <div class="filter-pills" id="subject-filters"></div>
+      </section>
+
+      <section class="audio-list-section">
+        <div class="list-header">
+          <h3>Audioaulas Disponíveis (5 áudios por conteúdo)</h3>
+          <span class="count-badge" id="audio-count">Carregando...</span>
+        </div>
+        <div class="audio-grid" id="audio-grid"></div>
+      </section>
+    </div>
+
+    <!-- VISÃO 2: PLAYER EM PÁGINA INTEIRA COM TRANSCRIÇÃO SINCRONIZADA -->
+    <div id="view-player-full" class="hidden">
+      <div class="full-player-header">
+        <button type="button" class="btn-voltar-lista" id="btn-voltar-catalogo">
+          <i data-lucide="arrow-left" size="18"></i>
+          <span>Voltar para a Lista de Áudios</span>
+        </button>
+        <span class="full-subject-badge" id="full-meta-badge">MATÉRIA • SÉRIE</span>
+      </div>
+
+      <div id="player-audio-destino" class="full-player-container"></div>
+    </div>
+  </main>
+
+  <footer class="footer-bar">
+    © 2026 Techadvisors • Painel do Aluno
+  </footer>
+
+  <!-- Carrega os módulos dos professores e o motor real de áudio + transcrição de resumos.js -->
+  <script src="../js/conteudos/1em_arte.js?v=20261213"></script>
+<script src="../js/conteudos/1em_biologia.js?v=20261213"></script>
+<script src="../js/conteudos/1em_edfisica.js?v=20261213"></script>
+<script src="../js/conteudos/1em_espanhol.js?v=20261213"></script>
+<script src="../js/conteudos/1em_filosofia.js?v=20261213"></script>
+<script src="../js/conteudos/1em_fisica.js?v=20261213"></script>
+<script src="../js/conteudos/1em_geografia.js?v=20261213"></script>
+<script src="../js/conteudos/1em_historia.js?v=20261213"></script>
+<script src="../js/conteudos/1em_ingles.js?v=20261213"></script>
+<script src="../js/conteudos/1em_matematica.js?v=20261213"></script>
+<script src="../js/conteudos/1em_portugues.js?v=20261213"></script>
+<script src="../js/conteudos/1em_quimica.js?v=20261213"></script>
+<script src="../js/conteudos/1em_sociologia.js?v=20261213"></script>
+<script src="../js/conteudos/2em_arte.js?v=20261213"></script>
+<script src="../js/conteudos/2em_biologia.js?v=20261213"></script>
+<script src="../js/conteudos/2em_edfisica.js?v=20261213"></script>
+<script src="../js/conteudos/2em_espanhol.js?v=20261213"></script>
+<script src="../js/conteudos/2em_filosofia.js?v=20261213"></script>
+<script src="../js/conteudos/2em_fisica.js?v=20261213"></script>
+<script src="../js/conteudos/2em_geografia.js?v=20261213"></script>
+<script src="../js/conteudos/2em_historia.js?v=20261213"></script>
+<script src="../js/conteudos/2em_ingles.js?v=20261213"></script>
+<script src="../js/conteudos/2em_matematica.js?v=20261213"></script>
+<script src="../js/conteudos/2em_portugues.js?v=20261213"></script>
+<script src="../js/conteudos/2em_quimica.js?v=20261213"></script>
+<script src="../js/conteudos/2em_sociologia.js?v=20261213"></script>
+<script src="../js/conteudos/3em_arte.js?v=20261213"></script>
+<script src="../js/conteudos/3em_biologia.js?v=20261213"></script>
+<script src="../js/conteudos/3em_edfisica.js?v=20261213"></script>
+<script src="../js/conteudos/3em_espanhol.js?v=20261213"></script>
+<script src="../js/conteudos/3em_filosofia.js?v=20261213"></script>
+<script src="../js/conteudos/3em_fisica.js?v=20261213"></script>
+<script src="../js/conteudos/3em_geografia.js?v=20261213"></script>
+<script src="../js/conteudos/3em_historia.js?v=20261213"></script>
+<script src="../js/conteudos/3em_ingles.js?v=20261213"></script>
+<script src="../js/conteudos/3em_matematica.js?v=20261213"></script>
+<script src="../js/conteudos/3em_portugues.js?v=20261213"></script>
+<script src="../js/conteudos/3em_quimica.js?v=20261213"></script>
+<script src="../js/conteudos/3em_sociologia.js?v=20261213"></script>
+  <script src="../js/resumos.js?v=20261230"></script>
+  <script src="../js/biblioteca-audios.js"></script>
+  <script src="../js/assistiva-global.js"></script>
+</body>
+</html>

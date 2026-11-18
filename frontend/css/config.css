@@ -1,0 +1,214 @@
+:root {
+   --font-scale-factor: 1;
+   --page-saturation: 100%;
+   --page-brightness: 100%;
+ }
+  * {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Poppins', sans-serif;
+ }
+  html {
+   font-size: calc(16px * var(--font-scale-factor));
+   filter: saturate(var(--page-saturation)) brightness(var(--page-brightness));
+   transition: filter 0.25s ease, font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+  body {
+   background: #f3f7fb;
+   color: #333;
+   line-height: 1.5;
+   transition: background-color 0.3s ease, color 0.3s ease;
+ }
+  /* Transições para dimensionamento de fonte suave nos elementos principais */
+ h1, h2, h3, h4, p, span, a, label, input, button, table, td, th {
+   transition: font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1), line-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+  /* Modo Alto Contraste / Escuro */
+ body.high-contrast {
+   background: #0f172a !important;
+   color: #f8fafc !important;
+ }
+  body.high-contrast .card,
+ body.high-contrast header,
+ body.high-contrast footer.home-footer,
+ body.high-contrast .bg-white {
+   background-color: #1e293b !important;
+   color: #f8fafc !important;
+   border-color: #334155 !important;
+ }
+  body.high-contrast .banner {
+   background: linear-gradient(135deg, #1e3a8a, #3b82f6) !important;
+ }
+  body.high-contrast h1,
+ body.high-contrast h2,
+ body.high-contrast h3,
+ body.high-contrast p,
+ body.high-contrast td,
+ body.high-contrast th,
+ body.high-contrast label,
+ body.high-contrast span {
+   color: #f1f5f9 !important;
+ }
+  /* Ajustes específicos do Painel de Configurações no Modo Escuro */
+ body.high-contrast #settings-drawer {
+   background-color: #0f172a !important;
+   border-left: 1px solid #334155;
+ }
+  body.high-contrast #settings-drawer .bg-slate-50 {
+   background-color: #1e293b !important;
+   border-color: #334155 !important;
+ }
+  body.high-contrast #settings-drawer button:not(.bg-indigo-600):not(.bg-slate-800) {
+   background-color: #334155 !important;
+   color: #f8fafc !important;
+   border-color: #475569 !important;
+ }
+  body.high-contrast #settings-drawer button:hover:not(.bg-indigo-600) {
+   background-color: #475569 !important;
+ }
+  body.high-contrast #settings-drawer .text-slate-400,
+ body.high-contrast #settings-drawer .text-slate-500,
+ body.high-contrast #settings-drawer .text-slate-600,
+ body.high-contrast #settings-drawer .text-slate-700,
+ body.high-contrast #settings-drawer .text-slate-800 {
+   color: #cbd5e1 !important;
+ }
+  body.high-contrast #settings-drawer .bg-indigo-50 {
+   background-color: #1e1b4b !important;
+ }
+  /* Header & Navegação */
+ header {
+   background: #1565C0;
+   color: white;
+   padding: 1.125rem 1.875rem;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   box-shadow: 0 3px 10px rgba(0,0,0,.15);
+ }
+  .logo {
+   font-size: 1.75rem;
+   font-weight: bold;
+   cursor: pointer;
+ }
+  nav ul {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   list-style: none;
+   gap: 1.25rem;
+ }
+  nav li {
+   cursor: pointer;
+   transition: .3s;
+   font-weight: 500;
+   white-space: nowrap;
+ }
+  nav li:hover {
+   color: #FFE082;
+ }
+  /* Conteúdo e Cards */
+ .container {
+   width: 90%;
+   max-width: 1200px;
+   margin: auto;
+   padding: 2.5rem 0;
+ }
+  .banner {
+   background: linear-gradient(135deg, #1976D2, #42A5F5);
+   color: white;
+   padding: 2.5rem;
+   border-radius: 1.25rem;
+   margin-bottom: 2.5rem;
+   box-shadow: 0 8px 20px rgba(0,0,0,.15);
+ }
+  .banner h2 {
+   font-size: 2.125rem;
+   margin-bottom: 0.625rem;
+ }
+  .banner p {
+   font-size: 1.125rem;
+   opacity: .9;
+ }
+  .cards {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+   gap: 1.5625rem;
+ }
+  .card {
+   background: white;
+   border-radius: 1.125rem;
+   padding: 1.875rem;
+   text-align: center;
+   box-shadow: 0 8px 18px rgba(0,0,0,.08);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   cursor: pointer;
+ }
+  .card:hover {
+   transform: translateY(-8px);
+ }
+  .card h3 {
+   color: #1565C0;
+   margin: 0.9375rem 0;
+   font-size: 1.25rem;
+ }
+  .card p {
+   color: #666;
+   font-size: 0.875rem;
+ }
+  .icone {
+   font-size: 3.4375rem;
+ }
+  footer.home-footer {
+   text-align: center;
+   padding: 1.25rem;
+   margin-top: 3.125rem;
+   background: #1565C0;
+   color: white;
+ }
+  /* Classes específicas das páginas */
+ .font-inter {
+   font-family: 'Inter', sans-serif !important;
+ }
+  .btn-hover {
+   transition: all 0.2s ease-in-out;
+ }
+ .btn-hover:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+ }
+ .btn-hover:active {
+   transform: translateY(0);
+ }
+  /* Ocultar e Exibir Telas */
+ .page-screen {
+   display: none;
+ }
+  .page-screen.active {
+   display: block;
+ }
+  .page-screen-flex {
+   display: none;
+ }
+  .page-screen-flex.active {
+   display: flex;
+ }
+  /* Painel de Configurações Lateral (Overlay/Drawer) */
+ #settings-drawer {
+   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+   transform: translateX(100%);
+ }
+  #settings-drawer.open {
+   transform: translateX(0);
+ }
+  #settings-overlay {
+   transition: opacity 0.3s ease-in-out;
+   opacity: 0;
+   pointer-events: none;
+ }
+  #settings-overlay.open {
+   opacity: 1;
+   pointer-events: auto;
+ }
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techadvisors - Painel do Professor</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/prof.css">
+</head>
+<body>
+
+  <header class="home-header">
+    <div class="logo" onclick="window.location.href='professor.html'">
+      TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">PROFESSOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li class="text-yellow-300 font-bold border-b-2 border-yellow-300 pb-0.5" onclick="window.location.href='professor.html'">Portal do Docente</li>
+        <li onclick="window.location.href='turmas.html'">Minhas Turmas</li>
+        <li onclick="window.location.href='relatorios-professor-escuro.html'">Relatórios & Notas</li>
+
+        <li class="user-menu-container">
+          <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>Olá, Professor</span>
+            <span class="text-xs">▼</span>
+          </div>
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">Minha Conta</li>
+              <li onclick="configuracoes()">Configurações</li>
+              <li onclick="logout()" class="logout-item">Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="banner">
+      <h2 id="prof-welcome-title">Bem-vindo, Professor(a)!</h2>
+      <p>
+        Gerencie suas turmas, publique atividades, acompanhe o desempenho e acesse relatórios inclusivos.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card flex flex-col items-center" onclick="window.location.href='turmas.html'">
+        <div class="w-16 h-16 rounded-2xl bg-blue-50 text-[#1565C0] flex items-center justify-center mb-2">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+          </svg>
+        </div>
+        <h3>Minhas Turmas</h3>
+        <p>Acesse a lista de turmas vinculadas e cadastre novas classes.</p>
+      </div>
+
+      <div class="card flex flex-col items-center" onclick="window.location.href='relatorios-professor-escuro.html'">
+        <div class="w-16 h-16 rounded-2xl bg-purple-50 text-purple-700 flex items-center justify-center mb-2">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+        </div>
+        <h3>Relatórios & Notas</h3>
+        <p>Acompanhe médias, frequência e desempenho consolidado por turma.</p>
+      </div>
+
+      <div class="card flex flex-col items-center" onclick="window.location.href='materias.html'">
+        <div class="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-2">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          </svg>
+        </div>
+        <h3>Conteúdos & Resumos</h3>
+        <p>Visualize os materiais didáticos e recursos disponíveis aos alunos.</p>
+      </div>
+
+      <div class="card flex flex-col items-center" onclick="window.location.href='config.html'">
+        <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center mb-2">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </div>
+        <h3>Meu Perfil & Ajustes</h3>
+        <p>Atualize seus dados institucionais e preferências de acessibilidade.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Painel do Professor
+  </footer>
+
+  <script src="../js/prof.js"></script>
+</body>
+</html>

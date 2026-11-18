@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferramentas Assistivas de Apoio — Techadvisors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/ferramentas-assistivas.css">
+</head>
+<body>
+  <!-- BARRA SUPERIOR -->
+  <header class="top-bar">
+    <div class="brand">
+      <span class="brand-book-icon"></span>
+      <span>TECHADVISORS</span>
+      <span class="badge-aluno">ALUNO</span>
+    </div>
+    <nav class="nav-links">
+      <a href="alunos.html" class="nav-item">
+        <span>Portal do Estudante</span>
+      </a>
+      <a href="alunos.html#materias" class="nav-item">
+        <span>Minhas Matérias</span>
+      </a>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="main-content">
+    <div class="top-controls-row">
+      <a href="javascript:history.back()" class="back-btn" id="btn-voltar">
+        <i data-lucide="arrow-left" size="18"></i>
+        <span>Voltar aos Recursos</span>
+      </a>
+
+      <!-- SELETOR SEPARADO ENTRE MODO CLARO E DARK MODE -->
+      <div class="theme-switcher" role="group" aria-label="Modo Visual">
+        <button type="button" class="theme-btn active" data-theme-target="light" id="btn-mode-light">
+          <i data-lucide="sun" size="16"></i>
+          <span>Modo Claro</span>
+        </button>
+        <button type="button" class="theme-btn" data-theme-target="dark" id="btn-mode-dark">
+          <i data-lucide="moon" size="16"></i>
+          <span>Dark Mode</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <i data-lucide="wrench" class="header-icon" size="36"></i>
+      <h1>Ferramentas Assistivas de Apoio</h1>
+      <p>Ajustes práticos de leitura, atenção e estímulo para personalizar seu estudo.</p>
+    </div>
+
+    <!-- ATALHOS RÁPIDOS NO TOPO -->
+    <div class="quick-actions-bar">
+      <div class="quick-title">
+        <i data-lucide="zap" size="18"></i>
+        <span>Ativação Rápida de Apoio:</span>
+      </div>
+      <div class="quick-buttons">
+        <button type="button" class="btn-quick" id="btn-leitura-facil">
+          <i data-lucide="eye" size="16"></i> Modo Leitura Fácil
+        </button>
+        <button type="button" class="btn-quick" id="btn-leitor-global">
+          <i data-lucide="volume-2" size="16"></i> Leitor Global
+        </button>
+        <button type="button" class="btn-quick" id="btn-zoom-125">
+          <i data-lucide="maximize-2" size="16"></i> Zoom 125%
+        </button>
+      </div>
+    </div>
+
+    <!-- CATEGORIA 1: LEITURA E VISÃO -->
+    <section class="category-section">
+      <h2 class="category-title">
+        <i data-lucide="book-open" size="20"></i>
+        <span>Apoio de Leitura (Dislexia e Miopia)</span>
+      </h2>
+      <div class="tools-grid">
+        <!-- 1. Fonte OpenDyslexic -->
+        <article class="tool-card">
+          <div>
+            <div class="tool-header">
+              <div class="icon-wrapper">
+                <i data-lucide="type" size="22"></i>
+              </div>
+              <h3 class="tool-title">Fonte para Dislexia</h3>
+            </div>
+            <p class="tool-desc">Ativa a tipografia OpenDyslexic com pesos na base das letras para prevenir a inversão de caracteres.</p>
+          </div>
+          <div class="control-row">
+            <span class="control-label">OpenDyslexic:</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-dyslexic">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </article>
+
+        <!-- 2. Máscara de Cor / Sobreposição Visual -->
+        <article class="tool-card">
+          <div>
+            <div class="tool-header">
+              <div class="icon-wrapper">
+                <i data-lucide="palette" size="22"></i>
+              </div>
+              <h3 class="tool-title">Filtro de Cor (Síndrome de Irlen)</h3>
+            </div>
+            <p class="tool-desc">Aplica uma camada de cor suave (azul, amarelo, rosa) na tela para acalmar a distorção óptica do texto.</p>
+          </div>
+          <div class="control-row">
+            <span class="control-label">Cor do Filtro:</span>
+            <select class="select-custom" id="sel-irlen">
+              <option value="none" selected>Sem Filtro</option>
+              <option value="blue">Azul Suave</option>
+              <option value="yellow">Amarelo Pastel</option>
+              <option value="green">Verde Menta</option>
+              <option value="pink">Rosa Suave</option>
+            </select>
+          </div>
+        </article>
+
+        <!-- 3. Lupa e Ampliador Magnético -->
+        <article class="tool-card">
+          <div>
+            <div class="tool-header">
+              <div class="icon-wrapper">
+                <i data-lucide="search" size="22"></i>
+              </div>
+              <h3 class="tool-title">Lupa de Detalhes</h3>
+            </div>
+            <p class="tool-desc">Cria uma lente de aumento interativa que amplia palavras e esquemas gráficos ao passar o mouse.</p>
+          </div>
+          <div class="control-row">
+            <span class="control-label">Ativar Lupa:</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-lupa">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </article>
+
+        <!-- 4. Simplificador de Texto por IA -->
+        <article class="tool-card">
+          <div>
+            <div class="tool-header">
+              <div class="icon-wrapper">
+                <i data-lucide="sparkles" size="22"></i>
+              </div>
+              <h3 class="tool-title">Simplificador de Linguagem</h3>
+            </div>
+            <p class="tool-desc">Converte frases longas e acadêmicas em pontos diretos e fáceis de compreender.</p>
+          </div>
+          <div class="control-row">
+            <span class="control-label">Modo Direto:</span>
+            <button type="button" class="btn-action" id="btn-simplificar-ia">Ativar IA</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CATEGORIA 2: FOCO E CONCENTRAÇÃO (TDAH) -->
+    <section class="category-section">
+      <h2 class="category-title">
+        <i data-lucide="target" size="20"></i>
+        <span>Foco e Organização (TDAH)</span>
+      </h2>
+      <div class="tools-grid">
+        <!-- 5. Temporizador Pomodoro -->
+        <article class="tool-card">
+          <div>
+            <div class="tool-header">
+              <div class="icon-wrapper">
+                <i data-lucide="timer" size="22"></i>
+              </div>
+              <h3 class="tool-title">Cronômetro de Foco</h3>
+            </div>
+            <p class="tool-desc">Divide as leituras em blocos curtos com alertas amigáveis para pausas de descanso mental.</p>
+          </div>
+          <div class="control-row">
+            <span class="control-label">Ritmo:</span>
+            <div class="inline-controls">
+              <select class="select-custom" id="sel-pomodoro">
+                <option value="15">15 min Foco / 3 min Pausa</option>
+                <option value="25" selected>25 min Foco / 5 min Pausa</option>
+              </select>
+              <button type="button" class="btn-action" id="btn-pomodoro-start">Iniciar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6. Som Branco & Ruído Rosa -->
+        <article class="tool-card">
+          <div>
+            <div class="tool-header">
+              <div class="icon-wrapper">
+                <i data-lucide="headphones" size="22"></i>
+              </div>
+              <h3 class="tool-title">Sons de Foco (Ruído Rosa)</h3>
+            </div>
+            <p class="tool-desc">Gerador de frequências suaves de fundo para mascarar ruídos do ambiente e focar nos estudos.</p>
+          </div>
+          <div class="control-row">
+            <span class="control-label">Áudio de Fundo:</span>
+            <select class="select-custom" id="sel-som-foco">
+              <option value="off" selected>Desativado</option>
+              <option value="rain">Chuva Suave</option>
+              <option value="pink">Ruído Rosa (TDAH)</option>
+              <option value="sea">Ondas do Mar</option>
+            </select>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CATEGORIA 3: SUPORTE COGNITIVO E SENSORIAL (AUTISMO/TEA) -->
+    <section class="category-section">
+      <h2 class="category-title">
+        <i data-lucide="heart" size="20"></i>
+        <span>Suporte Cognitivo e Sensorial (Autismo / TEA)</span>
+      </h2>
+      <div class="tools-grid">
+        <!-- 7. Dicionário de Pictogramas -->
+        <article class="tool-card">
+          <div>
+            <div class="tool-header">
+              <div class="icon-wrapper">
+                <i data-lucide="image" size="22"></i>
+              </div>
+              <h3 class="tool-title">Dicionário com Imagens</h3>
+            </div>
+            <p class="tool-desc">Mostra ilustrações e pictogramas explicativos ao tocar em termos técnicos ou abstratos.</p>
+          </div>
+          <div class="control-row">
+            <span class="control-label">Pictogramas:</span>
+            <label class="switch">
+              <input type="checkbox" id="chk-pictogramas" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </article>
+
+        <!-- 8. Síntese Visual em Mapas Mentais -->
+        <article class="tool-card">
+          <div>
+            <div class="tool-header">
+              <div class="icon-wrapper">
+                <i data-lucide="git-fork" size="22"></i>
+              </div>
+              <h3 class="tool-title">Resumos em Esquemas Visuais</h3>
+            </div>
+            <p class="tool-desc">Converte os resumos e conteúdos em fluxogramas estruturados para facilitar a associação visual.</p>
+          </div>
+          <div class="control-row">
+            <span class="control-label">Exibir Mapas:</span>
+            <button type="button" class="btn-action" id="btn-gerar-mapa">Gerar Mapa</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- OVERLAY DO FILTRO DE IRLEN E FEEDBACK -->
+  <div id="irlen-overlay" class="irlen-overlay" aria-hidden="true"></div>
+  <div id="assistiva-toast" class="assistiva-toast" role="status" aria-live="polite"></div>
+
+  <!-- RODAPÉ -->
+  <footer class="footer-bar">
+    © 2026 Techadvisors • Painel do Aluno
+  </footer>
+
+  <!-- BOTÃO FLUTUANTE (ALTERNA RAPIDAMENTE ENTRE CLARO E ESCURO) -->
+  <button type="button" class="floating-settings" id="btn-fab-theme" aria-label="Alternar Tema Claro/Escuro" title="Alternar Modo Claro / Dark Mode">
+    <i data-lucide="settings" size="20"></i>
+  </button>
+
+  <script src="../js/ferramentas-assistivas.js"></script>
+  <script src="../js/assistiva-global.js"></script>
+</body>
+</html>

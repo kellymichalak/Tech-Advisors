@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techadvisors - Relatórios & Notas (Professor - Modo
+Escuro)</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Fonts -->
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;70
+0;800;900&display=swap" rel="stylesheet">
+<!-- Conexão CSS Externa -->
+<link rel="stylesheet" href="../css/admin.css">
+<link rel="stylesheet" href="../css/config.css">
+<style>
+/*
+=====================================================================
+MODO ESCURO AZUL — ACABAMENTO SUAVE, MODERNO E ELEGANTE (SEM BORDAS
+DURAS)
+===================================================================== */
+html, body#pagina-relatorios-escuro {
+background: #070c18 !important;
+background-color: #070c18 !important;
+color: #e2e8f0 !important;
+font-family: 'Poppins', sans-serif !important;
+filter: none !important;
+}
+/* Topo e Rodapé em Azul-Marinho Profundo e Limpo */
+body#pagina-relatorios-escuro header.home-header,
+body#pagina-relatorios-escuro footer.home-footer {
+
+
+background: linear-gradient(90deg, #13284f 0%, #193669 100%)
+!important;
+border-color: rgba(147, 197, 253, 0.16) !important;
+color: #f1f5f9 !important;
+filter: none !important;
+}
+/* Banner Principal: azul elegante com brilho suave */
+body#pagina-relatorios-escuro .banner {
+background: linear-gradient(135deg, #153875 0%, #1e4fa3 60%, #235ec2
+100%) !important;
+border: 1px solid rgba(147, 197, 253, 0.25) !important;
+box-shadow:
+0 12px 30px rgba(15, 38, 82, 0.55),
+inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+filter: none !important;
+}
+/* Cartões: borda translúcida super fina + brilho de luz no topo +
+sombra profunda */
+body#pagina-relatorios-escuro .panel-box {
+background: linear-gradient(180deg, #111c34 0%, #0d1629 100%)
+!important;
+border: 1px solid rgba(147, 197, 253, 0.14) !important;
+border-radius: 1rem !important;
+box-shadow:
+0 10px 25px rgba(2, 6, 23, 0.55),
+inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+transition: transform 0.2s ease, border-color 0.2s ease, box-shadow
+0.2s ease;
+}
+body#pagina-relatorios-escuro .panel-box:hover {
+border-color: rgba(147, 197, 253, 0.28) !important;
+box-shadow:
+0 14px 30px rgba(2, 6, 23, 0.65),
+inset 0 1px 0 rgba(255, 255, 255, 0.11) !important;
+}
+/* Inputs e Selects discretos */
+
+
+body#pagina-relatorios-escuro .custom-input {
+background-color: #080e1c !important;
+border: 1px solid rgba(147, 197, 253, 0.16) !important;
+color: #f8fafc !important;
+transition: all 0.2s;
+}
+body#pagina-relatorios-escuro .custom-input::placeholder {
+color: #64748b !important;
+}
+body#pagina-relatorios-escuro .custom-input:focus {
+border-color: rgba(96, 165, 250, 0.55) !important;
+box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+outline: none;
+}
+/* Tabela de Alunos e Quizzes limpa e sutil */
+body#pagina-relatorios-escuro .custom-table {
+width: 100%;
+border-collapse: collapse;
+}
+body#pagina-relatorios-escuro .table-wrapper-outline {
+border: 1px solid rgba(147, 197, 253, 0.12) !important;
+border-radius: 0.75rem !important;
+overflow-x: auto;
+}
+body#pagina-relatorios-escuro .custom-table th {
+background-color: rgba(23, 39, 71, 0.75) !important;
+color: #93c5fd !important;
+text-align: left;
+padding: 13px 14px;
+font-size: 0.85rem;
+border-bottom: 1px solid rgba(147, 197, 253, 0.12) !important;
+}
+body#pagina-relatorios-escuro .custom-table td {
+padding: 13px 14px;
+
+
+border-bottom: 1px solid rgba(147, 197, 253, 0.08) !important;
+color: #e2e8f0 !important;
+font-size: 0.88rem;
+vertical-align: middle;
+}
+body#pagina-relatorios-escuro .custom-table tr:last-child td {
+border-bottom: none !important;
+}
+body#pagina-relatorios-escuro .custom-table tr:hover {
+background-color: rgba(30, 58, 110, 0.28) !important;
+}
+/* Barras de Progresso */
+body#pagina-relatorios-escuro .progress-bg {
+background-color: #070c18 !important;
+border: 1px solid rgba(147, 197, 253, 0.1) !important;
+border-radius: 999px;
+overflow: hidden;
+}
+/* Menu Dropdown do Professor */
+body#pagina-relatorios-escuro #userMenu {
+background-color: #112142 !important;
+border: 1px solid rgba(147, 197, 253, 0.22) !important;
+box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6) !important;
+}
+body#pagina-relatorios-escuro #userMenu li { color: #f1f5f9 !important;
+}
+body#pagina-relatorios-escuro #userMenu li:hover { background-color:
+rgba(59, 130, 246, 0.2) !important; color: #93c5fd !important; }
+body#pagina-relatorios-escuro #userMenu li.logout-item {
+border-top-color: rgba(147, 197, 253, 0.12) !important; color: #fca5a5
+!important; }
+body#pagina-relatorios-escuro #userMenu li.logout-item:hover {
+background-color: rgba(239, 68, 68, 0.18) !important; }
+/* Drawer de Configurações */
+
+
+body#pagina-relatorios-escuro #settings-drawer {
+background-color: #0a1122 !important;
+color: #f8fafc !important;
+border-left: 1px solid rgba(147, 197, 253, 0.15) !important;
+box-shadow: -8px 0 28px rgba(0, 0, 0, 0.65) !important;
+}
+body#pagina-relatorios-escuro #settings-drawer div.bg-slate-800 {
+background-color: #101a30 !important;
+border: 1px solid rgba(147, 197, 253, 0.14) !important;
+}
+body#pagina-relatorios-escuro #settings-drawer label,
+body#pagina-relatorios-escuro #settings-drawer span {
+color: #cbd5e1 !important;
+}
+body#pagina-relatorios-escuro #settings-drawer button.bg-slate-900 {
+background-color: #070c18 !important;
+border: 1px solid rgba(147, 197, 253, 0.16) !important;
+color: #f8fafc !important;
+}
+body#pagina-relatorios-escuro #settings-drawer
+button.bg-slate-900:hover {
+background-color: #162545 !important;
+}
+/* Botão Flutuante de Configurações */
+body#pagina-relatorios-escuro .fab-btn {
+background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)
+!important;
+border: 1px solid rgba(191, 219, 254, 0.3) !important;
+box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45) !important;
+}
+body#pagina-relatorios-escuro .fab-btn:hover { filter: brightness(1.1)
+!important; }
+#toast-notification { transition: all 0.35s ease-in-out; }
+
+
+</style>
+</head>
+<body id="pagina-relatorios-escuro">
+<!-- TOAST NOTIFICAÇÃO TEMPORÁRIA -->
+<div id="toast-notification" class="fixed top-5 right-5 z-[70] transform
+translate-x-full opacity-0 bg-emerald-600 text-white px-5 py-3 rounded-xl
+shadow-2xl flex items-center gap-3">
+
+✅</span>
+
+<span id="toast-icon" class="text-xl">
+
+<span id="toast-message" class="text-sm font-semibold">Ação realizada
+com sucesso!</span>
+</div>
+<!-- HEADER -->
+<header class="home-header">
+<div class="logo" onclick="window.location.href='professor.html'">
+
+📘 TECHADVISORS <span class="text-xs bg-blue-400/25 text-blue-100
+
+border border-blue-300/35 px-2.5 py-1 rounded ml-2 font-bold
+tracking-wide">PROFESSOR</span>
+</div>
+<nav>
+<ul>
+
+🏠 Painel
+
+<li onclick="window.location.href='professor.html'">
+Docente</li>
+
+🧩
+
+<li onclick="window.location.href='atividades-professor.html'">
+Quizzes & Atividades</li>
+<li onclick="window.location.href='testes.html'" style="color:
+
+📊 Relatórios & Notas</li>
+<li onclick="alert('Área de Chatbot em desenvolvimento')">🤖
+
+#93c5fd !important;" class="font-bold">
+Chatbot</li>
+
+<!-- PROFESSOR DROPDOWN -->
+<li class="user-menu-container relative">
+<div id="prof-name-nav" onclick="toggleUserMenu(event)"
+class="font-bold text-white flex items-center gap-1 select-none
+cursor-pointer bg-blue-950/70 hover:bg-blue-900 border border-blue-300/35
+px-3 py-1.5 rounded-lg transition-colors">
+
+👨‍🏫 Olá, Prof. Carlos</span>
+
+<span>
+
+<span class="text-xs text-blue-200">▼</span>
+</div>
+
+
+<div id="userMenu" class="user-dropdown hidden absolute right-0
+mt-2 w-48 rounded-md py-1 z-50">
+<ul class="flex flex-col m-0 p-0 list-none">
+<li onclick="minhaConta()" class="px-4 py-2 text-sm
+cursor-pointer flex items-center gap-2 w-full text-left">
+Conta</li>
+
+👤 Minha
+
+<li onclick="toggleSettingsDrawer(true)" class="px-4 py-2
+text-sm cursor-pointer flex items-center gap-2 w-full text-left">
+Configurações</li>
+
+⚙️
+
+<li onclick="logout()" class="logout-item px-4 py-2 text-sm
+cursor-pointer flex items-center gap-2 w-full text-left">
+</ul>
+
+🚪 Sair</li>
+
+</div>
+</li>
+</ul>
+</nav>
+</header>
+<!-- CONTAINER -->
+<div class="container">
+<!-- BANNER TOPO DA PÁGINA -->
+<div class="banner flex flex-col md:flex-row md:items-center
+justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="text-3xl">
+
+📊</span>
+
+<h2 class="m-0 text-white">Relatórios & Notas</h2>
+</div>
+<p class="m-0 text-blue-100">
+Acompanhe o ritmo individual de aprendizado, o desempenho
+automático nos quizzes e gerencie adaptações pedagógicas para cada
+estudante.
+</p>
+</div>
+<div class="flex gap-2 shrink-0">
+<button onclick="exportarRelatorioProfessor()" class="bg-white/15
+hover:bg-white/25 border border-white/25 text-white text-xs font-semibold
+px-4 py-2.5 rounded-lg transition-colors flex items-center gap-2">
+
+📥 Exportar Relatório (CSV)
+
+</button>
+
+
+<button onclick="window.print()" class="bg-[#2563eb]
+hover:bg-blue-500 text-white text-xs font-bold px-4 py-2.5 rounded-lg
+transition-colors flex items-center gap-2 shadow">
+
+🖨️ Imprimir Relatório
+
+</button>
+</div>
+</div>
+
+<!-- BARRA DE SELEÇÃO DE TURMA DO PROFESSOR -->
+<div class="panel-box p-4 mt-6 flex flex-col md:flex-row items-center
+justify-between gap-4">
+<div class="flex items-center gap-2 text-sm font-bold
+text-slate-100">
+
+🏫 Turma & Filtro de Acompanhamento:</span>
+
+<span>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full md:w-auto
+flex-1 max-w-xl">
+<select id="selectTurmaProfessor"
+onchange="atualizarPainelProfessor()" class="custom-input p-2.5 rounded-lg
+text-xs font-semibold">
+<option value="P1">1° Ano A • Ensino Médio Regular
+(Matemática)</option>
+<option value="P2">2° Ano A • Itinerário Exatas
+(Matemática)</option>
+<option value="P3">3° Ano A • Pré-Vestibular Intensivo
+(Matemática)</option>
+</select>
+<select id="selectStatusAluno"
+onchange="atualizarPainelProfessor()" class="custom-input p-2.5 rounded-lg
+text-xs font-medium">
+<option value="todos">Todos os Estudantes</option>
+<option value="aprovado">Bom Ritmo (Média ≥ 7,0)</option>
+<option value="atencao">Em Atenção (6,0 a 6,9)</option>
+<option value="reforco">Precisa de Apoio (&lt; 6,0)</option>
+</select>
+</div>
+</div>
+<!-- CARDS DE KPIs DA TURMA SELECIONADA -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
+
+
+<div class="panel-box p-5 flex items-center justify-between">
+<div>
+<span class="text-xs font-semibold text-slate-400 uppercase
+tracking-wider">Média nos Quizzes</span>
+<div id="kpi-media-turma" class="text-2xl font-extrabold
+text-white mt-1">7,3</div>
+<span class="text-[11px] font-semibold text-emerald-400 flex
+items-center gap-1 mt-1">▲ Correção automática</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-blue-500/20 border
+border-blue-400/35 text-blue-300 flex items-center justify-center
+
+🧩</div>
+
+text-2xl">
+
+</div>
+
+<div class="panel-box p-5 flex items-center justify-between">
+<div>
+<span class="text-xs font-semibold text-slate-400 uppercase
+tracking-wider">Progresso nos Estudos</span>
+<div id="kpi-progresso-turma" class="text-2xl font-extrabold
+text-white mt-1">82%</div>
+<span class="text-[11px] font-semibold text-slate-400 mt-1
+block">Quizzes e trilhas concluídas</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-emerald-500/20 border
+border-emerald-400/35 text-emerald-300 flex items-center justify-center
+
+✅</div>
+
+text-2xl">
+
+</div>
+
+<div class="panel-box p-5 flex items-center justify-between">
+<div>
+<span class="text-xs font-semibold text-slate-400 uppercase
+tracking-wider">Estudantes na Turma</span>
+<div id="kpi-total-alunos" class="text-2xl font-extrabold
+text-white mt-1">6</div>
+<span id="kpi-turma-turno" class="text-[11px] font-semibold
+text-slate-400 mt-1 block">Matemática • Matutino</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-sky-500/20 border
+border-sky-400/35 text-sky-300 flex items-center justify-center
+
+🎓</div>
+
+text-2xl">
+
+
+</div>
+<div class="panel-box p-5 flex items-center justify-between">
+<div>
+<span class="text-xs font-semibold text-slate-400 uppercase
+tracking-wider">Apoio Pedagógico</span>
+<div id="kpi-reforco" class="text-2xl font-extrabold
+text-amber-300 mt-1">2</div>
+<span class="text-[11px] font-semibold text-slate-400 mt-1
+block">Média &lt; 6,5 ou ritmo lento</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-amber-500/20 border
+border-amber-400/35 text-amber-300 flex items-center justify-center
+
+🤝</div>
+
+text-2xl">
+
+</div>
+</div>
+
+<!-- GRÁFICOS DE DESEMPENHO POR CONTEÚDO E DISTRIBUIÇÃO DE
+APROVEITAMENTO -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+<div class="panel-box p-6 lg:col-span-2 flex flex-col
+justify-between">
+<div class="flex items-center justify-between border-b
+border-blue-900/70 pb-3 mb-4">
+<div>
+<h3 class="text-base font-bold text-slate-100 m-0">Taxa de
+Acertos por Tópico / Quiz</h3>
+<p class="text-xs text-slate-400 m-0">Desempenho médio da turma
+nos quizzes de cada assunto trabalhado</p>
+</div>
+<span class="text-xs font-semibold bg-blue-500/20 border
+border-blue-400/35 text-blue-200 px-2.5 py-1 rounded-md">Escala 0 a
+10</span>
+</div>
+<div id="grafico-topicos-professor" class="flex flex-col gap-4
+my-auto"></div>
+<div class="mt-5 pt-3 border-t border-blue-900/70 text-xs
+text-slate-400 flex justify-between">
+
+
+💡 Tópicos abaixo de 6,5 indicam oportunidade de liberar
+
+<span>
+
+quizzes em etapas menores e apoio visual.</span>
+</div>
+</div>
+
+<div class="panel-box p-6 lg:col-span-1 flex flex-col
+justify-between">
+<div class="border-b border-blue-900/70 pb-3 mb-4">
+<h3 class="text-base font-bold text-slate-100 m-0">Faixas de
+Aprendizado</h3>
+<p class="text-xs text-slate-400 m-0">Distribuição dos alunos
+conforme notas dos quizzes</p>
+</div>
+<div id="resumo-faixas-notas" class="flex flex-col gap-3
+my-auto"></div>
+<div class="mt-5 pt-3 border-t border-blue-900/70 text-xs
+text-slate-400 flex justify-between">
+<span>Sincronizado automaticamente</span>
+<span class="font-semibold text-blue-300">Techadvisors
+Quizzes</span>
+</div>
+</div>
+</div>
+<!-- TABELA DE PROGRESSO E DESEMPENHO NOS QUIZZES POR ALUNO -->
+<div class="panel-box p-6 mt-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between
+gap-3 mb-4 border-b border-blue-900/70 pb-3">
+<div>
+<h3 class="text-lg font-bold text-slate-100 m-0">Progresso
+Individual & Desempenho nos Quizzes</h3>
+<p class="text-xs text-slate-400 m-0">Resultados registrados
+automaticamente. Clique em "Acompanhar" para ver os quizzes e gerenciar
+adaptações.</p>
+</div>
+<input type="text" id="buscaAlunoProfessor"
+
+🔍 Buscar estudante por
+
+oninput="atualizarPainelProfessor()" placeholder="
+
+nome..." class="custom-input p-2 px-3 rounded-lg text-xs w-full sm:w-72">
+
+
+</div>
+<div class="table-wrapper-outline">
+<table class="custom-table" id="tabelaAlunosProfessor">
+<thead>
+<tr>
+<th>Estudante</th>
+<th>Progresso</th>
+<th>Quizzes Feitos</th>
+<th>Atividades</th>
+<th>Média Quizzes</th>
+<th>Nota Geral</th>
+<th>Situação</th>
+<th class="text-center">Ações</th>
+</tr>
+</thead>
+<tbody id="tabelaAlunosProfessorBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- MODAL DETALHES DO ESTUDANTE & SUPORTE PEDAGÓGICO -->
+<div id="modalDetalhesAlunoOverlay" class="fixed inset-0 bg-slate-950/80
+backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+<div class="panel-box w-full max-w-2xl p-6 relative shadow-2xl
+max-h-[90vh] overflow-y-auto">
+<div class="flex justify-between items-center border-b
+border-blue-900/70 pb-3 mb-4">
+<div>
+<h3 id="modalAlunoNome" class="text-lg font-bold text-white
+m-0">Nome do Aluno</h3>
+<span id="modalTurmaDisciplina" class="text-xs text-slate-400">1°
+Ano A • Matemática</span>
+</div>
+<button onclick="fecharModalAluno()" class="text-slate-400
+hover:text-white text-xl font-bold">✕</button>
+</div>
+<!-- Resumo de Desempenho -->
+
+
+<div id="modalAlunoResumoCards" class="grid grid-cols-3 gap-3
+mb-4"></div>
+<!-- Histórico de Quizzes Realizados pelo Aluno -->
+<div class="mb-4">
+<h4 class="text-xs font-bold uppercase tracking-wider
+text-slate-300 mb-2">Histórico de Quizzes & Atividades na Plataforma</h4>
+<div class="table-wrapper-outline bg-[#080d1a]">
+<table class="custom-table">
+<thead>
+<tr>
+<th>Atividade / Quiz</th>
+<th>Tipo</th>
+<th>Acertos</th>
+<th>Nota</th>
+</tr>
+</thead>
+<tbody id="modalTabelaQuizzesAluno"></tbody>
+</table>
+</div>
+</div>
+<!-- Ações de Suporte & Adaptação para Neurodivergência -->
+<div class="bg-[#080d1a] border border-[#33599e] rounded-xl p-4
+space-y-3">
+<div>
+<span class="block text-xs font-bold text-blue-300">
+
+🧩 Adaptações
+
+Ativas para este Estudante (clique para ativar ou desativar)</span>
+<p class="text-[11px] text-slate-400 m-0">Ao clicar em um
+recurso, será exibida uma confirmação antes de aplicar:</p>
+</div>
+
+<div id="botoesAdaptacoesContainer" class="flex flex-wrap gap-2">
+<!-- Preenchido via JS com estado ativo/inativo -->
+</div>
+<!-- Campo para Criar ou Editar Orientação -->
+<div class="pt-2 border-t border-blue-900/70">
+<label id="labelFormOrientacao" class="block text-xs font-bold
+text-slate-200 mb-1">
+
+💬 Enviar Orientação Individual Passo a Passo</label>
+
+
+<div class="flex gap-2">
+<input type="text" id="inputRecomendacaoEstudo"
+class="custom-input flex-1 p-2 rounded-lg text-xs" placeholder="Ex: 1)
+Revisar o resumo visual de Trigonometria; 2) Refazer o Quiz em etapas...">
+<button type="button" id="btnSalvarOrientacao"
+onclick="enviarRecomendacaoAluno()" class="bg-[#2563eb] hover:bg-blue-500
+text-white text-xs px-3.5 py-2 rounded-lg font-semibold shrink-0">
+Enviar
+</button>
+<button type="button" id="btnCancelarEdicaoOrientacao"
+onclick="cancelarEdicaoOrientacao()" class="hidden bg-slate-700
+hover:bg-slate-600 text-slate-200 text-xs px-3 py-2 rounded-lg font-medium
+shrink-0">
+Cancelar
+</button>
+</div>
+</div>
+<!-- Lista de Orientações já Enviadas (com Editar e Remover) -->
+<div class="pt-2">
+<span class="block text-[11px] font-bold uppercase tracking-wider
+text-slate-400 mb-1.5">
+
+📋 Orientações Enviadas para este Estudante</span>
+
+<div id="listaOrientacoesEnviadas" class="space-y-2">
+<!-- Preenchido via JS -->
+</div>
+</div>
+</div>
+
+<div class="flex justify-end mt-5 pt-3 border-t border-blue-900/70">
+<button onclick="fecharModalAluno()" class="bg-slate-700
+hover:bg-slate-600 text-slate-200 text-xs px-4 py-2 rounded-lg
+font-medium">Fechar</button>
+</div>
+</div>
+</div>
+<!-- MODAL DE CONFIRMAÇÃO CENTRAL PARA ATIVAR / DESATIVAR RECURSO -->
+<div id="modalConfirmacaoRecursoOverlay" class="fixed inset-0
+bg-slate-950/85 backdrop-blur-sm z-[60] hidden flex items-center
+justify-center p-4">
+
+
+<div class="panel-box w-full max-w-md p-6 relative shadow-2xl
+text-center">
+<div id="confirmacaoIcone" class="w-12 h-12 rounded-full
+bg-blue-500/20 text-blue-300 flex items-center justify-center text-2xl
+mx-auto mb-3">
+
+🧩
+
+</div>
+<h3 id="confirmacaoTitulo" class="text-base font-bold text-white m-0
+mb-2">Confirmar Ação</h3>
+<p id="confirmacaoDescricao" class="text-xs text-slate-300 m-0 mb-5
+leading-relaxed">
+Deseja realmente aplicar esta alteração para o estudante?
+</p>
+<div class="flex items-center justify-center gap-3">
+<button type="button" onclick="fecharModalConfirmacaoRecurso()"
+class="bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs
+font-semibold px-4 py-2.5 rounded-lg transition-colors">
+Cancelar
+</button>
+<button type="button" id="btnConfirmarAcaoRecurso"
+onclick="confirmarAlternanciaRecurso()" class="bg-[#2563eb]
+hover:bg-blue-500 text-white text-xs font-bold px-5 py-2.5 rounded-lg
+transition-colors">
+Confirmar
+</button>
+</div>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="home-footer">
+© 2026 Techadvisors Painel do Professor
+</footer>
+<!-- Botão Flutuante de Configurações -->
+<button onclick="toggleSettingsDrawer(true)" title="Configurações e
+Acessibilidade" class="fab-btn fixed bottom-6 right-6 z-40 text-white p-4
+rounded-full flex items-center justify-center transition-all
+hover:scale-105 active:scale-95">
+
+⚙️
+
+
+</button>
+<div id="settings-overlay" onclick="toggleSettingsDrawer(false)"
+class="fixed inset-0 bg-black/60 z-50 hidden"></div>
+<aside id="settings-drawer" class="fixed top-0 right-0 h-full w-full
+max-w-sm z-50 flex flex-col p-6 overflow-y-auto hidden">
+<div class="flex items-center justify-between mb-6 border-b
+border-blue-900/70 pb-4">
+<h2 class="text-lg font-bold text-slate-100">Configurações</h2>
+<button onclick="toggleSettingsDrawer(false)" class="text-slate-400
+hover:text-white text-xl font-bold">✕</button>
+</div>
+<div class="mb-5 bg-slate-800 p-4 rounded-xl">
+<div class="flex justify-between items-center mb-2">
+<label class="text-xs font-semibold">Tamanho da Fonte</label>
+<span id="font-size-label" class="text-xs font-mono font-bold
+text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded">100%</span>
+</div>
+<div class="flex gap-2">
+<button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5
+bg-slate-900 border rounded text-xs font-bold transition-colors">A
+-</button>
+<button onclick="resetFontSize()" class="px-3 py-1.5 bg-slate-900
+border rounded text-xs font-medium transition-colors">Normal</button>
+<button onclick="changeFontSize(0.1)" class="flex-1 py-1.5
+bg-slate-900 border rounded text-xs font-bold transition-colors">A
++</button>
+</div>
+</div>
+<div class="mb-5 bg-slate-800 p-4 rounded-xl">
+<div class="flex justify-between items-center mb-1">
+<label for="brightness-range" class="text-xs font-semibold">Brilho
+da Tela</label>
+<span id="brightness-label" class="text-xs font-mono font-bold
+text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded">100%</span>
+</div>
+<input type="range" id="brightness-range" min="30" max="100"
+value="100" step="5" oninput="updateBrightness(this.value)" class="w-full
+accent-blue-500 cursor-pointer">
+</div>
+
+
+<div class="mb-5 bg-slate-800 p-4 rounded-xl">
+<div class="flex justify-between items-center mb-1">
+<label for="saturation-range" class="text-xs
+font-semibold">Saturação de Cores</label>
+<span id="saturation-label" class="text-xs font-mono font-bold
+text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded">100%</span>
+</div>
+<input type="range" id="saturation-range" min="0" max="150"
+value="100" step="5" oninput="updateSaturation(this.value)" class="w-full
+accent-blue-500 cursor-pointer">
+</div>
+<div class="mb-6 flex items-center justify-between bg-slate-800 p-4
+rounded-xl">
+<span class="text-xs font-semibold">Modo Alto Contraste</span>
+<input type="checkbox" id="toggle-contrast"
+onchange="toggleHighContrast(this.checked)" class="w-4 h-4 accent-blue-500
+cursor-pointer">
+</div>
+<button onclick="resetAllSettings()" class="text-xs font-semibold
+text-blue-400 hover:text-blue-300 underline mt-auto text-center
+pt-4">Restaurar Padrões</button>
+</aside>
+<!-- JAVASCRIPT -->
+<script>
+const opcoesAdaptacoes = [
+
+⏱️ Tempo Estendido', desc: 'Aumenta o tempo
+limite em quizzes cronometrados.' },
+{ id: 'etapas', label: '🪜 Quiz em Etapas Curtas', desc: 'Divide
+quizzes longos em blocos menores para reduzir sobrecarga.' },
+{ id: 'visual', label: '🎨 Apoio Visual', desc: 'Exibe esquemas
+visuais e destaques nos enunciados.' },
+{ id: 'leitura', label: '🔊 Leitura Guiada', desc: 'Habilita suporte
+{ id: 'tempo', label: '
+
+de leitura pausada e destaque de linha.' }
+];
+const turmasProfessor = [
+{
+id: 'P1',
+
+titulo: '1° Ano A • Ensino Médio Regular',
+
+
+disciplina: 'Matemática',
+turno: 'Matutino',
+evolucaoConteudos: [
+{ topico: 'Quiz: Funções Afins', media: 8.4 },
+{ topico: 'Quiz: Equações do 2º Grau', media: 7.6 },
+{ topico: 'Quiz: Geometria Plana', media: 8.1 },
+{ topico: 'Quiz: Trigonometria Básica', media: 6.3 }
+],
+alunos: [
+{
+id: 101,
+nome: 'Ana Clara Mendes',
+progresso: 96,
+quizzesFeitos: '6/6',
+outrasAtividades: '2/2',
+mediaQuizzes: 8.9,
+notaGeral: 9.0,
+resumo: '92% de acertos nos quizzes da unidade',
+adaptacoesAtivas: ['visual'],
+orientacoes: [
+{ id: 1, texto: 'Continuar utilizando os mapas mentais antes
+dos quizzes de revisão.', data: 'Hoje, 08:30' }
+],
+historico: [
+{ titulo: 'Quiz: Funções Afins', tipo: 'Quiz', acertos:
+'9/10', nota: 9.0 },
+{ titulo: 'Quiz: Equações do 2º Grau', tipo: 'Quiz', acertos:
+'8/10', nota: 8.0 },
+{ titulo: 'Desafio Rápido: Geometria', tipo: 'Quiz', acertos:
+'10/10', nota: 10.0 },
+{ titulo: 'Trilha Guiada 01', tipo: 'Atividade', acertos:
+'Concluída', nota: 9.2 }
+]
+},
+{
+id: 102,
+nome: 'Bruno Henrique Souza',
+progresso: 84,
+quizzesFeitos: '5/6',
+outrasAtividades: '2/2',
+
+
+mediaQuizzes: 7.5,
+notaGeral: 7.6,
+resumo: 'Bom ritmo • 1 quiz de revisão pendente',
+adaptacoesAtivas: ['leitura'],
+orientacoes: [],
+historico: [
+{ titulo: 'Quiz: Funções Afins', tipo: 'Quiz', acertos:
+'8/10', nota: 8.0 },
+{ titulo: 'Quiz: Equações do 2º Grau', tipo: 'Quiz', acertos:
+'7/10', nota: 7.0 },
+{ titulo: 'Trilha Guiada 01', tipo: 'Atividade', acertos:
+'Concluída', nota: 7.8 }
+]
+},
+{
+id: 103,
+nome: 'Camila Oliveira Lima',
+progresso: 92,
+quizzesFeitos: '6/6',
+outrasAtividades: '2/2',
+mediaQuizzes: 8.7,
+notaGeral: 8.7,
+resumo: 'Alta precisão nos quizzes em etapas curtas',
+adaptacoesAtivas: ['etapas'],
+orientacoes: [],
+historico: [
+{ titulo: 'Quiz: Funções Afins', tipo: 'Quiz', acertos:
+'9/10', nota: 9.0 },
+{ titulo: 'Quiz: Trigonometria Básica', tipo: 'Quiz',
+acertos: '8/10', nota: 8.0 },
+{ titulo: 'Trilha Guiada 01', tipo: 'Atividade', acertos:
+'Concluída', nota: 9.0 }
+]
+},
+{
+id: 104,
+nome: 'Diego Ferreira Santos',
+progresso: 62,
+quizzesFeitos: '4/6',
+outrasAtividades: '1/2',
+
+
+mediaQuizzes: 5.2,
+notaGeral: 5.4,
+resumo: 'Abaixo de 60% de acertos em Trigonometria',
+adaptacoesAtivas: ['tempo', 'etapas'],
+orientacoes: [
+{ id: 2, texto: 'Passo 1: Ler o guia visual de triângulo
+retângulo. Passo 2: Fazer o Quiz de Revisão em 2 partes.', data: 'Ontem,
+14:15' }
+],
+historico: [
+{ titulo: 'Quiz: Funções Afins', tipo: 'Quiz', acertos:
+'6/10', nota: 6.0 },
+{ titulo: 'Quiz: Trigonometria Básica', tipo: 'Quiz',
+acertos: '4/10', nota: 4.0 },
+{ titulo: 'Trilha Guiada 01', tipo: 'Atividade', acertos:
+'Concluída', nota: 6.0 }
+]
+},
+{
+id: 105,
+nome: 'Eduarda Costa Pereira',
+progresso: 88,
+quizzesFeitos: '5/6',
+outrasAtividades: '2/2',
+mediaQuizzes: 7.8,
+notaGeral: 7.9,
+resumo: 'Evolução constante a cada novo quiz',
+adaptacoesAtivas: [],
+orientacoes: [],
+historico: [
+{ titulo: 'Quiz: Funções Afins', tipo: 'Quiz', acertos:
+'8/10', nota: 8.0 },
+{ titulo: 'Quiz: Geometria Plana', tipo: 'Quiz', acertos:
+'8/10', nota: 8.0 },
+{ titulo: 'Trilha Guiada 01', tipo: 'Atividade', acertos:
+'Concluída', nota: 8.1 }
+]
+},
+{
+id: 106,
+
+
+nome: 'Felipe Martins Rocha',
+progresso: 70,
+quizzesFeitos: '4/6',
+outrasAtividades: '2/2',
+mediaQuizzes: 6.0,
+notaGeral: 6.1,
+resumo: 'Precisa praticar mais quizzes de equações',
+adaptacoesAtivas: ['tempo'],
+orientacoes: [],
+historico: [
+{ titulo: 'Quiz: Funções Afins', tipo: 'Quiz', acertos:
+'7/10', nota: 7.0 },
+{ titulo: 'Quiz: Equações do 2º Grau', tipo: 'Quiz', acertos:
+'5/10', nota: 5.0 },
+{ titulo: 'Trilha Guiada 01', tipo: 'Atividade', acertos:
+'Concluída', nota: 6.5 }
+]
+}
+]
+},
+{
+id: 'P2',
+titulo: '2° Ano A • Itinerário Exatas',
+disciplina: 'Matemática',
+turno: 'Matutino',
+evolucaoConteudos: [
+{ topico: 'Quiz: Matrizes e Determinantes', media: 8.7 },
+{ topico: 'Quiz: Sistemas Lineares', media: 8.2 },
+{ topico: 'Quiz: Análise Combinatória', media: 7.5 },
+{ topico: 'Quiz: Probabilidade', media: 7.9 }
+],
+alunos: [
+{
+id: 201,
+nome: 'Gabriel Almeida Nunes',
+progresso: 98,
+quizzesFeitos: '8/8',
+outrasAtividades: '2/2',
+mediaQuizzes: 9.4,
+notaGeral: 9.4,
+
+
+resumo: '94% de acertos nos quizzes de exatas',
+adaptacoesAtivas: [],
+orientacoes: [],
+historico: [
+{ titulo: 'Quiz: Matrizes e Determinantes', tipo: 'Quiz',
+acertos: '10/10', nota: 10.0 },
+{ titulo: 'Quiz: Análise Combinatória', tipo: 'Quiz',
+acertos: '9/10', nota: 9.0 }
+]
+},
+{
+id: 202,
+nome: 'Helena Ribeiro Gomes',
+progresso: 90,
+quizzesFeitos: '7/8',
+outrasAtividades: '2/2',
+mediaQuizzes: 8.2,
+notaGeral: 8.3,
+resumo: 'Ótimo desempenho em sistemas lineares',
+adaptacoesAtivas: ['visual'],
+orientacoes: [],
+historico: [
+{ titulo: 'Quiz: Matrizes e Determinantes', tipo: 'Quiz',
+acertos: '9/10', nota: 9.0 },
+{ titulo: 'Quiz: Sistemas Lineares', tipo: 'Quiz', acertos:
+'8/10', nota: 8.0 }
+]
+},
+{
+id: 203,
+nome: 'Igor Vasconcelos Dias',
+progresso: 76,
+quizzesFeitos: '6/8',
+outrasAtividades: '1/2',
+mediaQuizzes: 6.6,
+notaGeral: 6.7,
+resumo: '2 quizzes pendentes de conclusão',
+adaptacoesAtivas: ['etapas'],
+orientacoes: [],
+historico: [
+
+
+{ titulo: 'Quiz: Matrizes e Determinantes', tipo: 'Quiz',
+acertos: '7/10', nota: 7.0 },
+{ titulo: 'Quiz: Análise Combinatória', tipo: 'Quiz',
+acertos: '6/10', nota: 6.0 }
+]
+}
+]
+},
+{
+id: 'P3',
+titulo: '3° Ano A • Pré-Vestibular Intensivo',
+disciplina: 'Matemática',
+turno: 'Matutino',
+evolucaoConteudos: [
+{ topico: 'Quiz ENEM: Estatística', media: 8.8 },
+{ topico: 'Quiz ENEM: Porcentagem e Juros', media: 9.1 },
+{ topico: 'Quiz: Geometria Espacial', media: 8.0 },
+{ topico: 'Quiz: Logaritmos', media: 7.4 }
+],
+alunos: [
+{
+id: 301,
+nome: 'Larissa Carvalho Pinto',
+progresso: 95,
+quizzesFeitos: '10/10',
+outrasAtividades: '2/2',
+mediaQuizzes: 9.0,
+notaGeral: 9.0,
+resumo: 'Excelente preparo nos quizzes estilo ENEM',
+adaptacoesAtivas: [],
+orientacoes: [],
+historico: [
+{ titulo: 'Quiz ENEM: Estatística', tipo: 'Quiz', acertos:
+'9/10', nota: 9.0 },
+{ titulo: 'Quiz ENEM: Porcentagem e Juros', tipo: 'Quiz',
+acertos: '9/10', nota: 9.0 }
+]
+},
+{
+id: 302,
+
+
+nome: 'Lucas Moreira Barbosa',
+progresso: 65,
+quizzesFeitos: '6/10',
+outrasAtividades: '2/2',
+mediaQuizzes: 5.6,
+notaGeral: 5.7,
+resumo: 'Apoio visual recomendado em Logaritmos',
+adaptacoesAtivas: ['tempo', 'visual'],
+orientacoes: [],
+historico: [
+{ titulo: 'Quiz: Logaritmos', tipo: 'Quiz', acertos: '5/10',
+nota: 5.0 },
+{ titulo: 'Quiz: Geometria Espacial', tipo: 'Quiz', acertos:
+'6/10', nota: 6.0 }
+]
+}
+]
+}
+];
+let alunoModalId = null;
+let orientacaoEditandoId = null;
+let adaptacaoPendenteConfirmacaoId = null;
+let toastTimer = null;
+function normalizarTexto(texto) {
+return texto
+.toLowerCase()
+.normalize('NFD')
+.replace(/[\u0300-\u036f]/g, '');
+}
+function toggleUserMenu(e) {
+e.stopPropagation();
+const menu = document.getElementById('userMenu');
+if (menu) menu.classList.toggle('hidden');
+}
+document.addEventListener('click', function (e) {
+const menu = document.getElementById('userMenu');
+
+
+if (menu && !menu.classList.contains('hidden') &&
+!e.target.closest('.user-menu-container')) {
+menu.classList.add('hidden');
+}
+});
+function showToast(msg, tipo = 'sucesso') {
+const toast = document.getElementById('toast-notification');
+const icon = document.getElementById('toast-icon');
+document.getElementById('toast-message').innerText = msg;
+toast.classList.remove('bg-emerald-600', 'bg-amber-600');
+if (tipo === 'aviso') {
+toast.classList.add('bg-amber-600');
+
+⚠️';
+
+icon.innerText = '
+} else {
+
+toast.classList.add('bg-emerald-600');
+
+✅';
+
+icon.innerText = '
+}
+
+toast.classList.remove('translate-x-full', 'opacity-0');
+toast.classList.add('translate-x-0', 'opacity-100');
+clearTimeout(toastTimer);
+toastTimer = setTimeout(() => {
+toast.classList.remove('translate-x-0', 'opacity-100');
+toast.classList.add('translate-x-full', 'opacity-0');
+}, 3000);
+}
+function getTurmaAtual() {
+const id = document.getElementById('selectTurmaProfessor').value;
+return turmasProfessor.find(t => t.id === id) || turmasProfessor[0];
+}
+function getAlunoModalAtual() {
+const turma = getTurmaAtual();
+return turma.alunos.find(a => a.id === alunoModalId);
+}
+
+
+function atualizarPainelProfessor() {
+const turma = getTurmaAtual();
+const statusFiltro =
+document.getElementById('selectStatusAluno').value;
+const termoBusca =
+normalizarTexto(document.getElementById('buscaAlunoProfessor').value.trim(
+));
+const alunos = turma.alunos;
+const totalAlunos = alunos.length;
+const mediaQuizzesTurma = totalAlunos
+? (alunos.reduce((acc, a) => acc + a.mediaQuizzes, 0) /
+totalAlunos).toFixed(1)
+: '0.0';
+const progressoMedio = totalAlunos
+? Math.round(alunos.reduce((acc, a) => acc + a.progresso, 0) /
+totalAlunos)
+: 0;
+const precisaReforco = alunos.filter(a => a.notaGeral < 6.5).length;
+document.getElementById('kpi-media-turma').innerText =
+String(mediaQuizzesTurma).replace('.', ',');
+document.getElementById('kpi-progresso-turma').innerText =
+`${progressoMedio}%`;
+document.getElementById('kpi-total-alunos').innerText = totalAlunos;
+document.getElementById('kpi-turma-turno').innerText =
+`${turma.disciplina} • ${turma.turno}`;
+document.getElementById('kpi-reforco').innerText = precisaReforco;
+renderizarDesempenhoTopicos(turma);
+renderizarDistribuicaoNotas(alunos);
+const alunosFiltrados = alunos.filter(a => {
+const matchStatus =
+statusFiltro === 'todos' ||
+(statusFiltro === 'aprovado' && a.notaGeral >= 7.0) ||
+(statusFiltro === 'atencao' && a.notaGeral >= 6.0 && a.notaGeral
+< 7.0) ||
+(statusFiltro === 'reforco' && a.notaGeral < 6.0);
+
+
+const matchNome =
+!termoBusca ||
+normalizarTexto(a.nome).includes(termoBusca) ||
+normalizarTexto(a.resumo).includes(termoBusca);
+return matchStatus && matchNome;
+});
+renderizarTabelaAlunos(alunosFiltrados);
+}
+function renderizarDesempenhoTopicos(turma) {
+const container =
+document.getElementById('grafico-topicos-professor');
+container.innerHTML = '';
+turma.evolucaoConteudos.forEach(item => {
+const pct = Math.round((item.media / 10) * 100);
+let corBarra = 'bg-emerald-400';
+if (item.media < 6.5) corBarra = 'bg-rose-400';
+else if (item.media < 8.0) corBarra = 'bg-blue-400';
+const div = document.createElement('div');
+div.innerHTML = `
+<div class="flex justify-between text-xs font-semibold mb-1.5">
+<span class="text-slate-200">${item.topico}</span>
+<span class="text-blue-300 font-bold">Média
+${String(item.media.toFixed(1)).replace('.', ',')}</span>
+</div>
+<div class="w-full h-2.5 progress-bg">
+<div class="${corBarra} h-full rounded-full transition-all
+duration-500" style="width: ${pct}%"></div>
+</div>
+`;
+container.appendChild(div);
+});
+}
+function renderizarDistribuicaoNotas(alunos) {
+const destaque = alunos.filter(a => a.notaGeral >= 8.0).length;
+
+
+const regular = alunos.filter(a => a.notaGeral >= 6.0 && a.notaGeral
+< 8.0).length;
+const apoio = alunos.filter(a => a.notaGeral < 6.0).length;
+document.getElementById('resumo-faixas-notas').innerHTML = `
+<div class="flex items-center justify-between p-3 rounded-xl
+bg-emerald-500/15 border border-emerald-400/35">
+<div>
+<span class="text-xs font-bold text-emerald-200 block">Domínio
+Alto (≥ 8,0)</span>
+<span class="text-[11px] text-emerald-300/80">Excelente índice
+de acertos</span>
+</div>
+<span class="text-lg font-extrabold
+text-emerald-300">${destaque}</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl
+bg-blue-500/15 border border-blue-400/35">
+<div>
+<span class="text-xs font-bold text-blue-200 block">Ritmo
+Regular (6,0 a 7,9)</span>
+<span class="text-[11px] text-blue-300/80">Acompanhando os
+quizzes</span>
+</div>
+<span class="text-lg font-extrabold
+text-blue-300">${regular}</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl
+bg-amber-500/15 border border-amber-400/35">
+<div>
+<span class="text-xs font-bold text-amber-200 block">Apoio
+Pedagógico (&lt; 6,0)</span>
+<span class="text-[11px] text-amber-300/80">Indicado para
+trilhas adaptadas</span>
+</div>
+<span class="text-lg font-extrabold
+text-amber-300">${apoio}</span>
+</div>
+`;
+}
+
+
+function renderizarTabelaAlunos(lista) {
+const tbody = document.getElementById('tabelaAlunosProfessorBody');
+tbody.innerHTML = '';
+if (!lista.length) {
+tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6
+text-slate-400 text-xs">Nenhum estudante encontrado para esta
+pesquisa.</td></tr>`;
+return;
+}
+lista.forEach(a => {
+let badgeSituacao = '<span class="bg-emerald-500/20
+text-emerald-300 border border-emerald-500/35 text-xs px-2.5 py-1
+rounded-full font-semibold">Bom Progresso</span>';
+let corProgresso = 'bg-emerald-400';
+if (a.notaGeral < 6.0) {
+badgeSituacao = '<span class="bg-rose-500/20 text-rose-300 border
+border-rose-500/35 text-xs px-2.5 py-1 rounded-full
+font-semibold">Apoio</span>';
+corProgresso = 'bg-rose-400';
+} else if (a.notaGeral < 7.0) {
+badgeSituacao = '<span class="bg-amber-500/20 text-amber-300
+border border-amber-500/35 text-xs px-2.5 py-1 rounded-full
+font-semibold">Atenção</span>';
+corProgresso = 'bg-amber-400';
+}
+const selosAdaptacao = a.adaptacoesAtivas.map(id => {
+const op = opcoesAdaptacoes.find(o => o.id === id);
+return op ? `<span class="inline-block bg-blue-500/20
+text-blue-200 border border-blue-400/35 text-[10px] px-1.5 py-0.5 rounded
+font-semibold">${op.label}</span>` : '';
+}).join(' ');
+const badgeOrientacoes = a.orientacoes.length
+
+
+? `<span class="inline-block bg-sky-500/20 text-sky-200 border
+border-sky-400/35 text-[10px] px-1.5 py-0.5 rounded font-semibold">
+${a.orientacoes.length} orientação(ões)</span>`
+
+💬
+
+: '';
+const tr = document.createElement('tr');
+tr.innerHTML = `
+<td>
+<div class="font-bold text-slate-100">${a.nome}</div>
+<div class="text-[11px] text-slate-400">${a.resumo}</div>
+<div class="flex flex-wrap gap-1 mt-1">${selosAdaptacao}
+${badgeOrientacoes}</div>
+</td>
+<td>
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 progress-bg">
+<div class="${corProgresso} h-full rounded-full"
+style="width: ${a.progresso}%"></div>
+</div>
+<span class="text-xs font-bold
+text-slate-300">${a.progresso}%</span>
+</div>
+</td>
+
+🧩
+${a.quizzesFeitos}</td>
+<td class="font-semibold text-slate-300">📝
+<td class="font-semibold text-slate-300">
+
+${a.outrasAtividades}</td>
+
+<td class="font-semibold
+text-slate-100">${String(a.mediaQuizzes.toFixed(1)).replace('.',
+',')}</td>
+<td>
+<span class="font-extrabold text-sm ${a.notaGeral < 6.0 ?
+'text-rose-400' : 'text-blue-300'}">
+${String(a.notaGeral.toFixed(1)).replace('.', ',')}
+</span>
+</td>
+<td>${badgeSituacao}</td>
+<td class="text-center">
+
+
+<button onclick="abrirModalAluno(${a.id})" class="text-xs
+bg-blue-600/25 hover:bg-blue-600 border border-blue-400/40 text-blue-200
+hover:text-white font-semibold px-3 py-1.5 rounded-lg transition-colors">
+Acompanhar
+</button>
+</td>
+`;
+tbody.appendChild(tr);
+});
+}
+function abrirModalAluno(alunoId) {
+alunoModalId = alunoId;
+orientacaoEditandoId = null;
+const turma = getTurmaAtual();
+const aluno = getAlunoModalAtual();
+if (!aluno) return;
+document.getElementById('modalAlunoNome').innerText = aluno.nome;
+document.getElementById('modalTurmaDisciplina').innerText =
+`${turma.titulo} • ${turma.disciplina}`;
+document.getElementById('modalAlunoResumoCards').innerHTML = `
+<div class="bg-blue-500/15 border border-blue-400/35 rounded-xl p-3
+text-center">
+<span class="text-[11px] text-slate-300 block
+font-semibold">Média Quizzes</span>
+<strong class="text-base
+text-blue-300">${String(aluno.mediaQuizzes.toFixed(1)).replace('.',
+',')}</strong>
+</div>
+<div class="bg-emerald-500/15 border border-emerald-400/35
+rounded-xl p-3 text-center">
+<span class="text-[11px] text-slate-300 block
+font-semibold">Quizzes Feitos</span>
+<strong class="text-base
+text-emerald-300">${aluno.quizzesFeitos}</strong>
+</div>
+
+
+<div class="bg-sky-500/15 border border-sky-400/35 rounded-xl p-3
+text-center">
+<span class="text-[11px] text-slate-300 block
+font-semibold">Progresso Geral</span>
+<strong class="text-base
+text-sky-300">${aluno.progresso}%</strong>
+</div>
+`;
+const tbodyHist = document.getElementById('modalTabelaQuizzesAluno');
+tbodyHist.innerHTML = '';
+aluno.historico.forEach(item => {
+const badgeTipo = item.tipo === 'Quiz'
+? '<span class="bg-blue-500/20 text-blue-300 border
+border-blue-400/30 text-[11px] px-2 py-0.5 rounded font-semibold">
+Quiz</span>'
+
+🧩
+
+: '<span class="bg-slate-700 text-slate-200 border
+border-slate-500/40 text-[11px] px-2 py-0.5 rounded font-semibold">
+Atividade</span>';
+
+📝
+
+const tr = document.createElement('tr');
+tr.innerHTML = `
+<td class="font-semibold text-slate-100">${item.titulo}</td>
+<td>${badgeTipo}</td>
+<td class="text-xs text-slate-300">${item.acertos}</td>
+<td class="font-bold
+text-blue-300">${String(item.nota.toFixed(1)).replace('.', ',')}</td>
+`;
+tbodyHist.appendChild(tr);
+});
+resetarFormularioOrientacao();
+renderizarBotoesAdaptacoesModal();
+renderizarOrientacoesModal();
+document.getElementById('modalDetalhesAlunoOverlay').classList.remove('hid
+den');
+}
+
+
+function fecharModalAluno() {
+alunoModalId = null;
+orientacaoEditandoId = null;
+document.getElementById('modalDetalhesAlunoOverlay').classList.add('hidden
+');
+}
+function renderizarBotoesAdaptacoesModal() {
+const aluno = getAlunoModalAtual();
+const container =
+document.getElementById('botoesAdaptacoesContainer');
+if (!aluno || !container) return;
+container.innerHTML = opcoesAdaptacoes.map(op => {
+const ativo = aluno.adaptacoesAtivas.includes(op.id);
+const classe = ativo
+? 'bg-[#2563eb] text-white border border-blue-300'
+: 'bg-[#111c33] hover:bg-[#19294a] text-blue-200 border
+border-[#33599e]';
+return `
+<button type="button"
+onclick="solicitarConfirmacaoAdaptacao('${op.id}')" class="text-[11px]
+px-2.5 py-1.5 rounded-lg font-semibold transition-colors flex items-center
+gap-1.5 ${classe}">
+<span>${op.label}</span>
+<span class="font-extrabold">${ativo ? '✓ Ativo' : '+
+Ativar'}</span>
+</button>
+`;
+}).join('');
+}
+function solicitarConfirmacaoAdaptacao(adaptacaoId) {
+const aluno = getAlunoModalAtual();
+const op = opcoesAdaptacoes.find(o => o.id === adaptacaoId);
+if (!aluno || !op) return;
+adaptacaoPendenteConfirmacaoId = adaptacaoId;
+
+
+const jaAtivo = aluno.adaptacoesAtivas.includes(adaptacaoId);
+const iconeEl = document.getElementById('confirmacaoIcone');
+const tituloEl = document.getElementById('confirmacaoTitulo');
+const descEl = document.getElementById('confirmacaoDescricao');
+const btnConfirmar =
+document.getElementById('btnConfirmarAcaoRecurso');
+if (jaAtivo) {
+iconeEl.className = 'w-12 h-12 rounded-full bg-amber-500/20 border
+border-amber-400/35 text-amber-300 flex items-center justify-center
+text-2xl mx-auto mb-3';
+
+⚠️';
+
+iconeEl.innerText = '
+
+tituloEl.innerText = `Desativar ${op.label}?`;
+descEl.innerHTML = `Você está prestes a <strong
+class="text-white">desativar</strong> o recurso <strong
+class="text-amber-300">${op.label}</strong> para <strong
+class="text-white">${aluno.nome}</strong>.<br><span class="text-[11px]
+text-slate-400 mt-1 block">${op.desc}</span>`;
+btnConfirmar.className = 'bg-amber-600 hover:bg-amber-500
+text-white text-xs font-bold px-5 py-2.5 rounded-lg transition-colors';
+btnConfirmar.innerText = 'Sim, Desativar';
+} else {
+iconeEl.className = 'w-12 h-12 rounded-full bg-blue-500/20 border
+border-blue-400/35 text-blue-300 flex items-center justify-center text-2xl
+mx-auto mb-3';
+
+🧩';
+
+iconeEl.innerText = '
+
+tituloEl.innerText = `Ativar ${op.label}?`;
+descEl.innerHTML = `Deseja <strong
+class="text-white">ativar</strong> o recurso <strong
+class="text-blue-300">${op.label}</strong> para <strong
+class="text-white">${aluno.nome}</strong>?<br><span class="text-[11px]
+text-slate-400 mt-1 block">${op.desc}</span>`;
+btnConfirmar.className = 'bg-[#2563eb] hover:bg-blue-500 text-white
+text-xs font-bold px-5 py-2.5 rounded-lg transition-colors';
+btnConfirmar.innerText = 'Sim, Ativar';
+}
+
+
+document.getElementById('modalConfirmacaoRecursoOverlay').classList.remove
+('hidden');
+}
+function fecharModalConfirmacaoRecurso() {
+adaptacaoPendenteConfirmacaoId = null;
+document.getElementById('modalConfirmacaoRecursoOverlay').classList.add('h
+idden');
+}
+function confirmarAlternanciaRecurso() {
+const aluno = getAlunoModalAtual();
+const op = opcoesAdaptacoes.find(o => o.id ===
+adaptacaoPendenteConfirmacaoId);
+if (!aluno || !op) {
+fecharModalConfirmacaoRecurso();
+return;
+}
+const idx = aluno.adaptacoesAtivas.indexOf(op.id);
+if (idx >= 0) {
+aluno.adaptacoesAtivas.splice(idx, 1);
+showToast(`${op.label} desativado para ${aluno.nome}.`, 'aviso');
+} else {
+aluno.adaptacoesAtivas.push(op.id);
+showToast(`${op.label} ativado para ${aluno.nome}!`, 'sucesso');
+}
+fecharModalConfirmacaoRecurso();
+renderizarBotoesAdaptacoesModal();
+atualizarPainelProfessor();
+}
+function renderizarOrientacoesModal() {
+const aluno = getAlunoModalAtual();
+const container =
+document.getElementById('listaOrientacoesEnviadas');
+if (!aluno || !container) return;
+
+
+if (!aluno.orientacoes.length) {
+container.innerHTML = `<div class="text-[11px] text-slate-400
+bg-[#111c33] border border-[#33599e] rounded-lg p-2.5">Nenhuma orientação
+enviada ainda para este estudante.</div>`;
+return;
+}
+container.innerHTML = aluno.orientacoes.map(o => `
+<div class="bg-[#111c33] border border-[#33599e] rounded-lg p-2.5
+flex items-start justify-between gap-3">
+<div class="flex-1">
+<p class="text-xs text-slate-100 m-0
+leading-relaxed">${o.texto}</p>
+<span class="text-[10px] text-slate-400 block mt-1">Enviado:
+${o.data}</span>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<button type="button"
+onclick="iniciarEdicaoOrientacao(${o.id})" class="text-[11px]
+bg-blue-500/20 hover:bg-blue-500/35 border border-blue-400/30
+text-blue-200 px-2 py-1 rounded font-semibold" title="Editar orientação">
+
+✏️ Editar
+
+</button>
+
+<button type="button" onclick="removerOrientacao(${o.id})"
+class="text-[11px] bg-rose-500/20 hover:bg-rose-500/35 border
+border-rose-400/30 text-rose-200 px-2 py-1 rounded font-semibold"
+title="Remover orientação">
+
+🗑️
+
+</button>
+</div>
+</div>
+`).join('');
+}
+function resetarFormularioOrientacao() {
+orientacaoEditandoId = null;
+document.getElementById('inputRecomendacaoEstudo').value = '';
+
+💬 Enviar
+
+document.getElementById('labelFormOrientacao').innerText = '
+Orientação Individual Passo a Passo';
+
+
+document.getElementById('btnSalvarOrientacao').innerText = 'Enviar';
+document.getElementById('btnCancelarEdicaoOrientacao').classList.add('hidd
+en');
+}
+function iniciarEdicaoOrientacao(orientacaoId) {
+const aluno = getAlunoModalAtual();
+if (!aluno) return;
+const item = aluno.orientacoes.find(o => o.id === orientacaoId);
+if (!item) return;
+orientacaoEditandoId = orientacaoId;
+document.getElementById('inputRecomendacaoEstudo').value =
+item.texto;
+document.getElementById('inputRecomendacaoEstudo').focus();
+
+✏️
+
+document.getElementById('labelFormOrientacao').innerText = '
+Editando Orientação Enviada';
+
+document.getElementById('btnSalvarOrientacao').innerText = 'Salvar
+Alteração';
+document.getElementById('btnCancelarEdicaoOrientacao').classList.remove('h
+idden');
+}
+function cancelarEdicaoOrientacao() {
+resetarFormularioOrientacao();
+}
+function enviarRecomendacaoAluno() {
+const aluno = getAlunoModalAtual();
+if (!aluno) return;
+const input = document.getElementById('inputRecomendacaoEstudo');
+const texto = input.value.trim();
+if (!texto) {
+showToast('Digite o texto da orientação antes de enviar.',
+'aviso');
+input.focus();
+
+
+return;
+}
+if (orientacaoEditandoId !== null) {
+const item = aluno.orientacoes.find(o => o.id ===
+orientacaoEditandoId);
+if (item) {
+item.texto = texto;
+item.data = 'Editado agora';
+}
+resetarFormularioOrientacao();
+renderizarOrientacoesModal();
+atualizarPainelProfessor();
+showToast('Orientação atualizada com sucesso!', 'sucesso');
+} else {
+aluno.orientacoes.unshift({
+id: Date.now(),
+texto,
+data: 'Agora mesmo'
+});
+resetarFormularioOrientacao();
+renderizarOrientacoesModal();
+atualizarPainelProfessor();
+showToast(`Orientação enviada para ${aluno.nome}!`, 'sucesso');
+}
+}
+function removerOrientacao(orientacaoId) {
+const aluno = getAlunoModalAtual();
+if (!aluno) return;
+aluno.orientacoes = aluno.orientacoes.filter(o => o.id !==
+orientacaoId);
+if (orientacaoEditandoId === orientacaoId) {
+resetarFormularioOrientacao();
+}
+renderizarOrientacoesModal();
+atualizarPainelProfessor();
+showToast('Orientação removida.', 'aviso');
+}
+
+
+function exportarRelatorioProfessor() {
+const turma = getTurmaAtual();
+showToast(`Relatório da turma ${turma.titulo} exportado!`,
+'sucesso');
+}
+// Inicializar página
+atualizarPainelProfessor();
+</script>
+<!-- Conexão com os scripts externos -->
+<script src="../js/config.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

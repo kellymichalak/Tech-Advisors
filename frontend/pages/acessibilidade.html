@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursos Inclusivos - Techadvisors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/acessibilidade.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../css/alunos.css">
+<style>
+/* === AJUSTE DE ALTURA E DROPDOWN DA BARRA SUPERIOR === */
+header.home-header, .home-header {
+  padding: 12px 32px !important;
+  min-height: 64px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+header.home-header .logo {
+  font-size: 1.25rem !important;
+  line-height: 1.2 !important;
+}
+header.home-header nav ul {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+header.home-header nav li {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0.92rem !important;
+}
+.user-menu-container {
+  position: relative !important;
+}
+#userMenu.show {
+  display: block !important;
+}
+</style>
+<style>
+/* === CORREÇÃO DO DROPDOWN VERTICAL DO ALUNO === */
+#userMenu {
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  min-width: 190px !important;
+  background-color: #ffffff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important;
+  padding: 6px 0 !important;
+  margin-top: 8px !important;
+  z-index: 1000 !important;
+}
+#userMenu ul {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 2px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+#userMenu li {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 16px !important;
+  width: 100% !important;
+  text-align: left !important;
+  color: #334155 !important;
+  white-space: nowrap !important;
+}
+#userMenu li:hover {
+  background-color: #f1f5f9 !important;
+  color: #1364c2 !important;
+}
+#userMenu li.logout-item {
+  color: #dc2626 !important;
+}
+</style>
+
+<style id="polish-acessibilidade">
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f6fa !important;
+  }
+
+  /* Barra superior idêntica ao padrão TechAdvisors */
+  header.home-header {
+    background-color: #3533a3 !important;
+    padding: 20px 48px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+
+  header.home-header .logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 1.2rem !important;
+    cursor: pointer;
+  }
+
+  header.home-header .logo span {
+    background-color: #00d26a !important;
+    color: #000000 !important;
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    padding: 4px 10px !important;
+    border-radius: 5px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px;
+  }
+
+  header.home-header nav ul {
+    display: flex !important;
+    align-items: center !important;
+    gap: 26px !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  header.home-header nav ul li {
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    cursor: pointer;
+  }
+
+  #student-name-nav,
+  #student-name-nav span {
+    color: #ffcc00 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Container e alinhamento perfeito dos 3 cards */
+  main, .container, .acessibilidade-container {
+    flex: 1;
+    max-width: 1080px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 36px 24px 64px 24px !important;
+  }
+
+  .cards-grid, .resources-grid, .grid-cards,
+  main > div:last-of-type {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 24px !important;
+    align-items: stretch !important;
+  }
+
+  .cards-grid > div, .cards-grid > article,
+  .resources-grid > div, .resources-grid > article,
+  .grid-cards > div, .grid-cards > article,
+  main > div:last-of-type > div,
+  main > div:last-of-type > article {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 32px 24px !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 6px 24px rgba(53, 51, 163, 0.06) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  }
+
+  .cards-grid > div:hover, .resources-grid > div:hover,
+  main > div:last-of-type > div:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 28px rgba(53, 51, 163, 0.12) !important;
+  }
+
+  .cards-grid button, .cards-grid a,
+  .resources-grid button, .resources-grid a,
+  main > div:last-of-type button,
+  main > div:last-of-type a {
+    margin-top: auto !important;
+    background-color: #3f3da3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 10px 22px !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease !important;
+  }
+
+  .cards-grid button:hover, .cards-grid a:hover,
+  .resources-grid button:hover, .resources-grid a:hover,
+  main > div:last-of-type button:hover,
+  main > div:last-of-type a:hover {
+    background-color: #3231a0 !important;
+  }
+
+  @media (max-width: 850px) {
+    .cards-grid, .resources-grid, .grid-cards,
+    main > div:last-of-type {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+
+
+</head>
+<body>
+  <!-- BARRA SUPERIOR -->
+  <header class="home-header">
+   <div class="logo" onclick="window.location.href='alunos.html'">
+     📘 TECHADVISORS <span class="text-xs bg-emerald-400 text-slate-900 px-2 py-1 rounded ml-2 font-bold">ALUNO</span>
+   </div>
+
+
+   <nav>
+     <ul>
+       <li onclick="window.location.href='alunos.html'">🏠 Portal do Estudante</li>
+       <li onclick="alert('Acessando Minhas Matérias')">📖 Minhas Matérias</li>
+
+
+       <!-- ALUNO DROPDOWN -->
+       <li class="user-menu-container">
+         <div id="student-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+           <span>🎓 Olá, Aluno</span>
+           <span class="text-xs">▼</span>
+         </div>
+
+
+         <div id="userMenu" class="user-dropdown">
+           <ul>
+             <li onclick="minhaConta()">👤 Meu Perfil</li>
+             <li onclick="toggleSettingsDrawer(true)">⚙️ Configurações</li>
+             <li onclick="logout()" class="logout-item">🚪 Sair</li>
+           </ul>
+         </div>
+       </li>
+     </ul>
+   </nav>
+ </header>
+
+  <!-- RECURSOS INCLUSIVOS -->
+  <main class="main-content">
+
+    <div id="btn-voltar-portal-acess" style="margin-bottom: 18px;">
+      <a href="alunos.html" style="display:inline-flex;align-items:center;gap:6px;color:#3f3da3;text-decoration:none;font-weight:600;font-size:0.9rem;background:#ffffff;padding:8px 16px;border-radius:999px;border:1px solid #e2e8f0;box-shadow:0 2px 6px rgba(0,0,0,0.03);">
+        ← Voltar ao Portal
+      </a>
+    </div>
+    
+    <div class="page-header">
+      <i data-lucide="headphones" class="header-icon" size="36"></i>
+      <h1>Recursos Inclusivos</h1>
+      <p>Acesse áudios, resumos adaptados e ferramentas de apoio.</p>
+    </div>
+
+    <div class="grid">
+      <!-- Card 1: Áudios -->
+      <article class="card">
+        <div class="icon-wrapper">
+          <i data-lucide="volume-2" size="24"></i>
+        </div>
+        <h2>Áudios e Narrações</h2>
+        <p>Escute conteúdos didáticos, livros e orientações gravadas em áudio de alta qualidade com velocidade ajustável.</p>
+        <button class="btn" onclick="window.location.href='biblioteca-audios.html'">Ouvir Áudios</button>
+      </article>
+
+      <!-- Card 2: Resumos Adaptados -> Vai para materias.html -->
+      <article class="card">
+        <div class="icon-wrapper">
+          <i data-lucide="file-text" size="24"></i>
+        </div>
+        <h2>Resumos Adaptados</h2>
+        <p>Textos simplificados, com linguagem clara, leitura facilitada e formatos adaptados para estudo contínuo.</p>
+        <button class="btn" onclick="window.location.href='materias.html'">Acessar Resumos</button>
+      </article>
+
+      <!-- Card 3: Ferramentas de Apoio -->
+      <article class="card">
+        <div class="icon-wrapper">
+          <i data-lucide="wrench" size="24"></i>
+        </div>
+        <h2>Ferramentas de Apoio</h2>
+        <p>Ajustes de alto contraste, leitores de tela, aumento de fonte e recursos de acessibilidade personalizada.</p>
+        <button class="btn" onclick="if(typeof toggleSettingsDrawer==='function'){toggleSettingsDrawer(true)}else{alert('Ferramentas de apoio em breve')}">Abrir Ferramentas</button>
+      </article>
+    </div>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="footer-bar">
+    © 2026 Techadvisors - Painel do Aluno
+  </footer>
+
+  <!-- BOTÕES FLUTUANTES NO CANTO (TROCA CLARO/ESCURO + CONFIGURAÇÕES) -->
+  <div class="floating-actions">
+    <button id="btn-toggle-tema" class="floating-btn" onclick="alternarModoClaroEscuro()" aria-label="Alternar Modo Claro e Escuro" title="Mudar para Modo Escuro">
+      <i data-lucide="moon" size="20"></i>
+    </button>
+    <button class="floating-btn" aria-label="Configurações" title="Configurações">
+      <i data-lucide="settings" size="20"></i>
+    </button>
+  </div>
+
+  <script src="../js/acessibilidade.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/alunos.js"></script>
+
+<script>
+  if (typeof window.toggleUserMenu !== 'function') {
+    window.toggleUserMenu = function(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('userMenu');
+      if (menu) {
+        menu.classList.toggle('show');
+        menu.classList.toggle('hidden');
+      }
+    };
+    window.addEventListener('click', function(e) {
+      const menu = document.getElementById('userMenu');
+      if (menu && (menu.classList.contains('show') || !menu.classList.contains('hidden'))) {
+        if (!e.target.closest('.user-menu-container')) {
+          menu.classList.remove('show');
+          menu.classList.add('hidden');
+        }
+      }
+    });
+  }
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a, button, .card, article').forEach(el => {
+    if (/Abrir Ferramentas|Ferramentas de Apoio/i.test(el.textContent) && el.textContent.length < 180) {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'ferramentas-assistivas.html';
+      });
+    }
+  });
+});
+</script>
+
+
+
+
+<style id="ajuste-voltar-portal-esquerda">
+  .barra-voltar-portal-esq {
+    width: 100% !important;
+    max-width: 1120px !important;
+    margin: 56px auto 0 auto !important;
+    padding: 0 24px !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+  .barra-voltar-portal-esq + main,
+  .barra-voltar-portal-esq + .main-content,
+  .barra-voltar-portal-esq + section,
+  .barra-voltar-portal-esq + div {
+    padding-top: 0 !important;
+    margin-top: -16px !important;
+  }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const todos = [...document.querySelectorAll('a, button')];
+  const btnPortal = todos.find(el =>
+    !el.closest('header, nav') &&
+    /voltar ao portal/i.test((el.textContent || '').trim())
+  );
+
+  if (btnPortal) {
+    const header = document.querySelector('header');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'barra-voltar-portal-esq';
+    wrapper.appendChild(btnPortal);
+    if (header && header.parentNode) {
+      header.parentNode.insertBefore(wrapper, header.nextSibling);
+    }
+  }
+});
+</script>
+
+  <script src="../js/assistiva-global.js"></script>
+</body>
+</html>

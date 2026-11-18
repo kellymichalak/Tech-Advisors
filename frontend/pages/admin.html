@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techadvisors - Painel do Administrador</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Fonts -->
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;70
+0;800;900&display=swap" rel="stylesheet">
+<!-- Conexão CSS -->
+<link rel="stylesheet" href="../css/admin.css?v=13">
+<link rel="stylesheet" href="../css/config.css">
+
+</head>
+<body>
+<!-- ==================== PÁGINA DO ADMINISTRADOR ====================
+-->
+    <header class="home-header">
+    <div class="logo" onclick="window.location.href='admin.html'">
+      TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-950 px-2 py-1 rounded ml-2 font-bold">ADMINISTRADOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li class="text-yellow-300 font-bold border-b-2 border-yellow-300 pb-0.5" onclick="window.location.href='admin.html'">🏠 Portal Gestão</li>
+        <li  onclick="window.location.href='cadastro-turmas.html'">🏫 Cadastro de Turmas</li>
+        <li  onclick="window.location.href='cadastro-alunos.html'">👥 Alunos</li>
+        <li  onclick="window.location.href='cadastro-professores.html'">👨‍🏫 Professores</li>
+        <li  onclick="window.location.href='relatorios-admin.html'">📊 Relatórios & Indicadores</li>
+        <li class="user-menu-container">
+          <div id="admin-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>👨‍💼</span>
+            <span id="admin-name-text">Olá, Administrador</span>
+            <span class="text-xs">▼</span>
+          </div>
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">👤 Minha Conta</li>
+              <li onclick="configuracoes()">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+<div class="container">
+<div class="banner">
+<h2 id="admin-welcome-title">Bem-vindo(a), Administrador(a)!</h2>
+<p>
+Gerencie turmas, cadastre alunos e professores, e acompanhe os
+indicadores da instituição.
+</p>
+</div>
+<div class="cards">
+<div class="card" onclick="window.location.href='cadastro-turmas.html'">
+<div class="icone">
+
+🏫</div>
+
+
+<h3>Gestão de Turmas</h3>
+<p>Cadastre novas turmas, atribua professores e defina
+horários.</p>
+</div>
+<div class="card" onclick="window.location.href='cadastro-alunos.html'">
+<div class="icone">
+
+👥</div>
+
+<h3>Alunos & Matrículas</h3>
+<p>Gerencie matrículas e controle dados dos estudantes.</p>
+</div>
+<div class="card" onclick="window.location.href='cadastro-professores.html'">
+<div class="icone">
+
+👨‍🏫</div>
+
+<h3>Corpo Docente</h3>
+
+<p>Cadastre professores e vincule disciplinas acadêmicas.</p>
+</div>
+<div class="card" onclick="window.location.href='relatorios-admin.html'">
+<div class="icone">
+
+📊</div>
+
+<h3>Relatórios & Indicadores</h3>
+<p>Acompanhe métricas gerais e frequência escolar.</p>
+</div>
+<div class="card" onclick="toggleSettingsDrawer(true)">
+<div class="icone">
+
+⚙️</div>
+
+<h3>Configurações & Ajustes</h3>
+<p>Atualize preferências do sistema e permissões.</p>
+</div>
+</div>
+</div>
+<footer class="home-footer">
+© 2026 • Techadvisors — Painel do Administrador
+</footer>
+<!-- Botão Flutuante de Configurações -->
+<button onclick="toggleSettingsDrawer(true)" title="Configurações e
+Acessibilidade" class="fab-btn fixed bottom-6 right-6 z-40 text-white p-4
+
+
+rounded-full flex items-center justify-center border-2 border-white/20
+transition-all hover:scale-105 active:scale-95">
+
+⚙️
+
+</button>
+<!-- Fundo Escuro do Overlay -->
+<div id="settings-overlay" onclick="toggleSettingsDrawer(false)"
+class="fixed inset-0 bg-black/60 z-50 hidden"></div>
+<!-- Drawer / Sidebar de Configurações -->
+<aside id="settings-drawer" class="fixed top-0 right-0 h-full w-full
+max-w-sm z-50 shadow-2xl flex flex-col p-6 overflow-y-auto hidden">
+<div class="flex items-center justify-between mb-6 border-b
+border-purple-900/60 pb-4">
+<h2 class="text-lg font-bold">Configurações</h2>
+<button onclick="toggleSettingsDrawer(false)" class="text-purple-300
+hover:text-white text-xl font-bold">✕</button>
+</div>
+<!-- Controle de Fonte -->
+<div class="mb-5 bg-slate-50 p-4 rounded-xl border
+border-slate-200/80">
+<div class="flex justify-between items-center mb-2">
+<label class="text-xs font-semibold">Tamanho da Fonte</label>
+<span id="font-size-label" class="text-xs font-mono font-bold
+text-purple-300 bg-purple-950 px-2 py-0.5 rounded border
+border-purple-800/40">100%</span>
+</div>
+<div class="flex gap-2">
+<button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5
+bg-white border rounded text-xs font-bold transition-colors">A -</button>
+<button onclick="resetFontSize()" class="px-3 py-1.5 bg-white
+border rounded text-xs font-medium transition-colors">Normal</button>
+<button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white
+border rounded text-xs font-bold transition-colors">A +</button>
+</div>
+</div>
+<!-- Controle de Brilho -->
+<div class="mb-5 bg-slate-50 p-4 rounded-xl border
+border-slate-200/80">
+<div class="flex justify-between items-center mb-1">
+<label for="brightness-range" class="text-xs font-semibold">Brilho
+da Tela</label>
+
+
+<span id="brightness-label" class="text-xs font-mono font-bold
+text-purple-300 bg-purple-950 px-2 py-0.5 rounded border
+border-purple-800/40">100%</span>
+</div>
+<input type="range" id="brightness-range" min="30" max="100"
+value="100" step="5" oninput="updateBrightness(this.value)" class="w-full
+accent-purple-500 cursor-pointer">
+</div>
+<!-- Controle de Saturação -->
+<div class="mb-5 bg-slate-50 p-4 rounded-xl border
+border-slate-200/80">
+<div class="flex justify-between items-center mb-1">
+<label for="saturation-range" class="text-xs
+font-semibold">Saturação de Cores</label>
+<span id="saturation-label" class="text-xs font-mono font-bold
+text-purple-300 bg-purple-950 px-2 py-0.5 rounded border
+border-purple-800/40">100%</span>
+</div>
+<input type="range" id="saturation-range" min="0" max="150"
+value="100" step="5" oninput="updateSaturation(this.value)" class="w-full
+accent-purple-500 cursor-pointer">
+</div>
+<!-- Alto Contraste -->
+<div class="mb-6 flex items-center justify-between bg-slate-50 p-4
+rounded-xl border border-slate-200/80">
+<span class="text-xs font-semibold">Modo Alto Contraste</span>
+<input type="checkbox" id="toggle-contrast"
+onchange="toggleHighContrast(this.checked)" class="w-4 h-4
+accent-purple-500 cursor-pointer">
+</div>
+<button onclick="resetAllSettings()" class="text-xs font-semibold
+text-purple-400 hover:text-purple-300 underline mt-auto text-center
+pt-4">Restaurar Padrões</button>
+</aside>
+
+<!-- Conexão com os scripts externos -->
+<script src="../js/config.js"></script>
+<script src="../js/admin.js?v=10"></script>
+</body>
+</html>

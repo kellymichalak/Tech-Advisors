@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Resumos Adaptados - Techadvisors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-color: #f4f6fa;
+      --header-footer-bg: #3533a3;
+      --card-bg: #ffffff;
+      --text-purple: #3f3da3;
+      --text-main: #1e293b;
+      --text-sub: #6c757d;
+      --badge-green: #00d26a;
+      --icon-bg: #f0f0fd;
+      --button-bg: #3f3da3;
+      --border-color: #e2e8f0;
+      --accent-soft: #eeedfd;
+      --font-family: 'Poppins', sans-serif;
+    }
+
+    body.dark-mode {
+      --bg-color: #0f172a;
+      --header-footer-bg: #1e1b4b;
+      --card-bg: #1e293b;
+      --text-purple: #818cf8;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --border-color: #334155;
+      --accent-soft: #312e81;
+      --icon-bg: #312e81;
+      --button-bg: #6366f1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.25s, color 0.25s;
+    }
+
+    .top-bar {
+      background-color: var(--header-footer-bg);
+      color: white;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .badge-aluno {
+      background-color: var(--badge-green);
+      color: #000000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .main-content {
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 30px 24px 80px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .sticky-nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-color);
+      padding: 12px 0;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* CAMPO DE PESQUISA NO TOPO */
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+      min-width: 220px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-wrapper .search-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--text-sub);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 36px 8px 38px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-sub);
+    }
+
+    .search-input:focus {
+      border-color: var(--button-bg);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+    }
+
+    .clear-search-btn:hover {
+      color: var(--text-purple);
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-purple);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      background: var(--button-bg);
+      color: white;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+      color: var(--text-purple);
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .page-header p {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+    }
+
+    .serie-selector-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .serie-btn {
+      background-color: var(--card-bg);
+      color: var(--text-sub);
+      border: 1px solid var(--border-color);
+      padding: 10px 22px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .serie-btn.active {
+      background-color: var(--button-bg);
+      color: white;
+      border-color: var(--button-bg);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 100%;
+    }
+
+    .section-divider {
+      grid-column: 1 / -1;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-purple);
+      padding-top: 8px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+    }
+
+    .custom-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .custom-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--button-bg);
+    }
+
+    .card-icon {
+      background-color: var(--icon-bg);
+      color: var(--text-purple);
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .custom-card h2 {
+      font-size: 1.1rem;
+      color: var(--text-purple);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .custom-card p {
+      font-size: 0.84rem;
+      color: var(--text-sub);
+    }
+
+    .tag-qtd {
+      margin-top: auto;
+      padding-top: 12px;
+    }
+
+    .tag-qtd span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-purple);
+      background: var(--accent-soft);
+      padding: 4px 12px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    /* BOTÃO FLUTUANTE VOLTAR AO TOPO */
+    .btn-scroll-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: var(--button-bg);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+      z-index: 200;
+    }
+
+    .btn-scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .btn-scroll-top:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.1);
+    }
+
+    .footer-bar {
+      background-color: var(--header-footer-bg);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.88rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 850px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .top-bar { padding: 16px 20px; }
+      .search-wrapper {
+        order: 3;
+        max-width: 100%;
+        width: 100%;
+      }
+      .btn-scroll-top {
+        bottom: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+      }
+    }
+  </style>
+
+<style id="estilo-topo-acessibilidade">
+  header, .top-bar, .navbar {
+    background-color: #3533a3 !important;
+    color: #ffffff !important;
+  }
+  header a, .top-bar a, .navbar a,
+  header span, .top-bar span, .navbar span,
+  header button, .top-bar button, .navbar button {
+    color: #ffffff !important;
+  }
+  header .user-menu, .top-bar .user-menu, .navbar .user-menu {
+    color: #ffcc00 !important;
+  }
+</style>
+
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="brand" onclick="window.location.href='alunos.html'" style="cursor:pointer;">
+      <i data-lucide="book-open" size="24"></i>
+      <span>TECHADVISORS</span>
+      <span class="badge-aluno">ALUNO</span>
+    </div>
+    <nav class="top-nav" style="display:flex;align-items:center;gap:24px;">
+      <a href="alunos.html" style="text-decoration:none;color:#ffffff;font-weight:500;">🏠 Portal do Estudante</a>
+      <a href="materias.html" style="text-decoration:none;color:#ffffff;font-weight:500;">📖 Minhas Matérias</a>
+      <div style="position:relative;">
+        <button type="button" onclick="const m=document.getElementById('topUserDropTestes');m.style.display=m.style.display==='block'?'none':'block';" style="background:none;border:none;color:#fde047 !important;font-weight:700;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;gap:4px;">
+          <span>🎓 Olá, Aluno</span>
+          <span style="font-size:0.75rem;">▼</span>
+        </button>
+        <div id="topUserDropTestes" style="display:none;position:absolute;right:0;top:130%;background:#ffffff;color:#1e293b;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,0.18);min-width:175px;padding:6px;z-index:9999;">
+          <a href="alunos.html" style="display:block;padding:8px 12px;color:#1e293b !important;text-decoration:none;border-radius:6px;font-size:0.88rem;">🏠 Painel do Aluno</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+<main class="main-content">
+    
+    <div class="sticky-nav-bar">
+      <button class="back-btn" onclick="voltarNivel()">
+        <i data-lucide="arrow-left" size="18"></i>
+        <span id="txt-voltar">Voltar ao Início</span>
+      </button>
+
+      <!-- BARRA DE PESQUISA -->
+      <div class="search-wrapper">
+        <i data-lucide="search" size="17" class="search-icon"></i>
+        <input 
+          type="text" 
+          id="input-pesquisa" 
+          class="search-input" 
+          placeholder="Pesquisar matéria ou conteúdo..." 
+          oninput="executarPesquisa()"
+        >
+        <button id="btn-limpar-pesquisa" class="clear-search-btn" onclick="limparPesquisa()" title="Limpar busca">
+          <i data-lucide="x" size="16"></i>
+        </button>
+      </div>
+
+      <button class="back-btn" onclick="alternarModoEscuro()">
+        <i data-lucide="moon" size="18" id="icon-tema"></i>
+        <span id="txt-tema">Modo Escuro</span>
+      </button>
+    </div>
+
+    <div class="page-header">
+      <h1 id="page-title">Ensino Médio — Grade Curricular</h1>
+      <p id="page-subtitle">Selecione a sua série para visualizar todas as 13 disciplinas.</p>
+    </div>
+
+    <!-- SELETOR EXCLUSIVO ENSINO MÉDIO -->
+    <div class="serie-selector-bar" id="bar-series">
+      <button class="serie-btn active" data-serie="1em" onclick="selecionarSerie('1em', this)">1º Ano E.M.</button>
+      <button class="serie-btn" data-serie="2em" onclick="selecionarSerie('2em', this)">2º Ano E.M.</button>
+      <button class="serie-btn" data-serie="3em" onclick="selecionarSerie('3em', this)">3º Ano E.M.</button>
+    </div>
+
+    <!-- GRID DINÂMICO -->
+    <div class="cards-grid" id="grid-cards"></div>
+
+  </main>
+
+  <!-- BOTÃO VOLTAR AO TOPO -->
+  <button class="btn-scroll-top" id="btn-topo" onclick="voltarAoTopo()" title="Voltar ao topo" aria-label="Voltar ao topo">
+    <i data-lucide="arrow-up" size="22"></i>
+  </button>
+
+  <footer class="footer-bar">
+    © 2026 • Techadvisors — Plataforma Educacional Adaptada
+  </footer>
+
+  <script src="../js/resumos.js?v=20261230"></script>
+  <script>
+    const nomesSeries = {
+      "1em": "1º Ano do Ensino Médio",
+      "2em": "2º Ano do Ensino Médio",
+      "3em": "3º Ano do Ensino Médio"
+    };
+
+    let serieSalva = localStorage.getItem('serieSelecionada');
+    let serieAtiva = ["1em", "2em", "3em"].includes(serieSalva) ? serieSalva : "1em";
+    let nivelNavegacao = "materias";
+    let materiaAtual = { id: null, nome: "" };
+
+    function normalizarTexto(texto) {
+      return (texto || "")
+        .toString()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function alternarModoEscuro() {
+      document.body.classList.toggle('dark-mode');
+      const eEscuro = document.body.classList.contains('dark-mode');
+      localStorage.setItem('temaEscuro', eEscuro ? 'ativado' : 'desativado');
+      atualizarBotaoTema(eEscuro);
+    }
+
+    function atualizarBotaoTema(eEscuro) {
+      const icon = document.getElementById('icon-tema');
+      const txt = document.getElementById('txt-tema');
+      if (icon && txt) {
+        icon.setAttribute('data-lucide', eEscuro ? 'sun' : 'moon');
+        txt.innerText = eEscuro ? "Modo Claro" : "Modo Escuro";
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function selecionarSerie(serieId, btnElement) {
+      serieAtiva = serieId;
+      localStorage.setItem('serieSelecionada', serieId);
+      
+      document.querySelectorAll('.serie-btn').forEach(btn => btn.classList.remove('active'));
+      if (btnElement) {
+        btnElement.classList.add('active');
+      } else {
+        const btnCorrespondente = document.querySelector(`.serie-btn[data-serie="${serieId}"]`);
+        if (btnCorrespondente) btnCorrespondente.classList.add('active');
+      }
+
+      const termo = document.getElementById('input-pesquisa').value.trim();
+      if (termo) {
+        executarPesquisa();
+      } else {
+        renderizarMateriasDaSerie();
+      }
+    }
+
+    function renderizarMateriasDaSerie() {
+      nivelNavegacao = "materias";
+      materiaAtual = { id: null, nome: "" };
+      document.getElementById('page-title').innerText = "Disciplinas — " + nomesSeries[serieAtiva];
+      document.getElementById('page-subtitle').innerText = "Escolha uma das 13 matérias para explorar seus capítulos.";
+      document.getElementById('bar-series').style.display = "flex";
+      document.getElementById('txt-voltar').innerText = "Voltar ao Início";
+
+      const grid = document.getElementById('grid-cards');
+      grid.innerHTML = '';
+
+      if (!window.infoMateriasGlobal || !window.listaConteudosGlobal) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-sub);">Erro ao carregar <strong>js/resumos.js?v=20261230</strong>. Verifique se o caminho do arquivo está correto.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const materias = window.infoMateriasGlobal;
+      const topicosDaSerie = window.listaConteudosGlobal.filter(t => t.serie === serieAtiva);
+
+      Object.keys(materias).forEach(materiaId => {
+        const matInfo = materias[materiaId];
+        const qtdTopicos = topicosDaSerie.filter(t => t.materiaId === materiaId).length;
+
+        grid.innerHTML += `
+          <article class="custom-card" onclick="abrirMateria('${materiaId}', '${matInfo.nome}')">
+            <div class="card-icon"><i data-lucide="${matInfo.icon}" size="26"></i></div>
+            <h2>${matInfo.nome}</h2>
+            <p>${matInfo.desc}</p>
+            <div class="tag-qtd"><span>${qtdTopicos} capítulo(s)</span></div>
+          </article>
+        `;
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function abrirMateria(materiaId, materiaNome) {
+      nivelNavegacao = "topicos";
+      materiaAtual = { id: materiaId, nome: materiaNome };
+      limparCampoPesquisaSilencioso();
+
+      document.getElementById('page-title').innerText = materiaNome;
+      document.getElementById('page-subtitle').innerText = `Capítulos de ${materiaNome} — ${nomesSeries[serieAtiva]}.`;
+      document.getElementById('bar-series').style.display = "none";
+      document.getElementById('txt-voltar').innerText = "Voltar para Disciplinas";
+
+      const topicos = (window.listaConteudosGlobal || []).filter(t => t.serie === serieAtiva && t.materiaId === materiaId);
+      const grid = document.getElementById('grid-cards');
+      grid.innerHTML = '';
+
+      if (topicos.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-sub);">Os capítulos desta série serão adicionados em breve.</p>
+          </div>
+        `;
+        return;
+      }
+
+      topicos.forEach(topico => {
+        grid.innerHTML += `
+          <article class="custom-card" onclick="abrirLeitorResumo('${topico.id}')">
+            <div class="card-icon"><i data-lucide="${topico.icon || 'file-text'}" size="26"></i></div>
+            <h2>${topico.nome}</h2>
+            <p>${topico.ementa}</p>
+          </article>
+        `;
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function executarPesquisa() {
+      const input = document.getElementById('input-pesquisa');
+      const btnLimpar = document.getElementById('btn-limpar-pesquisa');
+      const termoBruto = input.value.trim();
+      const termo = normalizarTexto(termoBruto);
+
+      btnLimpar.style.display = termoBruto.length > 0 ? "flex" : "none";
+
+      if (!termo) {
+        if (nivelNavegacao === "topicos" && materiaAtual.id) {
+          abrirMateria(materiaAtual.id, materiaAtual.nome);
+        } else {
+          renderizarMateriasDaSerie();
+        }
+        return;
+      }
+
+      if (!window.infoMateriasGlobal || !window.listaConteudosGlobal) return;
+
+      const grid = document.getElementById('grid-cards');
+      grid.innerHTML = '';
+
+      // Filtra conteúdos APENAS do ano selecionado (serieAtiva)
+      const topicosDoAno = window.listaConteudosGlobal.filter(t => t.serie === serieAtiva);
+
+      if (nivelNavegacao === "topicos" && materiaAtual.id) {
+        // Pesquisa apenas dentro da disciplina aberta no ano atual
+        const topicosFiltrados = topicosDoAno.filter(t => 
+          t.materiaId === materiaAtual.id &&
+          (normalizarTexto(t.nome).includes(termo) || normalizarTexto(t.ementa).includes(termo))
+        );
+
+        document.getElementById('page-subtitle').innerText = `Resultados em ${materiaAtual.nome} (${nomesSeries[serieAtiva]}) para "${termoBruto}"`;
+
+        if (topicosFiltrados.length === 0) {
+          grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color);">
+              <p style="color: var(--text-sub);">Nenhum conteúdo encontrado em <strong>${materiaAtual.nome}</strong> para <strong>${nomesSeries[serieAtiva]}</strong>.</p>
+            </div>
+          `;
+          return;
+        }
+
+        topicosFiltrados.forEach(topico => {
+          grid.innerHTML += `
+            <article class="custom-card" onclick="abrirLeitorResumo('${topico.id}')">
+              <div class="card-icon"><i data-lucide="${topico.icon || 'file-text'}" size="26"></i></div>
+              <h2>${topico.nome}</h2>
+              <p>${topico.ementa}</p>
+            </article>
+          `;
+        });
+      } else {
+        // Pesquisa geral na série ativa: matérias + conteúdos daquele ano
+        const materias = window.infoMateriasGlobal;
+        const materiasFiltradas = Object.keys(materias).filter(materiaId => {
+          const mat = materias[materiaId];
+          return normalizarTexto(mat.nome).includes(termo) || normalizarTexto(mat.desc).includes(termo);
+        });
+
+        const topicosFiltrados = topicosDoAno.filter(t => 
+          normalizarTexto(t.nome).includes(termo) || normalizarTexto(t.ementa).includes(termo)
+        );
+
+        document.getElementById('page-title').innerText = `Busca — ${nomesSeries[serieAtiva]}`;
+        document.getElementById('page-subtitle').innerText = `Exibindo matérias e conteúdos do ${nomesSeries[serieAtiva]} para "${termoBruto}"`;
+
+        if (materiasFiltradas.length === 0 && topicosFiltrados.length === 0) {
+          grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color);">
+              <p style="color: var(--text-sub);">Nenhuma matéria ou conteúdo do <strong>${nomesSeries[serieAtiva]}</strong> encontrado para "<strong>${termoBruto}</strong>".</p>
+            </div>
+          `;
+          return;
+        }
+
+        if (materiasFiltradas.length > 0) {
+          grid.innerHTML += `<div class="section-divider">Disciplinas encontradas (${materiasFiltradas.length})</div>`;
+          materiasFiltradas.forEach(materiaId => {
+            const matInfo = materias[materiaId];
+            const qtdTopicos = topicosDoAno.filter(t => t.materiaId === materiaId).length;
+            grid.innerHTML += `
+              <article class="custom-card" onclick="abrirMateria('${materiaId}', '${matInfo.nome}')">
+                <div class="card-icon"><i data-lucide="${matInfo.icon}" size="26"></i></div>
+                <h2>${matInfo.nome}</h2>
+                <p>${matInfo.desc}</p>
+                <div class="tag-qtd"><span>${qtdTopicos} capítulo(s)</span></div>
+              </article>
+            `;
+          });
+        }
+
+        if (topicosFiltrados.length > 0) {
+          grid.innerHTML += `<div class="section-divider">Conteúdos do ${nomesSeries[serieAtiva]} (${topicosFiltrados.length})</div>`;
+          topicosFiltrados.forEach(topico => {
+            const nomeMat = materias[topico.materiaId]?.nome || "Disciplina";
+            grid.innerHTML += `
+              <article class="custom-card" onclick="abrirLeitorResumo('${topico.id}')">
+                <div class="card-icon"><i data-lucide="${topico.icon || 'file-text'}" size="26"></i></div>
+                <h2>${topico.nome}</h2>
+                <p>${topico.ementa}</p>
+                <div class="tag-qtd"><span>${nomeMat}</span></div>
+              </article>
+            `;
+          });
+        }
+      }
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function limparCampoPesquisaSilencioso() {
+      const input = document.getElementById('input-pesquisa');
+      const btnLimpar = document.getElementById('btn-limpar-pesquisa');
+      if (input) input.value = "";
+      if (btnLimpar) btnLimpar.style.display = "none";
+    }
+
+    function limparPesquisa() {
+      limparCampoPesquisaSilencioso();
+      executarPesquisa();
+    }
+
+    function abrirLeitorResumo(conteudoId) {
+      window.location.href = `resumos.html?id=${conteudoId}`;
+    }
+
+    function voltarNivel() {
+      if (nivelNavegacao === "topicos") {
+        limparCampoPesquisaSilencioso();
+        renderizarMateriasDaSerie();
+      } else {
+        window.history.back();
+      }
+    }
+
+    function voltarAoTopo() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('scroll', () => {
+      const btnTopo = document.getElementById('btn-topo');
+      if (window.scrollY > 250) {
+        btnTopo.classList.add('visible');
+      } else {
+        btnTopo.classList.remove('visible');
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('temaEscuro') === 'ativado') {
+        document.body.classList.add('dark-mode');
+        atualizarBotaoTema(true);
+      }
+      selecionarSerie(serieAtiva, null);
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btnVoltar = document.querySelector('.sticky-nav-bar > button[onclick="voltarNivel()"]');
+  const txtVoltar = document.getElementById('txt-voltar');
+  if (!btnVoltar || !txtVoltar) return;
+
+  let modoAcessibilidade = false;
+
+  function atualizarBotaoEsquerdo() {
+    const texto = (txtVoltar.textContent || '').trim();
+    if (/voltar ao in[ií]cio/i.test(texto)) {
+      modoAcessibilidade = true;
+      txtVoltar.textContent = 'Voltar para Acessibilidade';
+    } else if (/voltar para disciplinas/i.test(texto)) {
+      modoAcessibilidade = false;
+    }
+  }
+
+  // Intercepta o clique quando estiver na tela inicial de Disciplinas para ir direto para acessibilidade.html
+  btnVoltar.addEventListener('click', (e) => {
+    if (modoAcessibilidade) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      window.location.href = 'acessibilidade.html';
+    }
+  }, true);
+
+  atualizarBotaoEsquerdo();
+  new MutationObserver(atualizarBotaoEsquerdo).observe(txtVoltar, {
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
+});
+</script>
+
+  <script src="../js/assistiva-global.js"></script>
+</body>
+</html>

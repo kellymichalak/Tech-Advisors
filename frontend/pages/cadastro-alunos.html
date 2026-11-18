@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techadvisors - Alunos & Matrículas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css?v=13">
+  <link rel="stylesheet" href="../css/config.css">
+</head>
+<body>
+      <header class="home-header">
+    <div class="logo" onclick="window.location.href='admin.html'">
+      TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-950 px-2 py-1 rounded ml-2 font-bold">ADMINISTRADOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li  onclick="window.location.href='admin.html'">🏠 Portal Gestão</li>
+        <li  onclick="window.location.href='cadastro-turmas.html'">🏫 Cadastro de Turmas</li>
+        <li class="text-yellow-300 font-bold border-b-2 border-yellow-300 pb-0.5" onclick="window.location.href='cadastro-alunos.html'">👥 Alunos</li>
+        <li  onclick="window.location.href='cadastro-professores.html'">👨‍🏫 Professores</li>
+        <li  onclick="window.location.href='relatorios-admin.html'">📊 Relatórios & Indicadores</li>
+        <li class="user-menu-container">
+          <div id="admin-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>👨‍💼</span>
+            <span id="admin-name-text">Olá, Administrador</span>
+            <span class="text-xs">▼</span>
+          </div>
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">👤 Minha Conta</li>
+              <li onclick="configuracoes()">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="banner">
+      <h2>Alunos & Matrículas</h2>
+      <p>Gerencie matrículas, cadastre novos estudantes e consulte a base ativa por série.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-5 panel-box p-6">
+        <h3 class="text-xl font-bold mb-4 text-blue-700">Matricular Novo Aluno</h3>
+        <form id="form-cadastro-aluno" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase mb-1">Nome Completo do Estudante</label>
+            <input type="text" id="aluno-nome" required placeholder="Ex: Lucas Pereira Lima" class="custom-input w-full p-3 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-1">E-mail Escolar</label>
+            <input type="email" id="aluno-email" required placeholder="aluno@escola.com" class="custom-input w-full p-3 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-1">Senha de Acesso</label>
+            <input type="password" id="aluno-senha" required placeholder="Mínimo 6 caracteres" class="custom-input w-full p-3 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-1">Série / Ano Escolar</label>
+            <select id="aluno-serie" class="custom-input w-full p-3 rounded-xl text-sm">
+              <option value="1º Ano EM">1º Ano - Ensino Médio</option>
+              <option value="2º Ano EM">2º Ano - Ensino Médio</option>
+              <option value="3º Ano EM">3º Ano - Ensino Médio</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md transition-all cursor-pointer">
+            Salvar Matrícula
+          </button>
+        </form>
+      </div>
+
+      <div class="lg:col-span-7 panel-box p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-blue-700">Estudantes Matriculados</h3>
+          <button type="button" onclick="carregarAlunos()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white cursor-pointer">Atualizar Lista</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Série</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-alunos-body">
+              <tr><td colspan="4" class="p-6 text-center text-slate-400">Carregando alunos...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="home-footer">© 2026 • Techadvisors — Painel do Administrador</footer>
+  <script src="../js/config.js"></script>
+  <script src="../js/admin.js?v=10"></script>
+  <script>
+    const API_URL = 'http://127.0.0.1:8000';
+    async function carregarAlunos() {
+      const tbody = document.getElementById('tabela-alunos-body');
+      try {
+        const res = await fetch(`${API_URL}/alunos`);
+        const lista = res.ok ? await res.json() : [];
+        if (!lista.length) {
+          tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-slate-400">Nenhum aluno matriculado no momento.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = lista.map(a => `
+          <tr>
+            <td class="font-mono text-xs">#${a.id_aluno || a.id || '-'}</td>
+            <td class="font-semibold">${a.nome || '-'}</td>
+            <td>${a.email || '-'}</td>
+            <td>${a.serie || '-'}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center text-red-500">Erro de conexão com o servidor.</td></tr>';
+      }
+    }
+
+    document.getElementById('form-cadastro-aluno').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        nome: document.getElementById('aluno-nome').value.trim(),
+        email: document.getElementById('aluno-email').value.trim(),
+        senha: document.getElementById('aluno-senha').value,
+        role: 'aluno',
+        serie: document.getElementById('aluno-serie').value
+      };
+      try {
+        const res = await fetch(`${API_URL}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok) {
+          alert('Aluno matriculado com sucesso!');
+          e.target.reset();
+          carregarAlunos();
+        } else {
+          alert('Erro: ' + (data.detail || 'Não foi possível concluir a matrícula.'));
+        }
+      } catch (err) {
+        alert('Servidor FastAPI indisponível.');
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', carregarAlunos);
+  </script>
+</body>
+</html>

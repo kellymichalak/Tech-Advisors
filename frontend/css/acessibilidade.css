@@ -1,0 +1,304 @@
+/* ==========================================================================
+   1. BLOCO DO MODO CLARO (LIGHT MODE) - SEPARADO
+   ========================================================================== */
+:root {
+  --bg-color: #f4f6fa;
+  --header-footer-bg: #3f3da3;
+  --card-bg: #ffffff;
+  --card-border: transparent;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --card-hover-shadow: 0 8px 24px rgba(63, 61, 163, 0.12);
+  --card-hover-border: transparent;
+  --text-main: #1e293b;
+  --text-purple: #3f3da3;
+  --text-sub: #6c757d;
+  --header-text: #ffffff;
+  --user-menu-color: #ffcc00;
+  --badge-green: #30d26a;
+  --badge-text: #000000;
+  --icon-bg: #f0f0fd;
+  --button-bg: #3f3da3;
+  --button-hover: #2e2c85;
+  --fab-bg: #6c31bc;
+  --fab-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   2. BLOCO DO MODO ESCURO (DARK MODE) - SEPARADO
+   Ativado quando o elemento <html> recebe a classe .dark
+   ========================================================================== */
+html.dark {
+  --bg-color: #0f172a;
+  --header-footer-bg: #1e1b4b;
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  --card-hover-shadow: 0 12px 30px rgba(139, 92, 246, 0.15);
+  --card-hover-border: #6366f1;
+  --text-main: #f8fafc;
+  --text-purple: #a855f7;
+  --text-sub: #94a3b8;
+  --header-text: rgb(155, 140, 240);
+  --user-menu-color: #fde047;
+  --badge-green: #22c55e;
+  --badge-text: #052e16;
+  --icon-bg: #312e81;
+  --button-bg: #6366f1;
+  --button-hover: #4f46e5;
+  --fab-bg: #8b5cf6;
+  --fab-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   3. ESTILOS BASE DA PÁGINA
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* BARRA SUPERIOR */
+.top-bar {
+  background-color: var(--header-footer-bg);
+  color: var(--header-text);
+  padding: 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.25s ease;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+.brand-book-icon {
+  width: 20px;
+  height: 25px;
+  background-color: #3b82f6;
+  border-radius: 2px 4px 4px 2px;
+  border-left: 3px solid #60a5fa;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+}
+
+.badge-aluno {
+  background-color: var(--badge-green);
+  color: var(--badge-text);
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.nav-item {
+  color: var(--header-text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.92;
+  transition: opacity 0.2s;
+}
+
+.nav-item:hover {
+  opacity: 1;
+}
+
+.user-menu {
+  color: var(--user-menu-color);
+  font-weight: 700;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.main-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 50px 24px 110px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.header-icon {
+  color: var(--text-purple);
+  margin-bottom: 12px;
+}
+
+.page-header h1 {
+  color: var(--text-purple);
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  color: var(--text-sub);
+  font-size: 0.95rem;
+}
+
+/* GRID DOS CARDS */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1080px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 36px 24px 28px 24px;
+  text-align: center;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background-color 0.25s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-hover-shadow);
+  border-color: var(--card-hover-border);
+}
+
+.icon-wrapper {
+  background-color: var(--icon-bg);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--text-purple);
+}
+
+.card h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-purple);
+  margin-bottom: 12px;
+}
+
+html.dark .card h2 {
+  color: var(--text-main);
+}
+
+.card p {
+  color: var(--text-sub);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.btn {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: var(--button-hover);
+}
+
+/* RODAPÉ */
+.footer-bar {
+  background-color: var(--header-footer-bg);
+  color: var(--header-text);
+  text-align: center;
+  padding: 21px 18px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================================================
+   4. BOTÕES FLUTUANTES NO CANTO (TROCA DE TEMA CLARO/ESCURO E CONFIGURAÇÕES)
+   ========================================================================== */
+.floating-actions {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+}
+
+.floating-btn {
+  background-color: var(--fab-bg);
+  color: white;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--fab-shadow);
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, background-color 0.25s;
+}
+
+.floating-btn:hover {
+  transform: scale(1.06);
+}
+
+@media (max-width: 850px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .top-bar {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 12px;
+  }
+}

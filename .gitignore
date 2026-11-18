@@ -1,0 +1,17 @@
+# Ambiente virtual e Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Variáveis de ambiente e segredos (Supabase, chaves API)
+.env
+.env.*
+
+# Caches e arquivos temporários
+Backend/cache_transcricoes/
+*.log
+*.bak*
+.DS_Store
+Thumbs.db

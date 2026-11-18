@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techadvisors - Gestão de Turmas</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Fonts -->
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;70
+0;800;900&display=swap" rel="stylesheet">
+<!-- Conexão CSS -->
+<link rel="stylesheet" href="../css/admin.css?v=13">
+<link rel="stylesheet" href="../css/config.css">
+
+<script>
+  (function() {
+    const u = JSON.parse(localStorage.getItem('user') || 'null');
+    if (!u || u.role !== 'admin') {
+      alert('Acesso restrito: apenas administradores podem cadastrar ou editar turmas.');
+      window.location.href = u && u.role === 'professor' ? 'turmas.html' : 'index.html';
+    }
+  })();
+</script>
+</head>
+<body>
+<!-- TOAST NOTIFICAÇÃO TEMPORÁRIA -->
+<div id="toast-notification" class="fixed top-5 right-5 z-50 transform
+translate-x-full opacity-0 bg-emerald-600 text-white px-5 py-3 rounded-xl
+shadow-2xl flex items-center gap-3 border border-emerald-400">
+<span class="text-xl">
+
+✅</span>
+
+<span id="toast-message" class="text-sm font-semibold">Operação
+realizada com sucesso!</span>
+</div>
+<!-- ==================== HEADER ==================== -->
+    <header class="home-header">
+    <div class="logo" onclick="window.location.href='admin.html'">
+      TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-950 px-2 py-1 rounded ml-2 font-bold">ADMINISTRADOR</span>
+    </div>
+    <nav>
+      <ul>
+        <li  onclick="window.location.href='admin.html'">🏠 Portal Gestão</li>
+        <li class="text-yellow-300 font-bold border-b-2 border-yellow-300 pb-0.5" onclick="window.location.href='cadastro-turmas.html'">🏫 Cadastro de Turmas</li>
+        <li  onclick="window.location.href='cadastro-alunos.html'">👥 Alunos</li>
+        <li  onclick="window.location.href='cadastro-professores.html'">👨‍🏫 Professores</li>
+        <li  onclick="window.location.href='relatorios-admin.html'">📊 Relatórios & Indicadores</li>
+        <li class="user-menu-container">
+          <div id="admin-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>👨‍💼</span>
+            <span id="admin-name-text">Olá, Administrador</span>
+            <span class="text-xs">▼</span>
+          </div>
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">👤 Minha Conta</li>
+              <li onclick="configuracoes()">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+<!-- CONTAINER -->
+
+<div class="container">
+<!-- BANNER TOPO DA PÁGINA -->
+<div class="banner">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-3xl">
+
+🏫</span>
+
+<h2 id="admin-welcome-title" class="m-0 text-white">Gestão de
+Turmas (Ensino Médio)</h2>
+</div>
+<p class="m-0 text-purple-200">
+Cadastre novas turmas do Ensino Médio, atribua professores
+responsáveis e matricule alunos previamente cadastrados.
+</p>
+</div>
+<!-- SEÇÃO DUPLA: FORMULÁRIO DE CADASTRO E LISTA DE TURMAS -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+<!-- FORMULÁRIO DE CADASTRO DE TURMA -->
+<div class="panel-box p-6 lg:col-span-1">
+<h3 class="text-lg font-bold text-purple-300 mb-4 flex items-center
+gap-2 border-b border-purple-900/60 pb-3">
+
+➕ Cadastrar Nova Turma
+
+</h3>
+
+<form id="formCadastrarTurma" onsubmit="cadastrarTurma(event)"
+class="flex flex-col gap-4">
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Código da Turma</label>
+<input type="text" id="codigoTurmaInput" value="TM2026-003"
+disabled class="custom-input w-full p-2.5 rounded-lg text-sm font-mono
+text-center font-bold">
+</div>
+<div>
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Ano Letivo</label>
+
+
+<input type="text" id="anoLetivoInput" value="2026" disabled
+class="custom-input w-full p-2.5 rounded-lg text-sm font-mono text-center
+font-bold">
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Série / Ano</label>
+<select id="serieTurma" required class="custom-input w-full
+p-2.5 rounded-lg text-sm">
+<option value="">Selecione</option>
+<option value="1º Ano">1º Ano</option>
+<option value="2º Ano">2º Ano</option>
+<option value="3º Ano">3º Ano</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Turma / Letra</label>
+<input type="text" id="letraTurma" placeholder="Ex: A, B ou
+C" required class="custom-input w-full p-2.5 rounded-lg text-sm
+text-center uppercase font-bold">
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Turno</label>
+<select id="turnoTurma" required class="custom-input w-full
+p-2.5 rounded-lg text-sm">
+<option value="Matutino">Matutino (Manhã)</option>
+<option value="Vespertino">Vespertino (Tarde)</option>
+<option value="Noturno">Noturno (Noite)</option>
+<option value="Integral">Integral</option>
+</select>
+</div>
+
+
+<div>
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Professor(a) Tutor(a) / Responsável</label>
+<select id="profTurma" required class="custom-input w-full
+p-2.5 rounded-lg text-sm">
+<option value="">Selecione o Professor</option>
+<option value="Prof. Carlos Eduardo">Prof. Carlos Eduardo
+(Matemática)</option>
+<option value="Profa. Mariana Silva">Profa. Mariana Silva
+(Português)</option>
+<option value="Prof. Roberto Alves">Prof. Roberto Alves
+(História)</option>
+<option value="Profa. Fernanda Lima">Profa. Fernanda Lima
+(Biologia)</option>
+</select>
+</div>
+<button type="submit" class="mt-2 bg-purple-600
+hover:bg-purple-700 text-white font-semibold py-2.5 px-4 rounded-lg
+transition-colors flex items-center justify-center gap-2">
+
+💾 Salvar Turma
+
+</button>
+</form>
+</div>
+
+<!-- LISTA DE TURMAS CADASTRADAS -->
+<div class="panel-box p-6 lg:col-span-2 flex flex-col
+justify-between">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center
+justify-between gap-3 mb-4 border-b border-purple-900/60 pb-3">
+<h3 class="text-lg font-bold text-purple-300 m-0">
+
+📋 Turmas Ativas (Ensino Médio)
+
+</h3>
+
+<input type="text" id="inputBuscaTurma"
+
+🔍 Buscar por código, série, turma
+
+onkeyup="filtrarTurmas()" placeholder="
+
+ou prof..." class="custom-input p-2 px-3 rounded-lg text-xs w-full
+sm:w-72">
+</div>
+
+
+<!-- TABELA DE TURMAS -->
+<div class="overflow-x-auto">
+<table class="custom-table" id="tabelaTurmas">
+<thead>
+<tr>
+<th>Código</th>
+<th>Turma / Série</th>
+<th>Turno</th>
+<th>Prof. Responsável</th>
+<th>Criada em</th>
+<th>Alunos</th>
+<th class="text-center">Ações</th>
+</tr>
+</thead>
+<tbody id="tabelaTurmasBody">
+<tr><td colspan="7" class="text-center py-6 text-sm opacity-70">Carregando turmas cadastradas no banco de dados...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== MODAL DE CONFIRMAÇÃO DE EXCLUSÃO DE TURMA
+==================== -->
+<div id="modalDeletarOverlay" class="fixed inset-0 bg-black/70
+backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+<div class="panel-box w-full max-w-sm p-6 relative border
+border-purple-500/40 shadow-2xl text-center">
+<div class="text-4xl mb-3">
+
+⚠️</div>
+
+<h3 class="text-lg font-bold text-purple-300 mb-2">Excluir Turma</h3>
+<p class="text-xs text-purple-200 mb-6">Deseja realmente excluir esta
+turma? Esta ação não poderá ser desfeita.</p>
+
+
+<div class="flex justify-center gap-3">
+<button type="button" onclick="fecharModalDeletar()"
+class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-4 py-2
+rounded-lg font-medium transition-colors">
+Cancelar
+</button>
+<button type="button" onclick="confirmarDeletarTurma()"
+class="bg-red-600 hover:bg-red-700 text-white text-xs px-4 py-2 rounded-lg
+font-semibold transition-colors">
+Sim, Excluir
+</button>
+</div>
+</div>
+</div>
+<!-- ==================== MODAL DE CONFIRMAÇÃO DE REMOÇÃO DE ALUNO
+==================== -->
+<div id="modalDeletarAlunoOverlay" class="fixed inset-0 bg-black/70
+backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+<div class="panel-box w-full max-w-sm p-6 relative border
+border-purple-500/40 shadow-2xl text-center">
+<div class="text-4xl mb-3">
+
+👤❌</div>
+
+<h3 class="text-lg font-bold text-purple-300 mb-2">Remover Aluno</h3>
+<p class="text-xs text-purple-200 mb-6">Deseja realmente remover este
+aluno desta turma?</p>
+<div class="flex justify-center gap-3">
+<button type="button" onclick="fecharModalDeletarAluno()"
+class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-4 py-2
+rounded-lg font-medium transition-colors">
+Cancelar
+</button>
+<button type="button" onclick="confirmarRemoverAluno()"
+class="bg-red-600 hover:bg-red-700 text-white text-xs px-4 py-2 rounded-lg
+font-semibold transition-colors">
+Sim, Remover
+</button>
+</div>
+</div>
+
+
+</div>
+<!-- ==================== MODAL DE GERENCIAR ALUNOS COM AUTOCOMPLETAR
+==================== -->
+<div id="modalAlunosOverlay" class="fixed inset-0 bg-black/70 z-50 hidden
+flex items-center justify-center p-4">
+<div class="panel-box w-full max-w-2xl p-6 relative border
+border-purple-500/40 shadow-2xl">
+<div class="flex justify-between items-center border-b
+border-purple-900/60 pb-3 mb-4">
+<div>
+<h3 id="modalAlunosTitulo" class="text-lg font-bold
+text-purple-300 m-0">
+
+👥 Alunos da Turma</h3>
+
+<span id="modalAlunosSubtitulo" class="text-xs
+text-purple-400">Código: TM2026-001</span>
+</div>
+<button onclick="fecharModalAlunos()" class="text-purple-300
+hover:text-white text-xl font-bold">✕</button>
+</div>
+<!-- BUSCA DE ALUNO CADASTRADO COM AUTOCOMPLETAR -->
+<form onsubmit="adicionarAlunoModal(event)" class="relative mb-4
+bg-purple-950/40 p-4 rounded-xl border border-purple-900/40">
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Buscar Aluno Cadastrado na Plataforma</label>
+<div class="flex flex-col sm:flex-row gap-2 relative">
+<div class="flex-1 relative">
+<input type="text" id="inputBuscaAlunoPlataforma"
+onfocus="buscarAlunosPlataforma(this.value)" onkeyup="buscarAlunosPlataforma(this.value)" placeholder="Digite o nome ou
+e-mail do aluno..." autocomplete="off" required class="custom-input w-full
+p-2.5 rounded-lg text-xs">
+<!-- LISTA SUSPENSA DE AUTOCOMPLETAR -->
+<div id="autocompleteList" class="autocomplete-items absolute
+left-0 right-0 top-full mt-1 z-50 hidden"></div>
+</div>
+
+
+<button type="submit" class="bg-purple-600 hover:bg-purple-700
+text-white font-semibold text-xs px-5 py-2.5 rounded-lg transition-colors
+flex items-center justify-center gap-1">
+
+➕ Matricular Aluno
+
+</button>
+</div>
+
+<input type="hidden" id="inputNomeAlunoSelecionado">
+<input type="hidden" id="inputEmailAlunoSelecionado">
+</form>
+<!-- LISTA DE ALUNOS MATRICULADOS NA TURMA -->
+<div class="max-h-60 overflow-y-auto">
+<table class="custom-table text-left w-full">
+<thead>
+<tr>
+<th>Nome</th>
+<th>E-mail</th>
+<th class="text-center">Ação</th>
+</tr>
+</thead>
+<tbody id="listaAlunosModal">
+<!-- Gerado via JS -->
+</tbody>
+</table>
+</div>
+<div class="flex justify-end mt-4 pt-3 border-t
+border-purple-900/60">
+<button onclick="fecharModalAlunos()" class="bg-slate-700
+hover:bg-slate-600 text-white text-xs px-4 py-2
+rounded-lg">Fechar</button>
+</div>
+</div>
+</div>
+<!-- ==================== MODAL DE EDITAR TURMA ==================== -->
+<div id="modalEditarOverlay" class="fixed inset-0 bg-black/70 z-50 hidden
+flex items-center justify-center p-4">
+
+
+<div class="panel-box w-full max-w-md p-6 relative border
+border-purple-500/40 shadow-2xl">
+<div class="flex justify-between items-center border-b
+border-purple-900/60 pb-3 mb-4">
+<h3 class="text-lg font-bold text-purple-300 m-0">✏️ Editar Turma</h3>
+
+<button onclick="fecharModalEditar()" class="text-purple-300
+hover:text-white text-xl font-bold">✕</button>
+</div>
+<form onsubmit="salvarEdicaoTurma(event)" class="flex flex-col
+gap-4">
+<div>
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Prof. Responsável</label>
+<select id="editProfTurma" class="custom-input w-full p-2.5
+rounded-lg text-sm">
+<option value="Prof. Carlos Eduardo">Prof. Carlos Eduardo
+(Matemática)</option>
+<option value="Profa. Mariana Silva">Profa. Mariana Silva
+(Português)</option>
+<option value="Prof. Roberto Alves">Prof. Roberto Alves
+(História)</option>
+<option value="Profa. Fernanda Lima">Profa. Fernanda Lima
+(Biologia)</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-purple-200
+mb-1">Turno</label>
+<select id="editTurnoTurma" class="custom-input w-full p-2.5
+rounded-lg text-sm">
+<option value="Matutino">Matutino (Manhã)</option>
+<option value="Vespertino">Vespertino (Tarde)</option>
+<option value="Noturno">Noturno (Noite)</option>
+<option value="Integral">Integral</option>
+</select>
+</div>
+
+
+<div class="flex justify-end gap-2 mt-2">
+<button type="button" onclick="fecharModalEditar()"
+class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-4 py-2
+rounded-lg">Cancelar</button>
+<button type="submit" class="bg-purple-600 hover:bg-purple-700
+text-white text-xs px-4 py-2 rounded-lg font-semibold">Salvar
+Alterações</button>
+</div>
+</form>
+</div>
+</div>
+<footer class="home-footer">
+© 2026 • Techadvisors — Painel do Administrador
+</footer>
+<!-- Botão Flutuante de Configurações -->
+<button onclick="toggleSettingsDrawer(true)" title="Configurações e
+Acessibilidade" class="fab-btn fixed bottom-6 right-6 z-40 text-white p-4
+rounded-full flex items-center justify-center border-2 border-white/20
+transition-all hover:scale-105 active:scale-95">
+
+⚙️
+
+</button>
+<div id="settings-overlay" onclick="toggleSettingsDrawer(false)"
+class="fixed inset-0 bg-black/60 z-50 hidden"></div>
+<aside id="settings-drawer" class="fixed top-0 right-0 h-full w-full
+max-w-sm z-50 shadow-2xl flex flex-col p-6 overflow-y-auto hidden">
+<div class="flex items-center justify-between mb-6 border-b
+border-purple-900/60 pb-4">
+<h2 class="text-lg font-bold">Configurações</h2>
+<button onclick="toggleSettingsDrawer(false)" class="text-purple-300
+hover:text-white text-xl font-bold">✕</button>
+</div>
+<div class="mb-5 bg-slate-50 p-4 rounded-xl border
+border-slate-200/80">
+<div class="flex justify-between items-center mb-2">
+<label class="text-xs font-semibold">Tamanho da Fonte</label>
+<span id="font-size-label" class="text-xs font-mono font-bold
+text-purple-300 bg-purple-950 px-2 py-0.5 rounded border
+border-purple-800/40">100%</span>
+
+
+</div>
+<div class="flex gap-2">
+<button onclick="changeFontSize(-0.1)" class="flex-1 py-1.5
+bg-white border rounded text-xs font-bold transition-colors">A -</button>
+<button onclick="resetFontSize()" class="px-3 py-1.5 bg-white
+border rounded text-xs font-medium transition-colors">Normal</button>
+<button onclick="changeFontSize(0.1)" class="flex-1 py-1.5 bg-white
+border rounded text-xs font-bold transition-colors">A +</button>
+</div>
+</div>
+<div class="mb-5 bg-slate-50 p-4 rounded-xl border
+border-slate-200/80">
+<div class="flex justify-between items-center mb-1">
+<label for="brightness-range" class="text-xs font-semibold">Brilho
+da Tela</label>
+<span id="brightness-label" class="text-xs font-mono font-bold
+text-purple-300 bg-purple-950 px-2 py-0.5 rounded border
+border-purple-800/40">100%</span>
+</div>
+<input type="range" id="brightness-range" min="30" max="100"
+value="100" step="5" oninput="updateBrightness(this.value)" class="w-full
+accent-purple-500 cursor-pointer">
+</div>
+<div class="mb-5 bg-slate-50 p-4 rounded-xl border
+border-slate-200/80">
+<div class="flex justify-between items-center mb-1">
+<label for="saturation-range" class="text-xs
+font-semibold">Saturação de Cores</label>
+<span id="saturation-label" class="text-xs font-mono font-bold
+text-purple-300 bg-purple-950 px-2 py-0.5 rounded border
+border-purple-800/40">100%</span>
+</div>
+<input type="range" id="saturation-range" min="0" max="150"
+value="100" step="5" oninput="updateSaturation(this.value)" class="w-full
+accent-purple-500 cursor-pointer">
+</div>
+<div class="mb-6 flex items-center justify-between bg-slate-50 p-4
+rounded-xl border border-slate-200/80">
+<span class="text-xs font-semibold">Modo Alto Contraste</span>
+
+
+<input type="checkbox" id="toggle-contrast"
+onchange="toggleHighContrast(this.checked)" class="w-4 h-4
+accent-purple-500 cursor-pointer">
+</div>
+<button onclick="resetAllSettings()" class="text-xs font-semibold
+text-purple-400 hover:text-purple-300 underline mt-auto text-center
+pt-4">Restaurar Padrões</button>
+</aside>
+<!-- JAVASCRIPT PRINCIPAL (CONECTADO AO BACKEND + SUPABASE) -->
+<script>
+const API_BASE = window.location.port === '8000'
+  ? ''
+  : `${window.location.protocol}//${window.location.hostname}:8000`;
+
+let listaProfessores = [];
+let listaTurmas = [];
+let listaAlunos = [];
+let turmaSelecionadaObj = null;
+
+function toggleUserMenu(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('userMenu');
+  if (menu) menu.classList.toggle('show');
+}
+
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('userMenu');
+  if (menu && !e.target.closest('.user-menu-container')) {
+    menu.classList.remove('show');
+  }
+  const list = document.getElementById('autocompleteList');
+  if (list && !list.contains(e.target) && e.target.id !== 'inputBuscaAlunoPlataforma') {
+    list.classList.add('hidden');
+  }
+});
+
+function showToast(msg, isError = false) {
+  const toast = document.getElementById('toastFeedback');
+  const toastMsg = document.getElementById('toastMessage');
+  if (!toast || !toastMsg) return;
+  toastMsg.innerText = msg;
+  toast.classList.remove('hidden');
+  setTimeout(() => toast.classList.add('hidden'), 3500);
+}
+
+function getBadgeTurnoClass(turno) {
+  if (turno === 'Vespertino') return 'bg-amber-100 text-amber-800 font-semibold';
+  if (turno === 'Noturno') return 'bg-purple-100 text-purple-800 font-semibold';
+  if (turno === 'Integral') return 'bg-emerald-100 text-emerald-800 font-semibold';
+  return 'bg-blue-100 text-blue-800 font-semibold';
+}
+
+function atualizarProximoCodigoTurma() {
+  const ano = document.getElementById('anoLetivoInput')?.value || new Date().getFullYear();
+  let maiorNum = 0;
+  listaTurmas.forEach(t => {
+    const m = String(t.codigo_turma || '').match(/-(\d+)$/);
+    if (m) {
+      const n = parseInt(m[1], 10);
+      if (n > maiorNum) maiorNum = n;
+    }
+  });
+  const prox = String(maiorNum + 1).padStart(3, '0');
+  const inputCod = document.getElementById('codigoTurmaInput');
+  if (inputCod) inputCod.value = `TM${ano}-${prox}`;
+}
+
+async function carregarProfessoresDoBanco() {
+  try {
+    const resp = await fetch(`${API_BASE}/professores`);
+    if (!resp.ok) throw new Error('Falha ao buscar professores');
+    listaProfessores = await resp.json();
+
+    const selCadastro = document.getElementById('profTurma');
+    const selEditar = document.getElementById('editProfTurma');
+
+    if (selCadastro) {
+      selCadastro.innerHTML = '<option value="">Selecione o Professor</option>';
+      listaProfessores.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id_professor;
+        opt.textContent = p.nome;
+        selCadastro.appendChild(opt);
+      });
+    }
+
+    if (selEditar) {
+      selEditar.innerHTML = '';
+      listaProfessores.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id_professor;
+        opt.textContent = p.nome;
+        selEditar.appendChild(opt);
+      });
+    }
+  } catch (err) {
+    console.error('Erro ao carregar professores:', err);
+    showToast('Erro ao carregar professores do banco de dados.', true);
+  }
+}
+
+async function carregarAlunosDoBanco() {
+  try {
+    const resp = await fetch(`${API_BASE}/alunos`);
+    if (!resp.ok) throw new Error('Falha ao buscar alunos');
+    listaAlunos = await resp.json();
+  } catch (err) {
+    console.error('Erro ao carregar alunos:', err);
+    listaAlunos = [];
+  }
+}
+
+async function carregarTurmasDoBanco() {
+  try {
+    await carregarAlunosDoBanco();
+    const resp = await fetch(`${API_BASE}/turmas`);
+    if (!resp.ok) throw new Error('Falha ao buscar turmas');
+    listaTurmas = await resp.json();
+    renderizarTabelaTurmas();
+    atualizarProximoCodigoTurma();
+  } catch (err) {
+    console.error('Erro ao carregar turmas:', err);
+    const tbody = document.getElementById('tabelaTurmasBody');
+    if (tbody) {
+      tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6 text-red-500 text-sm">Não foi possível conectar ao servidor da API (porta 8000).</td></tr>';
+    }
+  }
+}
+
+function renderizarTabelaTurmas() {
+  const tbody = document.getElementById('tabelaTurmasBody');
+  if (!tbody) return;
+
+  if (!listaTurmas.length) {
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6 text-sm opacity-75">Nenhuma turma cadastrada no banco de dados ainda.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = '';
+  listaTurmas.forEach(turma => {
+    const qtdAlunos = listaAlunos.filter(a => Number(a.id_turma) === Number(turma.id_turma)).length;
+    const badgeClass = getBadgeTurnoClass(turma.turno);
+    const tr = document.createElement('tr');
+    tr.id = `linha-${turma.id_turma}`;
+    tr.dataset.idTurma = turma.id_turma;
+    tr.innerHTML = `
+      <td class="font-mono text-xs col-codigo">${turma.codigo_turma}</td>
+      <td class="font-bold col-nome">${turma.nome_turma}</td>
+      <td class="col-turno"><span class="${badgeClass} text-xs px-2 py-1 rounded">${turma.turno}</span></td>
+      <td class="col-prof">${turma.nome_professor || '—'}</td>
+      <td class="text-xs">${turma.ano_letivo}</td>
+      <td class="col-qtd-alunos">${qtdAlunos} aluno(s)</td>
+      <td class="text-center">
+        <button type="button" title="Editar Turma" onclick="abrirModalEditar(${turma.id_turma})" class="p-1">✏️</button>
+        <button type="button" title="Gerenciar Alunos" onclick="abrirModalAlunos(${turma.id_turma})" class="p-1">👥</button>
+        <button type="button" title="Excluir Turma" onclick="deletarLinha(${turma.id_turma})" class="p-1 hover:text-red-500">🗑️</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+async function cadastrarTurma(e) {
+  e.preventDefault();
+  const codigo_turma = document.getElementById('codigoTurmaInput').value.trim();
+  const ano_letivo = parseInt(document.getElementById('anoLetivoInput').value, 10) || new Date().getFullYear();
+  const serie_ano = document.getElementById('serieTurma').value.trim();
+  const letra = document.getElementById('letraTurma').value.trim().toUpperCase();
+  const turno = document.getElementById('turnoTurma').value;
+  const id_professor = parseInt(document.getElementById('profTurma').value, 10);
+
+  if (!serie_ano || !letra || !id_professor) {
+    alert('Preencha a série, a letra da turma e selecione um professor cadastrado.');
+    return;
+  }
+
+  const nome_turma = `${serie_ano} ${letra} EM`;
+  const payload = {
+    codigo_turma,
+    nome_turma,
+    serie_ano,
+    disciplina: 'Ensino Médio Regular',
+    turno,
+    ano_letivo,
+    id_professor,
+    status_turma: 'ativa'
+  };
+
+  try {
+    const resp = await fetch(`${API_BASE}/turmas`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) {
+      const erro = await resp.json().catch(() => ({}));
+      throw new Error(erro.detail || 'Erro ao salvar turma no banco.');
+    }
+    document.getElementById('serieTurma').value = '';
+    document.getElementById('letraTurma').value = '';
+    document.getElementById('profTurma').value = '';
+    await carregarTurmasDoBanco();
+    showToast('Turma cadastrada no banco de dados com sucesso!');
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+function filtrarTurmas() {
+  const termo = (document.getElementById('inputBuscaTurma')?.value || '').toLowerCase();
+  const linhas = document.querySelectorAll('#tabelaTurmasBody tr');
+  linhas.forEach(tr => {
+    const texto = tr.innerText.toLowerCase();
+    tr.style.display = texto.includes(termo) ? '' : 'none';
+  });
+}
+
+async function deletarLinha(idTurma) {
+  const turma = listaTurmas.find(t => Number(t.id_turma) === Number(idTurma));
+  const label = turma ? `${turma.codigo_turma} (${turma.nome_turma})` : `#${idTurma}`;
+  if (!confirm(`Deseja realmente excluir a turma ${label} do banco de dados?`)) return;
+
+  try {
+    const resp = await fetch(`${API_BASE}/turmas/${idTurma}`, { method: 'DELETE' });
+    if (!resp.ok) {
+      const erro = await resp.json().catch(() => ({}));
+      throw new Error(erro.detail || 'Não foi possível excluir a turma (verifique se há alunos vinculados).');
+    }
+    await carregarTurmasDoBanco();
+    showToast('Turma excluída com sucesso!');
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+function abrirModalEditar(idTurma) {
+  turmaSelecionadaObj = listaTurmas.find(t => Number(t.id_turma) === Number(idTurma));
+  if (!turmaSelecionadaObj) return;
+  const selProf = document.getElementById('editProfTurma');
+  const selTurno = document.getElementById('editTurnoTurma');
+  if (selProf) selProf.value = turmaSelecionadaObj.id_professor;
+  if (selTurno) selTurno.value = turmaSelecionadaObj.turno;
+  document.getElementById('modalEditarOverlay')?.classList.remove('hidden');
+}
+
+function fecharModalEditar() {
+  document.getElementById('modalEditarOverlay')?.classList.add('hidden');
+}
+
+async function salvarEdicaoTurma(e) {
+  e.preventDefault();
+  if (!turmaSelecionadaObj) return;
+  const novoProfId = parseInt(document.getElementById('editProfTurma').value, 10);
+  const novoTurno = document.getElementById('editTurnoTurma').value;
+
+  const payload = {
+    codigo_turma: turmaSelecionadaObj.codigo_turma,
+    nome_turma: turmaSelecionadaObj.nome_turma,
+    serie_ano: turmaSelecionadaObj.serie_ano,
+    disciplina: turmaSelecionadaObj.disciplina || 'Ensino Médio Regular',
+    turno: novoTurno,
+    ano_letivo: turmaSelecionadaObj.ano_letivo,
+    id_professor: novoProfId,
+    status_turma: turmaSelecionadaObj.status_turma || 'ativa'
+  };
+
+  try {
+    const resp = await fetch(`${API_BASE}/turmas/${turmaSelecionadaObj.id_turma}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) {
+      const erro = await resp.json().catch(() => ({}));
+      throw new Error(erro.detail || 'Erro ao atualizar turma.');
+    }
+    fecharModalEditar();
+    await carregarTurmasDoBanco();
+    showToast('Dados da turma atualizados no banco!');
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+function normalizarTextoBusca(str) {
+  return String(str || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+function buscarAlunosPlataforma(valor) {
+  const termo = normalizarTextoBusca(valor ?? document.getElementById('inputBuscaAlunoPlataforma')?.value ?? '');
+  const list = document.getElementById('autocompleteList');
+  if (!list) return;
+
+  const filtrados = listaAlunos
+    .filter(a => {
+      if (!termo) return true;
+      const nomeNorm = normalizarTextoBusca(a.nome);
+      const emailNorm = normalizarTextoBusca(a.email);
+      const matNorm = normalizarTextoBusca(a.matricula);
+      return nomeNorm.includes(termo) || emailNorm.includes(termo) || matNorm.includes(termo);
+    })
+    .sort((a, b) => {
+      const nomeA = normalizarTextoBusca(a.nome);
+      const nomeB = normalizarTextoBusca(b.nome);
+
+      if (termo) {
+        const comecaA = nomeA.startsWith(termo);
+        const comecaB = nomeB.startsWith(termo);
+        if (comecaA && !comecaB) return -1;
+        if (!comecaA && comecaB) return 1;
+
+        const palavraA = nomeA.split(/\s+/).some(p => p.startsWith(termo));
+        const palavraB = nomeB.split(/\s+/).some(p => p.startsWith(termo));
+        if (palavraA && !palavraB) return -1;
+        if (!palavraA && palavraB) return 1;
+      }
+
+      return String(a.nome || '').localeCompare(String(b.nome || ''), 'pt-BR', { sensitivity: 'base' });
+    });
+
+  list.innerHTML = '';
+  if (!filtrados.length) {
+    list.innerHTML = '<div class="p-2.5 text-xs opacity-75">Nenhum aluno encontrado no banco de dados.</div>';
+  } else {
+    filtrados.forEach(aluno => {
+      const jaNaTurma = turmaSelecionadaObj && Number(aluno.id_turma) === Number(turmaSelecionadaObj.id_turma);
+      const item = document.createElement('div');
+      item.className = 'p-2.5 text-xs cursor-pointer border-b border-slate-200/60 flex justify-between items-center';
+      item.innerHTML = `<span><strong>${aluno.nome}</strong> <span class="opacity-75">(${aluno.email || aluno.matricula || 'Sem e-mail'})</span></span>` +
+        (jaNaTurma ? '<span class="text-[11px] font-semibold text-emerald-600">Já matriculado</span>' : '');
+      item.onclick = () => selecionarAlunoAutocomplete(aluno);
+      list.appendChild(item);
+    });
+  }
+  list.classList.remove('hidden');
+}
+
+function filtrarAlunosAutocomplete() {
+  const termo = (document.getElementById('inputBuscaAlunoPlataforma')?.value || '').toLowerCase().trim();
+  const list = document.getElementById('autocompleteList');
+  if (!list) return;
+  if (!termo) {
+    list.classList.add('hidden');
+    return;
+  }
+  const filtrados = listaAlunos.filter(a =>
+    (a.nome || '').toLowerCase().includes(termo) ||
+    (a.email || '').toLowerCase().includes(termo) ||
+    (a.matricula || '').toLowerCase().includes(termo)
+  );
+  list.innerHTML = '';
+  if (!filtrados.length) {
+    list.innerHTML = '<div class="p-2 text-xs opacity-70">Nenhum aluno encontrado no banco de dados.</div>';
+  } else {
+    filtrados.forEach(aluno => {
+      const item = document.createElement('div');
+      item.className = 'p-2 text-xs cursor-pointer hover:bg-blue-50 border-b border-slate-100';
+      item.innerHTML = `<strong>${aluno.nome}</strong> <span class="opacity-70">(${aluno.matricula || aluno.email || 'Sem e-mail'})</span>`;
+      item.onclick = () => selecionarAlunoAutocomplete(aluno);
+      list.appendChild(item);
+    });
+  }
+  list.classList.remove('hidden');
+}
+
+function selecionarAlunoAutocomplete(aluno) {
+  const inpBusca = document.getElementById('inputBuscaAlunoPlataforma');
+  inpBusca.value = `${aluno.nome} (${aluno.matricula || aluno.email || ''})`;
+  inpBusca.dataset.idAluno = aluno.id_aluno;
+  document.getElementById('inputNomeAlunoSelecionado').value = aluno.nome;
+  document.getElementById('inputEmailAlunoSelecionado').value = aluno.email || aluno.matricula || '';
+  document.getElementById('autocompleteList').classList.add('hidden');
+}
+
+function abrirModalAlunos(idTurma) {
+  turmaSelecionadaObj = listaTurmas.find(t => Number(t.id_turma) === Number(idTurma));
+  if (!turmaSelecionadaObj) return;
+  document.getElementById('modalAlunosTitulo').innerText = `👥 Alunos da Turma: ${turmaSelecionadaObj.nome_turma}`;
+  document.getElementById('modalAlunosSubtitulo').innerText = `Código: ${turmaSelecionadaObj.codigo_turma}`;
+  const inpBusca = document.getElementById('inputBuscaAlunoPlataforma');
+  inpBusca.value = '';
+  delete inpBusca.dataset.idAluno;
+  document.getElementById('inputNomeAlunoSelecionado').value = '';
+  document.getElementById('inputEmailAlunoSelecionado').value = '';
+  document.getElementById('autocompleteList').classList.add('hidden');
+  renderizarListaAlunosModal();
+  document.getElementById('modalAlunosOverlay').classList.remove('hidden');
+}
+
+function fecharModalAlunos() {
+  document.getElementById('modalAlunosOverlay').classList.add('hidden');
+}
+
+function renderizarListaAlunosModal() {
+  const tbody = document.getElementById('listaAlunosModal');
+  if (!tbody || !turmaSelecionadaObj) return;
+  tbody.innerHTML = '';
+  const matriculados = listaAlunos.filter(a => Number(a.id_turma) === Number(turmaSelecionadaObj.id_turma));
+  if (!matriculados.length) {
+    tbody.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-xs opacity-70">Nenhum aluno matriculado nesta turma.</td></tr>';
+    return;
+  }
+  matriculados.forEach(aluno => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="font-bold">${aluno.nome}</td>
+      <td class="text-xs">${aluno.email || aluno.matricula || '—'}</td>
+      <td class="text-center">
+        <button type="button" onclick="removerAlunoModal(${aluno.id_aluno})" class="text-red-500 hover:text-red-700 text-xs p-1">🗑️ Remover</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+async function adicionarAlunoModal(e) {
+  e.preventDefault();
+  if (!turmaSelecionadaObj) return;
+  const inpBusca = document.getElementById('inputBuscaAlunoPlataforma');
+  const idAluno = parseInt(inpBusca.dataset.idAluno || '0', 10);
+  const aluno = listaAlunos.find(a => Number(a.id_aluno) === idAluno);
+  if (!aluno) {
+    alert('Selecione um aluno cadastrado no banco a partir da lista de sugestões.');
+    return;
+  }
+  if (Number(aluno.id_turma) === Number(turmaSelecionadaObj.id_turma)) {
+    alert('Este aluno já está matriculado nesta turma!');
+    return;
+  }
+
+  const payload = {
+    nome: aluno.nome,
+    matricula: aluno.matricula,
+    data_nascimento: aluno.data_nascimento,
+    email: aluno.email || null,
+    id_turma: turmaSelecionadaObj.id_turma,
+    id_nivel_suporte: aluno.id_nivel_suporte || null,
+    id_tipo_deficiencia: aluno.id_tipo_deficiencia || null,
+    id_responsavel: aluno.id_responsavel || null
+  };
+
+  try {
+    const resp = await fetch(`${API_BASE}/alunos/${aluno.id_aluno}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) throw new Error('Erro ao matricular aluno na turma.');
+    inpBusca.value = '';
+    delete inpBusca.dataset.idAluno;
+    document.getElementById('inputNomeAlunoSelecionado').value = '';
+    document.getElementById('inputEmailAlunoSelecionado').value = '';
+    await carregarTurmasDoBanco();
+    renderizarListaAlunosModal();
+    showToast('Aluno matriculado na turma com sucesso!');
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+async function removerAlunoModal(idAluno) {
+  const aluno = listaAlunos.find(a => Number(a.id_aluno) === Number(idAluno));
+  if (!aluno) return;
+  const payload = {
+    nome: aluno.nome,
+    matricula: aluno.matricula,
+    data_nascimento: aluno.data_nascimento,
+    email: aluno.email || null,
+    id_turma: null,
+    id_nivel_suporte: aluno.id_nivel_suporte || null,
+    id_tipo_deficiencia: aluno.id_tipo_deficiencia || null,
+    id_responsavel: aluno.id_responsavel || null
+  };
+  try {
+    const resp = await fetch(`${API_BASE}/alunos/${aluno.id_aluno}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) throw new Error('Erro ao remover aluno da turma.');
+    await carregarTurmasDoBanco();
+    renderizarListaAlunosModal();
+    showToast('Aluno removido da turma.');
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await carregarProfessoresDoBanco();
+  await carregarTurmasDoBanco();
+});
+</script>
+<!-- Conexão com os scripts externos -->
+<script src="../js/config.js"></script>
+<script src="../js/admin.js?v=11"></script>
+</body>
+</html>

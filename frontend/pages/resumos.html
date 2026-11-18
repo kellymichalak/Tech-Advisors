@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Aprendizagem Multimodal — Techadvisors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg-color: #f4f6fa;
+      --header-footer-bg: #3533a3;
+      --card-bg: #ffffff;
+      --text-purple: #3f3da3;
+      --text-main: #1e293b;
+      --text-sub: #6c757d;
+      --badge-green: #00d26a;
+      --icon-bg: #f0f0fd;
+      --button-bg: #3f3da3;
+      --button-hover: #3231a0;
+      --border-color: #e2e8f0;
+      --accent-soft: #eeedfd;
+      --quiz-bg: #fffbe6;
+      --quiz-border: #ffe58f;
+      --font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    }
+
+    body.dark-mode {
+      --bg-color: #0f172a;
+      --header-footer-bg: #1e1b4b;
+      --card-bg: #1e293b;
+      --text-purple: #818cf8;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --icon-bg: #312e81;
+      --button-bg: #6366f1;
+      --button-hover: #4f46e5;
+      --border-color: #334155;
+      --accent-soft: #312e81;
+      --quiz-bg: #1e293b;
+      --quiz-border: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-family);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.25s, color 0.25s;
+    }
+
+    .top-bar {
+      background-color: var(--header-footer-bg);
+      color: white;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .badge-aluno {
+      background-color: var(--badge-green);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.9rem;
+    }
+
+    .top-nav a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .top-nav a:hover {
+      opacity: 0.85;
+    }
+
+    .main-content {
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 30px 24px 100px 24px;
+      flex: 1;
+    }
+
+    .sticky-nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-color);
+      padding: 12px 0;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sticky-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-purple);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      background: var(--button-bg);
+      color: white;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+      color: var(--text-purple);
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .page-header p {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+    }
+
+    /* CARDS E GRUPOS DE ESTUDO */
+    .resumos-container {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .grupo-pedagogico-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .grupo-title {
+      font-size: 1.15rem;
+      color: var(--text-purple);
+      font-weight: 700;
+      border-left: 4px solid var(--button-bg);
+      padding-left: 12px;
+    }
+
+    .grupo-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .opcao-card-estudo {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .opcao-card-estudo:hover {
+      transform: translateY(-3px);
+      border-color: var(--button-bg);
+      box-shadow: 0 6px 20px rgba(63, 61, 163, 0.08);
+    }
+
+    .opcao-card-header h4 {
+      font-size: 1rem;
+      color: var(--text-purple);
+      font-weight: 600;
+    }
+
+    .perfil-badge {
+      display: inline-block;
+      background-color: var(--accent-soft);
+      color: var(--text-purple);
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+
+    .status-badge-dev {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      background: var(--bg-color);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* TELA DE LEITURA INDIVIDUAL (DETALHE DO FORMATO) */
+    .detalhe-modelo-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .aula-teorica-completa {
+      line-height: 1.8;
+      color: var(--text-main);
+    }
+
+    .aula-teorica-completa h2 {
+      color: var(--text-purple);
+      margin-top: 24px;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+      border-bottom: 2px solid var(--accent-soft);
+      padding-bottom: 4px;
+    }
+
+    .aula-teorica-completa h2:first-child {
+      margin-top: 0;
+    }
+
+    .aula-teorica-completa h3 {
+      color: var(--text-main);
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .aula-teorica-completa ul, .aula-teorica-completa ol {
+      padding-left: 22px;
+      margin-bottom: 14px;
+    }
+
+    .destaque-formula {
+      background: var(--icon-bg);
+      border-left: 5px solid var(--button-bg);
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      margin: 16px 0;
+      color: var(--text-purple);
+    }
+
+    .tabela-didatica {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+
+    .tabela-didatica th, .tabela-didatica td {
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      text-align: left;
+    }
+
+    .tabela-didatica th {
+      background-color: var(--header-footer-bg);
+      color: white;
+    }
+
+    /* MAPA MENTAL */
+    .mapa-mental-diagrama, .mapa-diagrama-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background: var(--bg-color);
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+    }
+
+    .no-raiz, .no-raiz-principal {
+      background: var(--header-footer-bg);
+      color: white;
+      padding: 16px 28px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .nos-filhos-grid, .nos-ramos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .card-no, .card-ramo {
+      background: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .no-header, .ramo-topo {
+      background: var(--icon-bg);
+      color: var(--text-purple);
+      padding: 8px 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .no-body {
+      padding: 12px;
+      font-size: 0.85rem;
+    }
+
+    /* QUIZ */
+    .quiz-card-interativo {
+      background: var(--quiz-bg);
+      border: 1px solid var(--quiz-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .quiz-opcoes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .quiz-btn {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .quiz-btn:hover {
+      border-color: var(--button-bg);
+    }
+
+    .feedback-quiz-box {
+      margin-top: 14px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    /* BOTÃO FLUTUANTE TOPO */
+    .btn-top-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: var(--button-bg);
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(53, 51, 163, 0.3);
+      cursor: pointer;
+      border: none;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-top-float.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .btn-top-float:hover {
+      transform: translateY(-3px);
+      background-color: var(--button-hover);
+    }
+
+    .footer-bar {
+      background-color: var(--header-footer-bg);
+      color: white;
+      text-align: center;
+      padding: 18px;
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .grupo-cards-grid, .nos-filhos-grid, .nos-ramos-grid {
+        grid-template-columns: 1fr;
+      }
+      .top-bar {
+        padding: 16px 20px;
+      }
+      .detalhe-modelo-card {
+        padding: 20px;
+      }
+    }
+  /* === TIPOGRAFIA E LEGIBILIDADE COGNITIVA (TDAH / DISLEXIA) === */
+.aula-teorica-completa,
+#conteudo-formato-detalhe {
+  max-width: 76ch;
+  margin: 0 auto;
+  font-size: var(--leitura-font-size, 1.04rem);
+  line-height: var(--leitura-line-height, 1.85);
+  letter-spacing: var(--leitura-letter-spacing, 0.012em);
+  word-spacing: var(--leitura-word-spacing, 0.03em);
+}
+
+.aula-teorica-completa p,
+#conteudo-formato-detalhe p {
+  margin-bottom: 1.15em;
+  line-height: inherit;
+}
+
+.aula-teorica-completa h2,
+#conteudo-formato-detalhe h2 {
+  font-size: 1.28rem;
+  font-weight: 800;
+  margin: 1.85em 0 0.75em 0;
+  padding: 8px 14px;
+  border-left: 4px solid #8b5cf6;
+  background: rgba(139, 92, 246, 0.08);
+  border-radius: 0 10px 10px 0;
+  line-height: 1.4;
+}
+
+.aula-teorica-completa h2:first-child,
+#conteudo-formato-detalhe h2:first-child {
+  margin-top: 0.2em;
+}
+
+.aula-teorica-completa h3,
+#conteudo-formato-detalhe h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 1.4em 0 0.55em 0;
+  color: #a78bfa;
+  line-height: 1.45;
+}
+
+.aula-teorica-completa ul,
+.aula-teorica-completa ol,
+#conteudo-formato-detalhe ul,
+#conteudo-formato-detalhe ol {
+  margin: 0.8em 0 1.3em 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.aula-teorica-completa li,
+#conteudo-formato-detalhe li {
+  position: relative;
+  padding: 12px 16px 12px 38px;
+  border-radius: 12px;
+  background: rgba(148, 163, 184, 0.07);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  line-height: 1.72;
+}
+
+.aula-teorica-completa ul li::before,
+#conteudo-formato-detalhe ul li::before {
+  content: "✦";
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  color: #8b5cf6;
+  font-weight: 800;
+}
+
+.aula-teorica-completa ol,
+#conteudo-formato-detalhe ol {
+  counter-reset: passo-leitura;
+}
+
+.aula-teorica-completa ol li,
+#conteudo-formato-detalhe ol li {
+  counter-increment: passo-leitura;
+}
+
+.aula-teorica-completa ol li::before,
+#conteudo-formato-detalhe ol li::before {
+  content: counter(passo-leitura);
+  position: absolute;
+  left: 11px;
+  top: 12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #8b5cf6;
+  color: #fff;
+  font-size: 0.74rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aula-teorica-completa strong,
+#conteudo-formato-detalhe strong {
+  color: #c4b5fd;
+  font-weight: 700;
+}
+
+.passo-a-passo {
+  padding: 18px 20px !important;
+  border-radius: 14px !important;
+  border-left: 4px solid #10b981 !important;
+  background: rgba(16, 185, 129, 0.07) !important;
+  margin: 1.1em 0 1.4em 0 !important;
+}
+
+.destaque-formula {
+  padding: 16px 20px !important;
+  border-radius: 14px !important;
+  font-size: 1.06rem !important;
+  font-weight: 700 !important;
+  text-align: center;
+  margin: 1.2em 0 !important;
+  border: 1px solid rgba(139, 92, 246, 0.35) !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+}
+
+.aula-teorica-completa table,
+#conteudo-formato-detalhe table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.3em 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.aula-teorica-completa th,
+#conteudo-formato-detalhe th {
+  background: rgba(139, 92, 246, 0.18);
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 800;
+}
+
+.aula-teorica-completa td,
+#conteudo-formato-detalhe td {
+  padding: 11px 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.14);
+  line-height: 1.65;
+}
+
+.barra-conforto-leitura {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 16px;
+  margin: 0 auto 20px auto;
+  max-width: 76ch;
+  border-radius: 12px;
+  background: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.btn-leitura-ctrl {
+  padding: 5px 11px;
+  border-radius: 8px;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: rgba(139, 92, 246, 0.1);
+  color: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-leitura-ctrl:hover,
+.btn-leitura-ctrl.ativo {
+  background: #8b5cf6;
+  color: #ffffff;
+  border-color: #8b5cf6;
+}
+/* === FIM TIPOGRAFIA === */
+
+</style>
+
+<style id="estilo-topo-acessibilidade">
+  header, .top-bar, .navbar {
+    background-color: #3533a3 !important;
+    color: #ffffff !important;
+  }
+  header a, .top-bar a, .navbar a,
+  header span, .top-bar span, .navbar span,
+  header button, .top-bar button, .navbar button {
+    color: #ffffff !important;
+  }
+  header .user-menu, .top-bar .user-menu, .navbar .user-menu {
+    color: #ffcc00 !important;
+  }
+</style>
+
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="brand">
+      <i data-lucide="book-open" size="22"></i>
+      <span>TECHADVISORS</span>
+      <span class="badge-aluno">ESTUDANTE</span>
+    </div>
+    <nav class="top-nav">
+      <a href="materias.html">📖 Minhas Matérias</a>
+      <a id="link-audios" href="audios.html">🎧 Ouvir Áudios</a>
+    </nav>
+  </header>
+
+    
+    
+
+  <main class="main-content">
+    <div class="sticky-nav-bar">
+      <button class="back-btn" id="btn-voltar">
+        <i data-lucide="arrow-left" size="18"></i>
+        <span id="txt-voltar">Voltar às Matérias</span>
+      </button>
+
+      <div class="sticky-right-actions">
+        <span style="font-size: 0.8rem; color: var(--text-sub); font-weight: 600;" id="indicador-modo">Visão Geral (16 Formatos)</span>
+        <button class="back-btn" onclick="alternarModoEscuro()">
+          <i data-lucide="moon" size="16" id="icon-tema"></i>
+          <span id="txt-tema">Modo Escuro</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <h1 id="page-title">Carregando conteúdo...</h1>
+      <p id="page-subtitle">Escolha um dos 16 formatos pedagógicos abaixo:</p>
+    </div>
+
+    <div class="resumos-container" id="container-resumos"></div>
+  </main>
+
+  <button class="btn-top-float" id="btn-top-float" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" title="Voltar ao topo" aria-label="Voltar ao topo">
+    <i data-lucide="arrow-up" size="24"></i>
+  </button>
+
+  <footer class="footer-bar">
+    © 2026 • Techadvisors — Plataforma Educacional Adaptativa
+  </footer>
+
+<script src="../js/resumos.js?v=1794775412"></script>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const conteudoAtualId = urlParams.get('id') || "por_1em_01";
+document.getElementById('link-audios').href = `audios.html?id=${conteudoAtualId}`;
+      localStorage.setItem('ultimo_topico_ativo', conteudoAtualId);
+      const _u = new URL(window.location); _u.searchParams.set('id', conteudoAtualId); window.history.replaceState({}, '', _u);
+
+const METADADOS_FORMATOS = {
+  texto_teorico: { titulo: "Texto Teórico Aprofundado", perfil: "Neurotípicos e TEA (Precisão técnica e rigor acadêmico)" },
+  resumo_narrativo: { titulo: "Resumo Narrativo Tradicional", perfil: "Neurotípicos e TEA (Revisão direta em prosa fluida)" },
+  topicos_bullet: { titulo: "Lista de Tópicos Estruturada", perfil: "TDAH e Dislexia (Leitura fracionada em chunking)" },
+  glossario_conteudo: { titulo: "Glossário / Dicionário do Conteúdo", perfil: "TEA e Dislexia (Definições literais e objetivas)" },
+  texto_lacunas: { titulo: "Texto com Lacunas", perfil: "Neurotípicos e TDAH (Fixação ativa)" },
+  mapa_mental: { titulo: "Mapa Mental Gráfico", perfil: "Dislexia, TDAH e TEA (Organização espacial)" },
+  infografico_ilustrado: { titulo: "Infográfico Ilustrado", perfil: "Todos os perfis (Síntese visual rápida)" },
+  fluxograma_decisao: { titulo: "Fluxograma de Tomada de Decisão", perfil: "TEA e TDAH (Árvore lógica passo a passo)" },
+  linha_tempo: { titulo: "Linha do Tempo", perfil: "Dislexia e Neurotípicos (Evolução cronológica)" },
+  tabela_comparativa: { titulo: "Tabela Comparativa / Matriz", perfil: "Todos os perfis (Cruzamento de regras e exemplos)" },
+  audioaula_podcast: { titulo: "Audioaula / Podcast Educativo", perfil: "Dislexia e TDAH (Roteiro conversacional)" },
+  video_whiteboard: { titulo: "Vídeo Whiteboard", perfil: "TDAH e Dislexia (Roteiro visual narrado)" },
+  storytelling_caso: { titulo: "Storytelling / Caso Real", perfil: "Todos os perfis (Aplicação contextualizada)" },
+  simulador_virtual: { titulo: "Simulador / Laboratório Virtual", perfil: "TDAH e TEA (Painel interativo prático)" },
+  flashcards_memorizacao: { titulo: "Flashcards", perfil: "Todos os perfis (Memorização ativa frente e verso)" },
+  quiz_justificado: { titulo: "Quiz Justificado", perfil: "TDAH e Dislexia (Feedback imediato explicado)" }
+};
+
+const ESTRUTURA_GRUPOS_PADRAO = [
+  {
+    grupoNome: "Grupo 1: Formatos Textuais e Conceituais (5 formatos)",
+    ids: ["texto_teorico", "resumo_narrativo", "topicos_bullet", "glossario_conteudo", "texto_lacunas"]
+  },
+  {
+    grupoNome: "Grupo 2: Formatos Visuais e Espaciais (5 formatos)",
+    ids: ["mapa_mental", "infografico_ilustrado", "fluxograma_decisao", "linha_tempo", "tabela_comparativa"]
+  },
+  {
+    grupoNome: "Grupo 3: Formatos Auditivos e Narrativos (3 formatos)",
+    ids: ["audioaula_podcast", "video_whiteboard", "storytelling_caso"]
+  },
+  {
+    grupoNome: "Grupo 4: Formatos Ativos, Práticos e Gamificados (3 formatos)",
+    ids: ["simulador_virtual", "flashcards_memorizacao", "quiz_justificado"]
+  }
+];
+
+let dadosConteudoAtual = null;
+let estadoTela = 'opcoes';
+let scrollSalvo = 0;
+
+function alternarModoEscuro() {
+  document.body.classList.toggle('dark-mode');
+  const eEscuro = document.body.classList.contains('dark-mode');
+  localStorage.setItem('temaEscuro', eEscuro ? 'ativado' : 'desativado');
+  atualizarBotaoTema(eEscuro);
+}
+
+function atualizarBotaoTema(eEscuro) {
+  const icon = document.getElementById('icon-tema');
+  const txt = document.getElementById('txt-tema');
+  if (icon && txt) {
+    icon.setAttribute('data-lucide', eEscuro ? 'sun' : 'moon');
+    txt.innerText = eEscuro ? "Modo Claro" : "Modo Escuro";
+  }
+  if (window.lucide) lucide.createIcons();
+}
+
+function obterGruposOrganizados(dados) {
+  const mapaModelos = {};
+  if (Array.isArray(dados.grupos)) {
+    dados.grupos.forEach(g => {
+      (g.modelos || []).forEach(m => { mapaModelos[m.id] = m; });
+    });
+  }
+  if (Array.isArray(dados.modelos)) {
+    dados.modelos.forEach(m => { mapaModelos[m.id] = m; });
+  }
+  if (dados.formatos && typeof dados.formatos === 'object') {
+    Object.keys(dados.formatos).forEach(fmtId => {
+      mapaModelos[fmtId] = { id: fmtId, html: dados.formatos[fmtId] };
+    });
+  }
+
+  return ESTRUTURA_GRUPOS_PADRAO.map(g => ({
+    grupoNome: g.grupoNome,
+    modelos: g.ids.map(id => {
+      const m = mapaModelos[id] || {};
+      const meta = METADADOS_FORMATOS[id] || {};
+      return {
+        id,
+        titulo: m.titulo || m.nome || meta.titulo || id,
+        perfil: m.perfil || meta.perfil || "Formato Pedagógico Adaptado",
+        html: m.html || null
+      };
+    })
+  }));
+}
+
+function renderizarGrid(restaurarScroll = false) {
+  const _urlAtual = new URL(window.location);
+  const _fmtNaUrl = _urlAtual.searchParams.get('formato');
+
+  if (!window._primeiraCargaConcluida) {
+    window._primeiraCargaConcluida = true;
+    if (_fmtNaUrl) {
+      if (typeof window.obterResumoMultiformato === 'function') {
+        dadosConteudoAtual = window.obterResumoMultiformato(conteudoAtualId);
+      }
+      if (dadosConteudoAtual) {
+        abrirDetalhe(_fmtNaUrl);
+        return;
+      }
+    }
+  } else if (_fmtNaUrl) {
+    _urlAtual.searchParams.delete('formato');
+    window.history.replaceState({}, '', _urlAtual);
+  }
+
+  estadoTela = 'opcoes';
+  document.getElementById('txt-voltar').innerText = "Voltar às Matérias";
+  document.getElementById('indicador-modo').innerText = "Visão Geral (16 Formatos)";
+  const container = document.getElementById('container-resumos');
+  container.innerHTML = '';
+
+  if (typeof window.obterResumoMultiformato !== 'function') {
+    container.innerHTML = `<div class="detalhe-modelo-card" style="text-align: center;"><p style="color: var(--text-sub);">Erro ao carregar <strong>js/resumos.js</strong>. Verifique se o caminho está correto.</p></div>`;
+    return;
+  }
+  const dadosConteudoAtual = window.obterResumoMultiformato(conteudoAtualId);
+  if (!dadosConteudoAtual) {
+    container.innerHTML = `<div class="detalhe-modelo-card" style="text-align: center;"><p style="color: var(--text-sub);">Conteúdo não encontrado para <strong>${conteudoAtualId}</strong>.</p></div>`;
+    return;
+  }
+
+  document.getElementById('page-title').innerText = dadosConteudoAtual.titulo;
+  document.getElementById('page-subtitle').innerText = `${dadosConteudoAtual.materia} • ${dadosConteudoAtual.serie} — Escolha um dos 16 formatos pedagógicos abaixo:`;
+
+  const grupos = obterGruposOrganizados(dadosConteudoAtual);
+  grupos.forEach(grupo => {
+    let cardsHTML = '';
+    grupo.modelos.forEach(mod => {
+      const badgeStatus = mod.html
+        ? `<span style="font-size: 0.82rem; color: var(--text-purple); font-weight: 600;">Acessar Formato →</span>`
+        : `<span class="status-badge-dev">Em breve</span>`;
+
+      cardsHTML += `
+        <article class="opcao-card-estudo" onclick="abrirDetalhe('${mod.id}')">
+          <div class="opcao-card-header">
+            <h4>${mod.titulo}</h4>
+            <span class="perfil-badge">${mod.perfil}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            ${badgeStatus}
+          </div>
+        </article>`;
+    });
+
+    container.innerHTML += `
+      <section class="grupo-pedagogico-section">
+        <h3 class="grupo-title">${grupo.grupoNome}</h3>
+        <div class="grupo-cards-grid">${cardsHTML}</div>
+      </section>`;
+  });
+
+  if (window.lucide) lucide.createIcons();
+  if (restaurarScroll) {
+    window.scrollTo({ top: scrollSalvo, behavior: 'instant' });
+  }
+}
+
+function abrirDetalhe(modeloId) {
+  window._primeiraCargaConcluida = true;
+  if (!dadosConteudoAtual && typeof window.obterResumoMultiformato === 'function') {
+    dadosConteudoAtual = window.obterResumoMultiformato(conteudoAtualId);
+  }
+  if (!dadosConteudoAtual) return;
+
+  if (modeloId) {
+    const _uFmt = new URL(window.location);
+    _uFmt.searchParams.set('formato', modeloId);
+    window.history.replaceState({}, '', _uFmt);
+  }
+
+  scrollSalvo = window.scrollY;
+  estadoTela = 'detalhe';
+
+  let encontrado = null;
+  const grupos = obterGruposOrganizados(dadosConteudoAtual);
+  grupos.forEach(g => {
+    g.modelos.forEach(m => { if (m.id === modeloId) encontrado = m; });
+  });
+  if (!encontrado) return;
+
+  document.getElementById('page-title').innerText = dadosConteudoAtual.titulo;
+  document.getElementById('page-subtitle').innerText = `${dadosConteudoAtual.materia} • ${dadosConteudoAtual.serie}`;
+  document.getElementById('txt-voltar').innerText = "Voltar para Formatos Pedagógicos";
+  document.getElementById('indicador-modo').innerText = "Modo Leitura Focado";
+  const conteudoHtml = encontrado.html || `<div style="text-align: center; padding: 32px;"><p style="color: var(--text-sub);">Este formato pedagógico está em desenvolvimento para este capítulo.</p></div>`;
+
+  document.getElementById('container-resumos').innerHTML = `
+    <article class="detalhe-modelo-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px; flex-wrap: wrap; gap: 8px;">
+        <h3 style="color: var(--text-purple); font-size: 1.25rem;">${encontrado.titulo}</h3>
+        <span class="perfil-badge">${encontrado.perfil}</span>
+      </div>
+      <div class="aula-teorica-completa">${conteudoHtml}</div>
+    </article>`;
+
+  if (window.lucide) lucide.createIcons();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  document.querySelectorAll('.caderno-notas-box').forEach(function(box) {
+    const tid = box.dataset.tid;
+    const ta = box.querySelector('textarea');
+    if (ta && tid) {
+      const rascunho = localStorage.getItem('nota_aula_' + tid);
+      if (rascunho !== null) ta.value = rascunho;
+      if (typeof window.renderizarHistoricoNotas === 'function') {
+        window.renderizarHistoricoNotas(box, tid);
+      }
+    }
+  });
+}
+
+function carregarArquivoDaMateria(topicoId, callback) {
+  window.conteudoAtualId = topicoId;
+  const item = (window.listaConteudosGlobal || []).find(t => t.id === topicoId);
+  if (!item) {
+    callback();
+    return;
+  }
+  const script = document.createElement('script');
+  script.src = `../js/conteudos/${item.serie}_${item.materiaId}.js?v=${Date.now()}`;
+  script.onload = () => callback();
+  script.onerror = () => callback();
+  document.body.appendChild(script);
+}
+
+document.getElementById('btn-voltar').addEventListener('click', () => {
+  if (estadoTela === 'detalhe') {
+    renderizarGrid(true);
+  } else {
+    window.location.href = 'materias.html';
+  }
+});
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('btn-top-float');
+  btn.classList.toggle('visible', window.scrollY > 250);
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('temaEscuro') === 'ativado') {
+    document.body.classList.add('dark-mode');
+    atualizarBotaoTema(true);
+  }
+  carregarArquivoDaMateria(conteudoAtualId, () => {
+    const _fmtInicial = new URLSearchParams(window.location.search).get('formato');
+    if (_fmtInicial) {
+      abrirDetalhe(_fmtInicial);
+    } else {
+      renderizarGrid();
+    }
+  });
+});
+</script>
+  <script src="../js/assistiva-global.js"></script>
+</body>
+</html>

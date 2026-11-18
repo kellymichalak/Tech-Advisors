@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techadvisors - Minhas Turmas</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Conexão CSS (Saindo de pages/ para css/) -->
+  <link rel="stylesheet" href="../css/turmas.css">
+</head>
+<body>
+
+  <!-- ==================== CABEÇALHO ==================== -->
+  <header class="home-header">
+    <div class="logo" onclick="window.location.href='professor.html'">
+      📘 TECHADVISORS <span class="text-xs bg-yellow-400 text-blue-900 px-2 py-1 rounded ml-2 font-bold">TURMAS</span>
+    </div>
+    <nav>
+      <ul>
+        <li onclick="window.location.href='professor.html'">🏠 Portal do Docente</li>
+        <li class="text-yellow-300 font-bold border-b-2 border-yellow-300 pb-0.5" onclick="window.location.href='turmas.html'">🏫 Minhas Turmas</li>
+        
+        <!-- PROFESSOR DROPDOWN -->
+        <li class="user-menu-container">
+          <div id="prof-name-nav" onclick="toggleUserMenu(event)" class="font-bold text-yellow-300 flex items-center gap-1 select-none cursor-pointer">
+            <span>👨‍🏫 Olá, Professor</span>
+            <span class="text-xs">▼</span>
+          </div>
+         
+          <div id="userMenu" class="user-dropdown">
+            <ul>
+              <li onclick="minhaConta()">👤 Minha Conta</li>
+              <li onclick="configuracoes()">⚙️ Configurações</li>
+              <li onclick="logout()" class="logout-item">🚪 Sair</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+  <div class="container">
+    <div class="banner flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <h2>Minhas Turmas</h2>
+        <p>Gerencie e acompanhe o progresso das suas turmas cadastradas.</p>
+      </div>
+      <button onclick="abrirModalTurma()" class="bg-yellow-400 hover:bg-yellow-300 text-blue-900 font-bold px-6 py-3 rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Nova Turma
+      </button>
+    </div>
+
+    <!-- Lista de Turmas -->
+    <div id="lista-turmas" class="cards">
+      <div class="card" onclick="alert('Visualizando detalhes da Turma 101')">
+        <div class="icone">🏫</div>
+        <h3>Turma 101 - Informática</h3>
+        <p>1º Ano Ensino Médio • Matutino</p>
+      </div>
+
+      <div class="card" onclick="alert('Visualizando detalhes da Turma 202')">
+        <div class="icone">🏫</div>
+        <h3>Turma 202 - Programação Web</h3>
+        <p>2º Ano Ensino Médio • Vespertino</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE CADASTRO DE TURMA ==================== -->
+  <div id="modal-turma" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
+      <div class="flex justify-between items-center mb-6 border-b pb-3">
+        <h3 class="text-xl font-bold text-slate-800">Cadastrar Nova Turma</h3>
+        <button onclick="fecharModalTurma()" class="text-slate-400 hover:text-slate-600 font-bold text-lg">&times;</button>
+      </div>
+
+      <form onsubmit="salvarTurma(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 tracking-wider">Nome da Turma</label>
+          <input type="text" id="turma-nome" required placeholder="Ex: Turma 101 - Informática" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 tracking-wider">Série / Ano</label>
+          <input type="text" id="turma-serie" required placeholder="Ex: 1º Ano EM" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 tracking-wider">Disciplina</label>
+          <input type="text" id="turma-disciplina" required placeholder="Ex: Programação Web" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5 tracking-wider">Turno</label>
+          <select id="turma-turno" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none">
+            <option value="Matutino">Matutino</option>
+            <option value="Vespertino">Vespertino</option>
+            <option value="Noturno">Noturno</option>
+            <option value="Integral">Integral</option>
+          </select>
+        </div>
+
+        <div class="flex gap-3 mt-6 pt-2">
+          <button type="button" onclick="fecharModalTurma()" class="w-1/2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all">Cancelar</button>
+          <button type="submit" class="w-1/2 py-3 bg-[#1364c2] hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md">Salvar Turma</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer class="home-footer">
+    © 2026 • Techadvisors — Painel do Professor
+  </footer>
+
+  <!-- Conexão JS (Saindo de pages/ para js/) -->
+  <script src="../js/turmas.js"></script>
+
+</body>
+</html>

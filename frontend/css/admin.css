@@ -1,0 +1,562 @@
+* ==================== ESTILOS GLOBAIS ==================== */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
+}
+body {
+background: #f3f7fb;
+color: #333;
+}
+.font-inter {
+font-family: 'Inter', sans-serif !important;
+}
+/* ==================== CONTROLE DE VISIBILIDADE DAS TELAS
+==================== */
+/* Oculta qualquer tela marcada como hidden ou não-ativa */
+.hidden {
+display: none !important;
+}
+.page-screen {
+display: none;
+}
+.page-screen.active {
+display: block;
+}
+.page-screen-flex {
+display: none;
+}
+.page-screen-flex.active {
+display: flex;
+}
+/* ==================== HEADER & NAVEGAÇÃO ==================== */
+header.home-header {
+background: #1364c2;
+color: white;
+padding: 20px 40px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+flex-wrap: wrap;
+gap: 15px;
+}
+.logo {
+font-size: 30px;
+font-weight: bold;
+cursor: pointer;
+user-select: none;
+}
+nav > ul {
+display: flex;
+flex-direction: row;
+align-items: center;
+list-style: none;
+gap: 22px;
+}
+.user-dropdown {
+position: absolute;
+right: 0;
+top: calc(100% + 10px);
+min-width: 210px;
+background: #ffffff;
+border-radius: 14px;
+box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+border: 1px solid #e2e8f0;
+padding: 6px;
+z-index: 999;
+}
+.user-dropdown ul {
+display: flex !important;
+flex-direction: column !important;
+align-items: stretch !important;
+gap: 4px !important;
+list-style: none !important;
+padding: 0 !important;
+margin: 0 !important;
+}
+.user-dropdown li {
+display: flex !important;
+align-items: center !important;
+gap: 10px !important;
+padding: 10px 14px !important;
+border-radius: 10px !important;
+color: #1e293b !important;
+font-size: 14px !important;
+font-weight: 600 !important;
+white-space: nowrap !important;
+}
+.user-dropdown li:hover {
+background: #eff6ff !important;
+color: #1d4ed8 !important;
+}
+.user-dropdown li.logout-item {
+color: #dc2626 !important;
+border-top: 1px solid #f1f5f9 !important;
+margin-top: 4px !important;
+padding-top: 10px !important;
+}
+.user-dropdown li.logout-item:hover {
+background: #fef2f2 !important;
+color: #b91c1c !important;
+}
+body.dark-theme .user-dropdown {
+background: #1e1b4b !important;
+border-color: #312e81 !important;
+}
+body.dark-theme .user-dropdown li {
+color: #f1f5f9 !important;
+}
+body.dark-theme .user-dropdown li:hover {
+background: #312e81 !important;
+color: #fde047 !important;
+}
+nav li {
+cursor: pointer;
+transition: color 0.3s ease;
+font-weight: 500;
+font-size: 16px;
+white-space: nowrap;
+}
+nav li:hover {
+color: #FFE082;
+}
+/* ==================== CONTEÚDO E BANNER ==================== */
+.container {
+width: 90%;
+max-width: 1200px;
+margin: auto;
+padding: 50px 0;
+}
+.banner {
+background: linear-gradient(135deg, #0865c2, #2386d8);
+color: white;
+padding: 50px;
+border-radius: 24px;
+margin-bottom: 40px;
+
+
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+.banner h2 {
+font-size: 38px;
+margin-bottom: 12px;
+}
+.banner p {
+font-size: 20px;
+opacity: 0.9;
+}
+/* ==================== GRID DE CARDS ==================== */
+.cards {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+gap: 30px;
+}
+.card {
+background: white;
+border-radius: 20px;
+padding: 35px 25px;
+text-align: center;
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+cursor: pointer;
+}
+.card:hover {
+transform: translateY(-8px);
+box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+.card h3 {
+color: #1565C0;
+font-size: 20px;
+margin: 18px 0 10px 0;
+}
+.card p {
+color: #666;
+font-size: 15px;
+}
+.icone {
+font-size: 60px;
+
+
+}
+/* ==================== EFEITOS DE BOTÕES ==================== */
+.btn-hover {
+transition: all 0.2s ease-in-out;
+}
+.btn-hover:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.btn-hover:active {
+transform: translateY(0);
+}
+/* ==================== CARDS SELECIONÁVEIS (CADASTRO)
+==================== */
+.role-card {
+border: 2px solid #e2e8f0;
+border-radius: 1.25rem;
+padding: 2rem 1.25rem;
+text-align: center;
+cursor: pointer;
+transition: background-color 0.2s ease, border-color 0.2s ease,
+box-shadow 0.2s ease, transform 0.2s ease;
+background-color: #ffffff;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+box-sizing: border-box;
+}
+.role-card:hover {
+border-color: #6b21a8;
+transform: translateY(-2px);
+}
+.role-card.selected {
+border-color: #6b21a8;
+box-shadow: 0 0 0 2px #6b21a8, 0 10px 20px -5px rgba(107, 33, 168,
+0.2);
+background-color: #f5f3ff;
+}
+/* ==================== FOOTER ==================== */
+
+
+footer.home-footer {
+text-align: center;
+padding: 24px;
+margin-top: 60px;
+background: #1565C0;
+color: white;
+font-size: 15px;
+}
+/* ==================== AJUSTES RESPONSIVOS (CELULAR)
+==================== */
+@media (max-width: 768px) {
+header.home-header {
+padding: 20px;
+flex-direction: column;
+text-align: center;
+}
+nav ul {
+gap: 15px;
+flex-wrap: wrap;
+justify-content: center;
+}
+.banner {
+padding: 30px 20px;
+}
+.banner h2 {
+font-size: 28px;
+}
+.banner p {
+font-size: 16px;
+}
+}
+
+
+/* ==================== DROPDOWN USUÁRIO & MODO ESCURO OPCIONAL ==================== */
+.user-menu-container { position: relative; }
+.user-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  min-width: 190px;
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  overflow: hidden;
+}
+.user-dropdown.show { display: block !important; }
+.user-dropdown ul { display: flex; flex-direction: column; gap: 0; padding: 6px 0; }
+.user-dropdown li {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #334155;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.user-dropdown li:hover { background: #f1f5f9; color: #0f172a; }
+.user-dropdown li.logout-item { color: #dc2626; font-weight: 600; border-top: 1px solid #f1f5f9; }
+
+.panel-box {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+.custom-input {
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+.custom-input:focus { border-color: #2563eb; outline: none; }
+
+/* Tema Escuro (ativado somente quando body.dark-theme está ativo) */
+body.dark-theme { background-color: #0b0919 !important; color: #ffffff !important; }
+body.dark-theme header.home-header { background-color: #1a0047 !important; }
+body.dark-theme .banner { background: linear-gradient(135deg, #320091 0%, #1e0059 100%) !important; border: 1px solid #4a00cb !important; }
+body.dark-theme .card, body.dark-theme .panel-box { background-color: #17142d !important; border: 1px solid #272248 !important; color: #f8fafc !important; }
+body.dark-theme .card h3 { color: #c4b5fd !important; }
+body.dark-theme .card p { color: #cbd5e1 !important; }
+body.dark-theme .custom-input { background-color: #0f0c24 !important; border: 1px solid #2e265c !important; color: #ffffff !important; }
+body.dark-theme .user-dropdown { background-color: #1e1b4b !important; border-color: #3730a3 !important; }
+body.dark-theme .user-dropdown li { color: #e2e8f0 !important; }
+body.dark-theme .user-dropdown li:hover { background-color: #312e81 !important; }
+body.dark-theme footer.home-footer { background-color: #1a0047 !important; }
+
+
+/* ==================== CONTRASTE CLARO / ESCURO (RELATÓRIOS & TURMAS ADMIN) ==================== */
+body:not(.dark-theme) .panel-box .text-white { color: #0f172a !important; }
+body:not(.dark-theme) .panel-box .text-purple-300,
+body:not(.dark-theme) .panel-box .text-purple-300\/80,
+body:not(.dark-theme) .panel-box .text-purple-300\/70 { color: #475569 !important; }
+body:not(.dark-theme) .panel-box h3.text-purple-300 { color: #1e40af !important; }
+body:not(.dark-theme) .panel-box .border-purple-900\/60 { border-color: #e2e8f0 !important; }
+body:not(.dark-theme) .panel-box .bg-purple-950 { background-color: #eff6ff !important; color: #1d4ed8 !important; border-color: #bfdbfe !important; }
+body:not(.dark-theme) .custom-table th { background-color: #f8fafc; color: #475569; border-bottom: 2px solid #e2e8f0; padding: 12px; font-size: 12px; text-transform: uppercase; }
+body:not(.dark-theme) .custom-table td { color: #1e293b; border-bottom: 1px solid #f1f5f9; padding: 12px; font-size: 14px; }
+body.dark-theme .custom-table th { background-color: #1e1b4b; color: #c4b5fd; border-bottom: 1px solid #312e81; padding: 12px; font-size: 12px; text-transform: uppercase; }
+body.dark-theme .custom-table td { color: #e2e8f0; border-bottom: 1px solid #272248; padding: 12px; font-size: 14px; }
+.custom-table { width: 100%; border-collapse: collapse; text-align: left; }
+
+
+/* ==================== AJUSTE DE CORES DE DESTAQUE (MODO CLARO VS ESCURO) ==================== */
+body:not(.dark-theme) .panel-box .text-emerald-400,
+body:not(.dark-theme) .panel-box .text-emerald-500 { color: #047857 !important; font-weight: 600; }
+body:not(.dark-theme) .panel-box .text-amber-400,
+body:not(.dark-theme) .panel-box .text-amber-500 { color: #b45309 !important; }
+body:not(.dark-theme) .panel-box .bg-purple-900\/40,
+body:not(.dark-theme) .panel-box .bg-emerald-900\/40,
+body:not(.dark-theme) .panel-box .bg-sky-900\/40,
+body:not(.dark-theme) .panel-box .bg-amber-900\/40 { background-color: #eff6ff !important; border-color: #bfdbfe !important; }
+
+
+/* ==================== BOTÃO FLUTUANTE ENGRENAGEM ==================== */
+button[onclick*="toggleSettingsDrawer"],
+.floating-settings-btn {
+  background: linear-gradient(135deg, #1364c2, #2563eb) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 8px 20px rgba(19, 100, 194, 0.35) !important;
+  border-radius: 9999px !important;
+  width: 52px !important;
+  height: 52px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 22px !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+button[onclick*="toggleSettingsDrawer"]:hover,
+.floating-settings-btn:hover {
+  transform: scale(1.08) rotate(20deg) !important;
+}
+body.dark-theme button[onclick*="toggleSettingsDrawer"],
+body.dark-theme .floating-settings-btn {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.45) !important;
+}
+.user-dropdown li {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  text-align: left !important;
+}
+
+
+/* ==================== DRAWER DE CONFIGURAÇÕES & CONTRASTE FINAL ==================== */
+#settings-drawer {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  border-left: 1px solid #e2e8f0 !important;
+}
+#settings-drawer h2,
+#settings-drawer label,
+#settings-drawer span {
+  color: #1e293b !important;
+}
+#settings-drawer #font-size-label,
+#settings-drawer #brightness-label,
+#settings-drawer #saturation-label {
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+}
+#settings-drawer button[onclick*="resetAllSettings"] {
+  color: #1d4ed8 !important;
+}
+body.dark-theme #settings-drawer {
+  background-color: #17142d !important;
+  color: #f8fafc !important;
+  border-left: 1px solid #2e265c !important;
+}
+body.dark-theme #settings-drawer h2,
+body.dark-theme #settings-drawer label,
+body.dark-theme #settings-drawer span {
+  color: #f8fafc !important;
+}
+
+/* Garantir que o dropdown só abra ao clicar e fique alinhado */
+#userMenu {
+  display: none !important;
+}
+#userMenu.show {
+  display: block !important;
+}
+
+
+/* ==================== CONTRASTE DE LABELS & BOTÕES NO MODO CLARO ==================== */
+body:not(.dark-theme) label,
+body:not(.dark-theme) .panel-box label {
+  color: #334155 !important;
+  font-weight: 700 !important;
+}
+body:not(.dark-theme) .panel-box button[type="submit"],
+body:not(.dark-theme) .btn-primary-admin {
+  background: linear-gradient(135deg, #1364c2, #2563eb) !important;
+  color: #ffffff !important;
+}
+body:not(.dark-theme) .panel-box span.bg-purple-900\/50,
+body:not(.dark-theme) .panel-box span.bg-purple-950 {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+  border-color: #93c5fd !important;
+}
+
+
+/* ==================== BADGE DE TURNO NA TABELA (MODO CLARO VS ESCURO) ==================== */
+body:not(.dark-theme) .col-turno span {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+  font-weight: 600 !important;
+}
+body.dark-theme .col-turno span {
+  background-color: rgba(30, 58, 138, 0.6) !important;
+  color: #93c5fd !important;
+}
+
+
+/* ==================== MODAIS E AUTOCOMPLETE (MODO CLARO & ESCURO) ==================== */
+body:not(.dark-theme) .panel-box form.bg-purple-950\/40 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+body:not(.dark-theme) button.bg-slate-700,
+body.dark-theme button.bg-slate-700 {
+  background-color: #475569 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+body:not(.dark-theme) button.bg-slate-700:hover {
+  background-color: #334155 !important;
+}
+body:not(.dark-theme) #autocompleteList {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15) !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+body:not(.dark-theme) #autocompleteList > div:hover {
+  background-color: #eff6ff !important;
+}
+body.dark-theme #autocompleteList {
+  background-color: #1e1b4b !important;
+  color: #f8fafc !important;
+  border: 1px solid #4c1d95 !important;
+  border-radius: 0.5rem !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+body.dark-theme #autocompleteList > div:hover {
+  background-color: #312e81 !important;
+}
+
+
+/* ==================== CORREÇÃO DEFINITIVA DE BOTÕES E MODAIS (TODAS AS PÁGINAS ADMIN) ==================== */
+body:not(.dark-theme) .panel-box {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Todos os botões primários (roxos ou azuis) sempre com texto branco nítido */
+body:not(.dark-theme) .panel-box button[type="submit"],
+body:not(.dark-theme) .panel-box button.bg-purple-600,
+body:not(.dark-theme) .panel-box button.bg-indigo-600,
+body:not(.dark-theme) .panel-box button.bg-blue-600,
+body:not(.dark-theme) button.bg-purple-600,
+body:not(.dark-theme) button.bg-indigo-600,
+body:not(.dark-theme) button.bg-blue-600,
+body:not(.dark-theme) .btn-primary-admin {
+  background: linear-gradient(135deg, #1364c2, #2563eb) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 600 !important;
+}
+body:not(.dark-theme) .panel-box button[type="submit"]:hover,
+body:not(.dark-theme) button.bg-purple-600:hover,
+body:not(.dark-theme) button.bg-indigo-600:hover,
+body:not(.dark-theme) button.bg-blue-600:hover {
+  background: linear-gradient(135deg, #0f52a0, #1d4ed8) !important;
+  color: #ffffff !important;
+}
+
+/* Botões secundários (Fechar / Cancelar) no modo claro: cinza claro com texto escuro legível */
+body:not(.dark-theme) .panel-box button.bg-slate-700,
+body:not(.dark-theme) .panel-box button.bg-gray-700,
+body:not(.dark-theme) button.bg-slate-700,
+body:not(.dark-theme) button.bg-gray-700 {
+  background-color: #e2e8f0 !important;
+  color: #1e293b !important;
+  border: 1px solid #cbd5e1 !important;
+  font-weight: 600 !important;
+}
+body:not(.dark-theme) .panel-box button.bg-slate-700:hover,
+body:not(.dark-theme) button.bg-slate-700:hover {
+  background-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* Botões no modo escuro */
+body.dark-theme .panel-box button[type="submit"],
+body.dark-theme button.bg-purple-600 {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+  color: #ffffff !important;
+}
+body.dark-theme .panel-box button.bg-slate-700,
+body.dark-theme button.bg-gray-700 {
+  background-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+/* Botão Remover dentro da tabela do modal */
+body:not(.dark-theme) #listaAlunosModal button {
+  background: transparent !important;
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+}
+body:not(.dark-theme) #listaAlunosModal button:hover {
+  background-color: #fee2e2 !important;
+  border-radius: 0.375rem !important;
+}
+
+
+/* ==================== CONTRASTE DO SUBTÍTULO DO BANNER ADMIN ==================== */
+body:not(.dark-theme) .welcome-banner p,
+body:not(.dark-theme) .admin-banner p,
+body:not(.dark-theme) #admin-welcome-title ~ p,
+body:not(.dark-theme) div:has(> div > #admin-welcome-title) > p {
+  color: #ffffff !important;
+  opacity: 0.96 !important;
+}
